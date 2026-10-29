@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071c25"><meta name="description" content="AVNIVO HIDAYAH — islomiy bilim va ibodatni o‘rganish">
+<title>AVNIVO HIDAYAH</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;--gold:#f1d18e;--muted:#c1d2d1;--deep:#061a23;--speed:390ms}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--deep);color:#f9f6ec}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+[hidden]{display:none!important}
+#splash{position:fixed;inset:0;z-index:100;background:#050d1b;display:flex;align-items:center;justify-content:center}
+#splash img{width:100%;height:100%;object-fit:contain;display:block}
+.screen{position:fixed;inset:0;min-height:100svh;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top)) 22px calc(20px + env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 20%,#214955 0%,#0b2a34 43%,#04151d 100%);opacity:0;transform:translate3d(18px,0,0) scale(.985);transition:opacity var(--speed) ease,transform var(--speed) cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.screen.active{opacity:1;transform:none;pointer-events:auto}
+.screen.leaving{opacity:0;transform:translate3d(-15px,0,0) scale(.99)}
+.screen::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M48 1L72 24 95 48 72 72 48 95 24 72 1 48 24 24Z M48 19L77 48 48 77 19 48Z' stroke='%23e7c47b' fill='none' stroke-width='1'/%3E%3C/svg%3E");background-size:96px}
+.screen::after{content:"";position:fixed;z-index:-1;inset:40% -20% -20%;background:radial-gradient(ellipse at 50% 100%,#d1aa5533,transparent 65%);pointer-events:none}
+.top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;flex-shrink:0}
+.logo{font-size:13px;font-weight:800;letter-spacing:.13em;color:var(--gold);white-space:nowrap}
+.back{border:1px solid #d7bd8170;background:#092833bd;color:#fff0d0;padding:11px 13px;border-radius:13px;min-height:43px}
+.progress{display:flex;justify-content:center;gap:5px;flex:1}
+.progress i{width:clamp(11px,4vw,23px);height:4px;border-radius:4px;background:#ffffff45;transition:background .3s,transform .3s}
+.progress i.on{background:var(--gold);transform:scaleY(1.2)}
+.center{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;max-width:520px;width:100%;margin:auto}
+.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:15px}
+h1{font-size:clamp(27px,7vw,38px);line-height:1.18;margin:0 0 17px;font-weight:760;letter-spacing:-.025em}
+.desc{font-size:16px;line-height:1.7;color:#d6e1df;max-width:365px;margin:0}
+.arabic{font-family:Georgia,serif;font-size:29px;color:#f6d58d;direction:rtl;margin:5px 0 12px;text-shadow:0 0 17px #f2bb5770}
+.art{width:min(67vw,270px);aspect-ratio:1;position:relative;display:grid;place-items:center;margin:5px auto 24px}
+.art::before,.art::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.art::before{inset:3%;border:1px solid #d5b16b77;box-shadow:0 0 0 12px #e3bd6910,0 0 45px #d9ac5736}
+.art::after{inset:13%;border:1px dashed #e7c8887a;animation:spin 32s linear infinite}
+.art svg{width:61%;height:61%;stroke:#f6d68e;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 12px #dca74d88);animation:breathe 3.6s ease-in-out infinite}
+.art .star{position:absolute;color:#f7d99c;font-size:15px;filter:drop-shadow(0 0 9px #ffce65);animation:twinkle 2.6s ease-in-out infinite}
+.art .star.a{top:6%;left:20%}.art .star.b{right:8%;top:32%;animation-delay:.7s}.art .star.c{bottom:8%;left:31%;animation-delay:1.4s}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes breathe{50%{transform:scale(1.045);filter:drop-shadow(0 0 23px #f0c26f)}}@keyframes twinkle{50%{opacity:.3;transform:scale(.65)}}
+.foot{position:relative;z-index:1;width:100%;max-width:520px;margin:22px auto 0;flex-shrink:0}
+.primary{width:100%;border:1px solid #ffe7ad;background:linear-gradient(135deg,#f5dca5,#c9a15c);color:#1c2b2a;font-weight:800;padding:16px;border-radius:16px;min-height:56px;font-size:16px}
+.primary:active{transform:scale(.99)}
+.form-title{width:100%;text-align:left;margin:18px 0 6px}
+.form-title p{color:var(--muted);line-height:1.6;margin:0}
+.form-area{width:100%;text-align:left;margin:23px 0 10px}
+label{display:block;color:#f8e6c3;font-size:14px;margin:0 0 8px}
+input,select{display:block;width:100%;min-height:53px;padding:13px 15px;border:1px solid #b8a4759a;border-radius:14px;background:#071f2bcf;color:#fff;font-size:16px;margin-bottom:20px}
+input::placeholder{color:#a8b9b6}
+select{appearance:auto}
+.hint{color:#c2d2cf;font-size:13px;line-height:1.6;margin:0 0 10px}
+.error{color:#ffb9ad;font-size:14px;min-height:22px;margin:0 0 9px}
+.home-title{position:relative;z-index:1;max-width:620px;width:100%;margin:35px auto 22px}
+.home-title p{color:#d4e0de;line-height:1.65}
+.tiles{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:620px;width:100%;margin:0 auto 25px}
+.tile{min-height:143px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:12px;background:linear-gradient(145deg,#17424bdf,#092631e8);border:1px solid #c6aa7290;border-radius:18px;color:#f8f2e6;padding:16px;text-align:left}
+.tile svg{height:37px;width:37px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tile strong{font-size:14px;line-height:1.45}
+.small{position:relative;z-index:1;font-size:12px;color:#c0d1cc;line-height:1.65;max-width:620px;margin:0 auto 24px}
+@media(max-height:720px){.art{width:min(46vw,180px);margin:0 auto 13px}.arabic{font-size:24px}.desc{font-size:14px}.kicker{margin-bottom:9px}}
+@media(prefers-reduced-motion:reduce){:root{--speed:0ms}.art svg,.art::after,.art .star{animation:none!important}}
+
+/* V8: individual motion for the ORIGINAL SVG icons, no replacements. */
+#tour .center{will-change:transform,opacity}
+#tour .art svg{overflow:visible;transform-origin:center;animation:iconReveal .68s cubic-bezier(.18,.9,.2,1) both}
+#tour .art svg>*{transform-box:fill-box;transform-origin:center}
+#tour .art[data-icon="ai"] svg path:first-child{animation:aiTalk 2.8s ease-in-out infinite}
+#tour .art[data-icon="ai"] svg path:nth-child(2){animation:aiLines 2.3s ease-in-out infinite}
+#tour .art[data-icon="ai"] svg path:nth-child(3){animation:aiSpark 1.8s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg path:first-child{animation:prayerRise 3.4s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg path:nth-child(2){animation:prayerDoor 3.4s ease-in-out infinite}
+#tour .art[data-icon="book"] svg path:first-child{animation:bookOpen 3s ease-in-out infinite}
+#tour .art[data-icon="book"] svg path:nth-child(2){animation:bookText 3s ease-in-out infinite}
+#tour .art[data-icon="compass"] svg path:nth-child(3){animation:needle 4s cubic-bezier(.4,0,.2,1) infinite;transform-origin:50% 50%;transform-box:view-box}
+#tour .art[data-icon="compass"] svg circle:nth-child(2){animation:compassRing 9s linear infinite;transform-origin:50% 50%;transform-box:view-box}
+#tour .art[data-icon="beads"] svg circle{animation:beadLight 2.8s ease-in-out infinite}
+#tour .art[data-icon="beads"] svg circle:nth-child(2){animation-delay:.15s}
+#tour .art[data-icon="beads"] svg circle:nth-child(3){animation-delay:.3s}
+#tour .art[data-icon="beads"] svg circle:nth-child(4){animation-delay:.45s}
+#tour .art[data-icon="beads"] svg circle:nth-child(5){animation-delay:.6s}
+#tour .art[data-icon="beads"] svg circle:nth-child(6){animation-delay:.75s}
+#tour .art[data-icon="beads"] svg circle:nth-child(7){animation-delay:.9s}
+#tour .art[data-icon="beads"] svg circle:nth-child(8){animation-delay:1.05s}
+#tour .art[data-icon="beads"] svg path{animation:beadTassel 2.8s ease-in-out infinite}
+@keyframes iconReveal{from{opacity:0;transform:scale(.78) rotate(-7deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes aiTalk{50%{transform:scale(1.035)}}
+@keyframes aiLines{50%{opacity:.35;transform:translateX(2px)}}
+@keyframes aiSpark{50%{opacity:.3;transform:scale(.85)}}
+@keyframes prayerRise{50%{transform:translateY(-4px)}}
+@keyframes prayerDoor{50%{opacity:.5}}
+@keyframes bookOpen{50%{transform:scaleX(1.075)}}
+@keyframes bookText{50%{opacity:.4}}
+@keyframes needle{0%,100%{transform:rotate(-14deg)}45%{transform:rotate(24deg)}70%{transform:rotate(-5deg)}}
+@keyframes compassRing{to{transform:rotate(360deg)}}
+@keyframes beadLight{0%,100%{stroke:#f6d68e;filter:drop-shadow(0 0 0 transparent)}35%{stroke:#fff5d6;filter:drop-shadow(0 0 7px #ffd36b)}}
+@keyframes beadTassel{50%{transform:rotate(12deg)}}
+@media(prefers-reduced-motion:reduce){
+ #tour .art svg,#tour .art svg>*,#tour .art::after,#tour .art .star{animation:none!important}
+ #tour .center{will-change:auto}
+}
+
+/* Home uses the APPROVED artwork pixel-for-pixel; dynamic glow is sampled from it. */
+.home-screen{padding:0;display:block;overflow-y:auto;background:#031820}
+.home-screen::before,.home-screen::after{display:none}
+.home-art-wrap{position:relative;width:100%;max-width:857px;margin:0 auto;aspect-ratio:857/1836;isolation:isolate;overflow:hidden;background:#031820}
+.home-picture,.home-highlights{position:absolute;inset:0;width:100%;height:100%;display:block}
+.home-picture{object-fit:fill;pointer-events:none;user-select:none}
+.home-highlights{z-index:1;pointer-events:none}
+.home-hit{position:absolute;z-index:2;border-radius:18px}
+.home-hit button{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent;border-radius:inherit;color:transparent;touch-action:manipulation}
+.home-hit button:focus-visible{outline:2px solid #ffdf9e;outline-offset:-3px;background:#f2d68a1c}
+.home-hit button:active{background:#ffe3a51a}
+.ai-hit{border-radius:50%}
+@media(min-width:857px){.home-art-wrap{box-shadow:0 0 60px #0009}}
+@media(prefers-reduced-motion:reduce){.home-highlights{display:none}}
+</style>
+</head>
+<body>
+<!-- LOCKED APPROVED SPLASH: exact splash.png, static, no sound, no animation, 3000ms -->
+<div id="splash"><img src="./splash.png" alt="AVNIVO HIDAYAH" fetchpriority="high"></div>
+<section class="screen" id="profile" hidden>
+ <div class="top"><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="center">
+  <div class="form-title">
+   <div class="kicker" data-i18n="welcomeLabel"></div>
+   <h1 data-i18n="welcomeTitle"></h1>
+   <p data-i18n="welcomeDesc"></p>
+  </div>
+  <form id="profileForm" class="form-area" novalidate>
+   <label for="language" data-i18n="languageLabel"></label>
+   <select id="language" name="language" aria-label="Til / Тил">
+    <option value="uz-Latn">O‘zbekcha (lotin alifbosi)</option>
+    <option value="uz-Cyrl">Ўзбекча (кирил алифбоси)</option>
+   </select>
+   <label for="name" data-i18n="nameLabel"></label>
+   <input id="name" name="name" maxlength="40" autocomplete="given-name" required>
+   <label for="age" data-i18n="ageLabel"></label>
+   <input id="age" name="age" type="number" min="5" max="120" step="1" inputmode="numeric" required>
+   <p class="hint" data-i18n="privacy"></p>
+   <p class="error" id="error" role="alert" aria-live="assertive"></p>
+   <button class="primary" type="submit" data-i18n="continue"></button>
+  </form>
+ </div>
+</section>
+<section class="screen" id="tour" hidden>
+ <div class="top">
+  <button class="back" id="back" type="button" data-i18n="back"></button>
+  <div class="progress" id="progress"></div><span class="logo">HIDAYAH</span>
+ </div>
+ <div class="center">
+  <div class="kicker" id="step"></div>
+  <div class="art" id="art"><span class="star a">✦</span><span class="star b">✧</span><span class="star c">✦</span><div id="symbol" style="display:contents"></div></div>
+  <div class="arabic" id="arabic" lang="ar"></div>
+  <h1 id="heading"></h1><p class="desc" id="description"></p>
+ </div>
+ <div class="foot"><button class="primary" id="next" type="button"></button></div>
+</section>
+<main class="screen home-screen" id="home" hidden>
+ <div class="home-art-wrap" id="homeArtwork">
+  <img class="home-picture" src="./home-art.webp" alt="" draggable="false" decoding="async">
+  <canvas id="homeHighlights" class="home-highlights" aria-hidden="true"></canvas>
+  <div class="home-hit" data-target="profile" style="left:53.5000%;top:1.5000%;width:43%;height:9%"><button type="button" data-go="profile" aria-label="Profil"></button></div>
+  <div class="home-hit" style="left:0.5000%;top:15.5000%;width:39%;height:11%"><button type="button" data-go="dates" aria-label="Bugungi sana"></button></div>
+  <div class="home-hit" style="left:59.0000%;top:15.5000%;width:38%;height:11%"><button type="button" data-go="times" aria-label="Keyingi namoz"></button></div>
+  <div class="home-hit" style="left:4.0000%;top:29.5000%;width:42%;height:23%"><button type="button" data-go="prayer" aria-label="Namozni o‘rganish"></button></div>
+  <div class="home-hit" style="left:53.0000%;top:29.5000%;width:42%;height:23%"><button type="button" data-go="book" aria-label="Duolar va suralar"></button></div>
+  <div class="home-hit" style="left:4.0000%;top:54.5000%;width:42%;height:23%"><button type="button" data-go="compass" aria-label="Qibla kompasi"></button></div>
+  <div class="home-hit" style="left:53.0000%;top:54.5000%;width:42%;height:23%"><button type="button" data-go="beads" aria-label="Tasbeh"></button></div>
+  <div class="home-hit nav-hit" style="left:1.5000%;top:85.5000%;width:21%;height:9%"><button type="button" data-go="home" aria-label="Asosiy"></button></div>
+  <div class="home-hit nav-hit" style="left:22.5000%;top:85.5000%;width:21%;height:9%"><button type="button" data-go="times" aria-label="Namoz vaqtlari"></button></div>
+  <div class="home-hit nav-hit ai-hit" style="left:40.5000%;top:82.5000%;width:19%;height:11%"><button type="button" data-go="ai" aria-label="AI"></button></div>
+  <div class="home-hit nav-hit" style="left:60.5000%;top:85.5000%;width:19%;height:9%"><button type="button" data-go="reminders" aria-label="Eslatmalar"></button></div>
+  <div class="home-hit nav-hit" style="left:81.0000%;top:85.5000%;width:18%;height:9%"><button type="button" data-go="settings" aria-label="Sozlamalar"></button></div>
+ </div>
+</main>
+<section class="screen" id="detail" hidden>
+ <div class="top"><button type="button" class="back" id="detailBack">← Orqaga</button><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="center"><div class="art" id="detailArt"><span class="star a">✦</span><span class="star b">✧</span><div id="detailSymbol" style="display:contents"></div></div>
+ <h1 id="detailTitle"></h1><p class="desc" id="detailDesc"></p></div>
+</section>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const KEY="avnivo-hidayah-profile-v2",LANG_KEY="avnivo-hidayah-language-v1";
+const I18N={
+ "uz-Latn":{
+ welcomeLabel:"Hidayahga xush kelibsiz",welcomeTitle:"Avval tanishib olaylik",welcomeDesc:"Ismingiz bilan murojaat qilamiz va tushuntirishlarni yoshingizga moslaymiz.",
+ languageLabel:"Ilova tili",nameLabel:"Ismingiz",ageLabel:"Yoshingiz",namePlaceholder:"Ismingizni yozing",agePlaceholder:"Masalan, 20",
+ privacy:"Ism va yosh faqat shu qurilmadagi brauzerda saqlanadi. Yosh diniy hukmlarni emas, tushuntirish uslubini belgilaydi.",
+ continue:"Davom etish",back:"← Orqaga",next:"Keyingisi →",enter:"Hidayahga kirish →",
+ profile:"Profil",salaam:"Assalomu alaykum",greeting:", xush kelibsiz!",homeDesc:"Ilm, ibodat va zikr yo‘lingizdagi yordamchi.",
+ placeholder:"Bu bo‘limlarning asosiy funksiyalari keyingi bosqichda yaratiladi. AI javoblari malakali diniy mutaxassis maslahatining o‘rnini bosmaydi.",
+ stage:"IMKONIYATLAR",errorName:"Ism 2–40 ta belgidan iborat bo‘lsin.",errorAge:"Yoshni 5 dan 120 gacha butun son bilan kiriting.",unavailable:" bo‘limi hali ishlab chiqilmoqda.",
+ items:[
+  {title:"Islomiy savol-javob",desc:"Qur’on, hadis, ibodat va odob haqida savollar bering. AI yordamchisi tushunarli javoblar va tekshirish uchun manbalar taqdim etishga mo‘ljallangan."},
+  {title:"Namozni o‘rganish",desc:"Tahoratdan namozning yakunigacha bo‘lgan tartibni, harakatlarni va o‘qiladigan suralarni bosqichma-bosqich o‘rganing."},
+  {title:"Duolar va suralar",desc:"Kundalik duolar hamda suralarni arabcha matni, o‘qilishi va o‘zbekcha ma’nosi bilan o‘rganing."},
+  {title:"Qibla kompasi",desc:"Namoz uchun qibla yo‘nalishini toping. Bunda qurilmangizning joylashuv va kompas imkoniyatlaridan foydalaniladi."},
+  {title:"Tasbeh va zikr",desc:"Elektron tasbeh orqali zikrlarni sanang va kundalik zikrlaringizni kuzatib boring."}
+ ]},
+ "uz-Cyrl":{
+ welcomeLabel:"Ҳидояга хуш келибсиз",welcomeTitle:"Аввал танишиб олайлик",welcomeDesc:"Исмингиз билан мурожаат қиламиз ва тушунтиришларни ёшингизга мослаймиз.",
+ languageLabel:"Илова тили",nameLabel:"Исмингиз",ageLabel:"Ёшингиз",namePlaceholder:"Исмингизни ёзинг",agePlaceholder:"Масалан, 20",
+ privacy:"Исм ва ёш фақат шу қурилмадаги браузерда сақланади. Ёш диний ҳукмларни эмас, тушунтириш услубини белгилайди.",
+ continue:"Давом этиш",back:"← Орқага",next:"Кейингиси →",enter:"Ҳидояга кириш →",
+ profile:"Профил",salaam:"Ассалому алайкум",greeting:", хуш келибсиз!",homeDesc:"Илм, ибодат ва зикр йўлингиздаги ёрдамчи.",
+ placeholder:"Бу бўлимларнинг асосий функциялари кейинги босқичда яратилади. AI жавоблари малакали диний мутахассис маслаҳатининг ўрнини босмайди.",
+ stage:"ИМКОНИЯТЛАР",errorName:"Исм 2–40 та белгидан иборат бўлсин.",errorAge:"Ёшни 5 дан 120 гача бутун сон билан киритинг.",unavailable:" бўлими ҳали ишлаб чиқилмоқда.",
+ items:[
+  {title:"Исломий савол-жавоб",desc:"Қуръон, ҳадис, ибодат ва одоб ҳақида саволлар беринг. AI ёрдамчиси тушунарли жавоблар ва текшириш учун манбалар тақдим этишга мўлжалланган."},
+  {title:"Намозни ўрганиш",desc:"Таҳоратдан намознинг якунигача бўлган тартибни, ҳаракатларни ва ўқиладиган сураларни босқичма-босқич ўрганинг."},
+  {title:"Дуолар ва суралар",desc:"Кундалик дуолар ҳамда сураларни арабча матни, ўқилиши ва ўзбекча маъноси билан ўрганинг."},
+  {title:"Қибла компаси",desc:"Намоз учун қибла йўналишини топинг. Бунда қурилмангизнинг жойлашув ва компас имкониятларидан фойдаланилади."},
+  {title:"Тасбеҳ ва зикр",desc:"Электрон тасбеҳ орқали зикрларни сананг ва кундалик зикрларингизни кузатиб боринг."}
+ ]}
+};
+const icon={
+ ai:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M20 30Q20 15 35 15H65Q80 15 80 30V61Q80 75 65 75H48L31 88V75Q20 72 20 61Z"/><path d="M35 37H65M35 49H65M35 61H54"/><path d="M73 8L75 3M84 15L92 12"/></svg>',
+ prayer:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M15 87V42L50 13 85 42V87Z"/><path d="M35 87V63Q50 44 65 63V87M10 87H90M50 14V5M30 42L50 24 70 42"/><path d="M45 37H55"/></svg>',
+ book:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 21Q30 9 12 19V77Q35 68 50 84Q65 68 88 77V19Q70 9 50 21Z"/><path d="M50 21V84M23 35Q33 31 42 36M58 36Q67 31 78 35M23 49Q33 45 42 50M58 50Q67 45 78 49"/></svg>',
+ compass:'<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="37"/><circle cx="50" cy="50" r="28" stroke-dasharray="3 7"/><path d="M63 35L55 56 36 65 45 44Z"/><path d="M50 6V14M50 86V94M6 50H14M86 50H94"/></svg>',
+ beads:'<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="15" r="7"/><circle cx="70" cy="25" r="7"/><circle cx="81" cy="45" r="7"/><circle cx="76" cy="65" r="7"/><circle cx="57" cy="80" r="7"/><circle cx="35" cy="76" r="7"/><circle cx="21" cy="56" r="7"/><circle cx="26" cy="34" r="7"/><path d="M57 87L61 97"/></svg>'
+};
+const ids=["ai","prayer","book","compass","beads"];
+const arabic=["العلم","الصلاة","الدعاء","القبلة","الذكر"];
+let person=null,lang="uz-Latn",page="profile",step=0,transitionToken=0,ready=false;
+function safeGet(k){try{return localStorage.getItem(k)}catch{return null}}
+function safeSet(k,v){try{localStorage.setItem(k,v)}catch{}}
+function saved(){try{const p=JSON.parse(safeGet(KEY));return p&&typeof p.name==="string"&&p.name.length>=2&&Number.isInteger(p.age)&&p.age>=5&&p.age<=120&&I18N[p.lang]?p:null}catch{return null}}
+function tr(){return I18N[lang]}
+function setLanguage(value){
+ lang=I18N[value]?value:"uz-Latn";
+ document.documentElement.lang=lang;
+ $("language").value=lang;
+ safeSet(LANG_KEY,lang);
+ for(const el of document.querySelectorAll("[data-i18n]"))el.textContent=tr()[el.dataset.i18n];
+ $("name").placeholder=tr().namePlaceholder;$("age").placeholder=tr().agePlaceholder;
+ $("error").textContent="";
+ if(page==="tour")renderTour();
+ if(page==="home")renderHome();
+ if(page==="detail")renderDetail(history.state?.id||"ai");
+}
+function show(next){
+ const old=document.querySelector(".screen.active"),target=$(next);
+ transitionToken++;const token=transitionToken;
+ if(old===target){page=next;return}
+ target.hidden=false;target.classList.remove("leaving");
+ requestAnimationFrame(()=>{if(token===transitionToken)target.classList.add("active")});
+ if(old){old.classList.remove("active");old.classList.add("leaving");setTimeout(()=>{if(!old.classList.contains("active")){old.hidden=true;old.classList.remove("leaving")}},420)}
+ page=next;
+ if(next==="home")startGlow();else stopGlow();
+}
+let tourMotion=Promise.resolve(), tourSequence=0;
+const reduced=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+async function switchTour(index, direction=1){
+ const seq=++tourSequence, center=$("tour").querySelector(".center");
+ center.getAnimations({subtree:false}).forEach(a=>a.cancel());
+ if(reduced()||$("tour").hidden||!$("tour").classList.contains("active")){
+  step=index;renderTour();return;
+ }
+ const out=center.animate([{opacity:1,transform:"translateX(0) scale(1)"},{opacity:0,transform:`translateX(${-direction*34}px) scale(.965)`}],
+ {duration:200,easing:"ease-in",fill:"forwards"});
+ try{await out.finished}catch{return}
+ if(seq!==tourSequence)return;
+ out.cancel();step=index;renderTour();
+ const enter=center.animate([{opacity:0,transform:`translateX(${direction*36}px) scale(.97)`},{opacity:1,transform:"translateX(0) scale(1)"}],
+ {duration:390,easing:"cubic-bezier(.16,1,.3,1)",fill:"both"});
+ try{await enter.finished}catch{return}
+ if(seq===tourSequence)enter.cancel();
+}
+function navigate(next,index=0){
+ const previous=step,wasTour=page==="tour";
+ history.pushState({page:next,index},"",location.href);
+ if(next==="tour"&&wasTour){switchTour(index,index>=previous?1:-1);return}
+ step=index;
+ if(next==="tour")renderTour();
+ if(next==="home")renderHome();
+ show(next);
+}
+function renderTour(){
+ $("art").dataset.icon=ids[step];
+ const s=tr().items[step];
+ $("step").textContent=`${step+1} / ${ids.length} · ${tr().stage}`;
+ $("symbol").innerHTML=icon[ids[step]];
+ $("arabic").textContent=arabic[step];
+ $("heading").textContent=s.title;$("description").textContent=s.desc;
+ $("next").textContent=step===ids.length-1?tr().enter:tr().next;
+ $("progress").innerHTML=ids.map((_,i)=>`<i class="${i<=step?"on":""}"></i>`).join("");
+}
+function renderHome(){initHomeArt()}
+const HIGHLIGHTS=[
+ // Pixel coordinates of ORIGINAL artwork, localized to icons and ornate rings.
+ {x:218,y:735,r:94,rate:1.45,phase:0},
+ {x:620,y:720,r:94,rate:1.65,phase:1.0},
+ {x:219,y:1161,r:93,rate:1.85,phase:2.1},
+ {x:617,y:1163,r:94,rate:1.55,phase:3.0},
+ {x:93,y:1614,r:32,rate:1.8,phase:1.1},
+ {x:277,y:1610,r:31,rate:1.6,phase:2.4},
+ {x:420,y:1583,r:70,rate:1.25,phase:0.3},
+ {x:588,y:1612,r:31,rate:1.7,phase:3.4},
+ {x:744,y:1612,r:31,rate:1.6,phase:4.0}
+];
+let glowReady=false,glowRunning=false,glowFrame=0,glowSprite=null,glowContext=null;
+function initHomeArt(){
+ if(glowReady){startGlow();return}
+ const picture=document.querySelector(".home-picture");
+ const start=()=>{if(glowReady)return;glowReady=true;buildGlow(picture);startGlow()};
+ if(picture.complete&&picture.naturalWidth)start();
+ else picture.addEventListener("load",start,{once:true});
+}
+function buildGlow(img){
+ const width=857,height=1836;
+ const source=document.createElement("canvas");source.width=width;source.height=height;
+ const sc=source.getContext("2d",{willReadFrequently:true});
+ sc.drawImage(img,0,0,width,height);
+ const data=sc.getImageData(0,0,width,height);
+ const px=data.data;
+ // Retain ONLY gold/blue luminous pixels from the existing image.
+ // The design, shapes and original icon drawings remain unchanged.
+ for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+  const i=(y*width+x)*4,r=px[i],g=px[i+1],b=px[i+2];
+  const gold=r>105&&r>g*1.13&&g>b*1.20;
+  const cyan=b>85&&g>90&&b>r*1.22;
+  const bright=Math.max(r,g,b);
+  px[i+3]=(gold||cyan)?Math.min(170,Math.max(0,(bright-75)*1.15)):0;
+ }
+ sc.putImageData(data,0,0);
+ glowSprite=source;
+ const cv=$("homeHighlights");
+ cv.width=width;cv.height=height;
+ glowContext=cv.getContext("2d",{alpha:true});
+}
+function startGlow(){
+ if(glowRunning||!glowContext||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ glowRunning=true;
+ const tick=(ms)=>{
+  if(!glowRunning)return;
+  const c=glowContext;
+  c.clearRect(0,0,857,1836);
+  for(const p of HIGHLIGHTS){
+   const wave=(Math.sin(ms*.001*p.rate*2*Math.PI+p.phase)+1)/2;
+   const radius=p.r*(.94+.07*wave);
+   c.save();
+   c.beginPath();c.arc(p.x,p.y,radius,0,Math.PI*2);c.clip();
+   c.globalAlpha=.16+.37*wave;
+   c.filter=`brightness(${(1.2+wave*.7).toFixed(2)}) drop-shadow(0 0 ${Math.round(5+8*wave)}px #e4b75d)`;
+   c.drawImage(glowSprite,0,0);
+   c.restore();
+  }
+  glowFrame=requestAnimationFrame(tick);
+ };
+ glowFrame=requestAnimationFrame(tick);
+}
+function stopGlow(){glowRunning=false;cancelAnimationFrame(glowFrame)}
+const DETAIL_IDS=["prayer","book","compass","beads","ai","times","reminders","settings","dates"];
+function detailText(id){
+ const cy=lang==="uz-Cyrl";
+ const text={
+ "prayer":[0,cy?"Намозни ўрганиш бўлими кейинги босқичда ишга туширилади.":"Namozni o‘rganish bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "book":[1,cy?"Дуолар ва суралар бўлими кейинги босқичда ишга туширилади.":"Duolar va suralar bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "compass":[3,cy?"Қибла компаси кейинги босқичда ишга туширилади.":"Qibla kompasi keyingi bosqichda ishga tushiriladi."],
+ "beads":[4,cy?"Тасбеҳ бўлими кейинги босқичда ишга туширилади.":"Tasbeh bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "ai":[0,cy?"AI савол-жавоб бўлими кейинги босқичда ишга туширилади.":"AI savol-javob bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "times":[1,cy?"Намоз вақтлари кейинги босқичда уланади.":"Namoz vaqtlari keyingi bosqichda ulanadi."],
+ "reminders":[4,cy?"Эслатмалар кейинги босқичда уланади.":"Eslatmalar keyingi bosqichda ulanadi."],
+ "settings":[0,cy?"Созламалар кейинги босқичда уланади.":"Sozlamalar keyingi bosqichda ulanadi."],
+ "dates":[1,cy?"Сана тақвими кейинги босқичда уланади.":"Sana taqvimi keyingi bosqichda ulanadi."]
+ };
+ const headings={
+ times:cy?"Намоз вақтлари":"Namoz vaqtlari",
+ reminders:cy?"Эслатмалар":"Eslatmalar",
+ settings:cy?"Созламалар":"Sozlamalar",
+ dates:cy?"Бугунги сана":"Bugungi sana"
+ };
+ const [i,desc]=text[id]||text.ai;
+ return {title:headings[id]||tr().items[i].title,desc,icon:icon[id]||icon.ai};
+}
+function renderDetail(id){
+ const item=detailText(id);
+ $("detailTitle").textContent=item.title;
+ $("detailDesc").textContent=item.desc;
+ $("detailSymbol").innerHTML=item.icon;
+ $("detailBack").textContent=tr().back;
+}
+$("homeArtwork").addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");if(!b)return;
+ const id=b.dataset.go;
+ if(id==="home")return;
+ if(id==="profile"){ $("name").value=person?.name||"";$("age").value=person?.age||"";navigate("profile");return }
+ renderDetail(id);history.pushState({page:"detail",id},"",location.href);show("detail");
+});
+$("detailBack").addEventListener("click",()=>history.back());
+
+$("language").addEventListener("change",e=>setLanguage(e.target.value));
+$("profileForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=$("name").value.trim().replace(/\s+/g," "),age=Number($("age").value);
+ if([...name].length<2||[...name].length>40){$("error").textContent=tr().errorName;return}
+ if(!$("age").value.trim()||!Number.isInteger(age)||age<5||age>120){$("error").textContent=tr().errorAge;return}
+ person={name,age,lang};$("error").textContent="";navigate("tour",0);
+});
+$("next").addEventListener("click",()=>{
+ if($("tour").querySelector(".center").getAnimations({subtree:false}).length)return;
+ if(step<ids.length-1)navigate("tour",step+1);
+ else{person.lang=lang;safeSet(KEY,JSON.stringify(person));navigate("home")}
+});
+$("back").addEventListener("click",()=>history.back());
+window.addEventListener("popstate",e=>{
+ if(!ready)return;
+ const s=e.state;
+ if(s&&["profile","tour","home","detail"].includes(s.page)){
+  const nextIndex=Math.max(0,Math.min(ids.length-1,Number(s.index)||0));
+  if(s.page==="tour"&&page==="tour"){switchTour(nextIndex,nextIndex>=step?1:-1);return}
+  ++tourSequence;
+  step=nextIndex;
+  if(s.page==="tour")renderTour();
+  if(s.page==="home")renderHome();
+  if(s.page==="detail")renderDetail(s.id||"ai");
+  show(s.page);
+ }else{
+  // Keep Android back predictable even if history returns to a pre-app entry.
+  if(page==="tour"){++tourSequence;step=0;show("profile")}
+ }
+});
+function begin(){
+ if(ready)return;ready=true;
+ $("splash").hidden=true;
+ person=saved();
+ const initial=person?"home":"profile";
+ lang=person?.lang||(I18N[safeGet(LANG_KEY)]?safeGet(LANG_KEY):"uz-Latn");
+ setLanguage(lang);
+ history.replaceState({page:initial,index:0},"",location.href);
+ if(person)renderHome();
+ show(initial);
+}
+window.setTimeout(begin,3000);
+</script>
+</body>
+</html>

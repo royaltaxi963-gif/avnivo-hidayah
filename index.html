@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071c24"><title>AVNIVO HIDAYAH</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark;--gold:#eac784;--muted:#b9c9c8;--bg:#071c24}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:#f8f5eb}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #f2d99e;outline-offset:3px}
+[hidden]{display:none!important}
+#splash{position:fixed;inset:0;z-index:10;background:#050d1b;display:flex;align-items:center;justify-content:center}
+#splash img{display:block;width:100%;height:100%;object-fit:contain}
+.screen{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top)) 22px calc(22px + env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 25%,#214b53 0%,#0c2731 50%,#05151e 100%)}
+.screen:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.22;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M50 0L75 25 100 50 75 75 50 100 25 75 0 50 25 25Z M50 20L80 50 50 80 20 50Z' fill='none' stroke='%23e9c785' stroke-width='.8'/%3E%3C/svg%3E");background-size:84px}
+.screen:after{content:"";position:absolute;z-index:-1;left:-20%;right:-20%;bottom:-20%;height:65%;background:radial-gradient(ellipse,#c5a45d19,transparent 65%);pointer-events:none}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+.logo{font-size:13px;font-weight:800;letter-spacing:.18em;color:var(--gold)}
+.back{border:1px solid #d7bd814a;background:#0b2532a6;color:#f4e7c9;padding:10px 15px;border-radius:13px;min-width:76px}
+.progress{display:flex;gap:6px;justify-content:center;flex:1}.progress i{display:block;height:4px;width:19px;border-radius:4px;background:#ffffff30}.progress i.active{background:var(--gold)}
+.center{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;max-width:520px;width:100%;margin:auto}
+.ornament{width:min(72vw,290px);aspect-ratio:1;display:grid;place-items:center;position:relative;margin-bottom:25px}
+.ornament:before{content:"";position:absolute;inset:7%;border:1px solid #e5c17a80;border-radius:50%;box-shadow:0 0 0 12px #e5c17a0b,0 0 55px #e6c77a1c}
+.ornament:after{content:"";position:absolute;inset:0;border:1px solid #c6a76545;border-radius:50%}
+.symbol{width:56%;height:56%;color:#f6d68b;filter:drop-shadow(0 0 20px #d3a75280)}
+.symbol svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.arabic{font-family:serif;color:#f3d898;font-size:28px;margin:0 0 10px}
+h1{font-size:clamp(27px,7vw,37px);line-height:1.17;margin:0 0 16px;font-weight:750;letter-spacing:-.025em}
+.desc{font-size:16px;color:#d4dfdd;line-height:1.65;margin:0;max-width:340px}
+.foot{width:100%;max-width:520px;margin:18px auto 0}
+.primary{width:100%;border:1px solid #ffe0a2;background:linear-gradient(125deg,#f4d89b,#c59c56);color:#1b2525;font-weight:800;padding:17px;border-radius:16px;font-size:16px;min-height:56px}
+.secondary{width:100%;border:1px solid #d8c18870;background:#ffffff0b;color:#f6e8c8;border-radius:15px;padding:13px;margin-top:10px}
+.kicker{font-size:12px;letter-spacing:.19em;text-transform:uppercase;color:#e6c886;margin-bottom:16px}
+.form-title{margin:22px 0 12px;text-align:left;width:100%}
+.form-title h1{margin-bottom:9px}.form-title p{color:var(--muted);line-height:1.5;margin:0}
+.form-area{width:100%;text-align:left;margin:28px 0 10px}
+label{display:block;color:#f5e5c2;font-size:14px;margin:0 0 9px}
+input{width:100%;padding:17px;border:1px solid #b9aa7e85;border-radius:14px;background:#061924d9;color:white;font-size:17px;margin-bottom:22px}
+input::placeholder{color:#9aafad}
+.hint{color:#b8c9c7;font-size:13px;line-height:1.55;margin:0 0 12px}
+.error{color:#ffb9ad;font-size:14px;min-height:22px;margin:0 0 8px}
+.home-heading{padding:36px 0 18px}.home-heading h1{margin:10px 0}.home-heading p{color:#d4dfdd;line-height:1.5}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:600px;width:100%;margin:0 auto 24px}
+.tile{background:#0c2d38d9;border:1px solid #bfa26a80;border-radius:18px;padding:23px 12px;text-align:left;min-height:128px;color:#f6f1e4;display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.tile .emoji{font-size:28px}.tile strong{font-size:14px}.small{font-size:12px;color:#bbcfca;line-height:1.5}
+@media(max-height:680px){.ornament{width:min(45vw,190px);margin-bottom:12px}.arabic{font-size:22px}.desc{font-size:14px}.center{justify-content:center}}
+@media(prefers-reduced-motion:no-preference){.screen.enter .center{animation:rise .45s ease both}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}}
+</style>
+</head>
+<body>
+<!-- APPROVED SPLASH: preserve exactly: same image, no animation/audio, 3 seconds -->
+<div id="splash" aria-label="AVNIVO HIDAYAH kirish rasmi"><img src="./splash.png" alt="Hidayah — AVNIVO" fetchpriority="high"></div>
+<section id="profile" class="screen" hidden>
+ <div class="top"><span class="logo">AVNIVO · هداية</span></div>
+ <div class="center">
+  <div class="form-title"><div class="kicker">Hidayahga xush kelibsiz</div><h1>Avval tanishib olaylik</h1><p>Ilova sizga ismingiz bilan murojaat qiladi va tushuntirishlarni yoshingizga mos ravishda beradi.</p></div>
+  <form id="profileForm" class="form-area" novalidate>
+   <label for="name">Ismingiz</label><input id="name" name="name" type="text" autocomplete="given-name" maxlength="40" placeholder="Ismingizni yozing" required>
+   <label for="age">Yoshingiz</label><input id="age" name="age" type="number" inputmode="numeric" min="5" max="120" placeholder="Masalan, 20" required>
+   <p class="hint">Ma’lumotlar faqat shu brauzeringizda saqlanadi. Yosh diniy hukmlarni o‘zgartirmaydi, faqat izohlar uslubini moslaydi.</p>
+   <p class="error" id="error" role="alert"></p>
+   <button class="primary" type="submit">Davom etish</button>
+  </form>
+ </div>
+</section>
+<section id="tour" class="screen" hidden>
+ <div class="top"><button id="back" class="back" type="button">← Orqaga</button><div class="progress" id="progress" aria-label="Tanishuv bosqichlari"></div><span class="logo">HIDAYAH</span></div>
+ <div class="center" id="tourCenter" aria-live="polite">
+  <div class="kicker" id="step"></div>
+  <div class="ornament"><div class="symbol" id="symbol"></div></div>
+  <div class="arabic" id="arabic" lang="ar" dir="rtl"></div>
+  <h1 id="heading"></h1><p class="desc" id="description"></p>
+ </div>
+ <div class="foot"><button class="primary" id="next" type="button">Keyingisi →</button></div>
+</section>
+<main id="home" class="screen" hidden>
+ <div class="top"><span class="logo">AVNIVO · هداية</span><button id="settings" class="back" type="button">Profil</button></div>
+ <div class="home-heading"><div class="kicker">Assalomu alaykum</div><h1 id="greeting"></h1><p>Hidayah — ilm, ibodat va kundalik zikr yo‘lingizdagi yordamchi.</p></div>
+ <div class="tiles" id="tiles"></div>
+ <p class="small">Bo‘limlarning asosiy funksiyalari keyingi bosqichlarda yaratiladi. AI javoblari diniy mutaxassis maslahatining o‘rnini bosmaydi.</p>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const icons={
+ ai:'<svg viewBox="0 0 100 100"><path d="M21 26Q21 15 34 15H67Q80 15 80 29V58Q80 71 67 71H47L30 85V71Q21 68 21 58Z"/><path d="M37 40H65M37 52H58"/><path d="M72 13L75 7M83 20L91 17"/></svg>',
+ prayer:'<svg viewBox="0 0 100 100"><path d="M17 85V40L50 13 83 40V85Z"/><path d="M36 85V60Q50 42 64 60V85M12 85H88M43 31H57M50 20V13"/><path d="M24 43L50 22 76 43"/></svg>',
+ book:'<svg viewBox="0 0 100 100"><path d="M50 22Q32 11 13 20V76Q35 68 50 82Q65 68 87 76V20Q67 11 50 22Z"/><path d="M50 22V82M22 33Q32 29 41 35M59 35Q70 29 79 33M22 46Q32 42 41 48M59 48Q70 42 79 46"/></svg>',
+ compass:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="37"/><circle cx="50" cy="50" r="27" stroke-dasharray="3 8"/><path d="M62 37L55 57 36 65 44 44Z"/><path d="M50 6V15M50 85V94M6 50H15M85 50H94"/></svg>',
+ beads:'<svg viewBox="0 0 100 100"><path d="M50 15Q78 14 81 46Q85 74 58 83M42 83Q16 74 19 46Q22 17 50 15"/><circle cx="50" cy="16" r="7"/><circle cx="70" cy="25" r="7"/><circle cx="81" cy="45" r="7"/><circle cx="76" cy="66" r="7"/><circle cx="57" cy="80" r="7"/><circle cx="35" cy="76" r="7"/><circle cx="21" cy="56" r="7"/><circle cx="26" cy="34" r="7"/><path d="M57 87L61 97"/></svg>'
+};
+const slides=[
+ {id:'ai',arabic:'العلم',title:'Islomiy savol-javob',text:'Qur’on, hadis, ibodat va odob haqidagi savollaringizni AI yordamchisiga bering. Javoblarda manbalar va aniqlik muhim.'},
+ {id:'prayer',arabic:'الصلاة',title:'Namozni bosqichma-bosqich o‘rganing',text:'Tahoratdan boshlab namozning tartibi, o‘qiladigan suralar va harakatlarni tushunarli darslarda o‘rganing.'},
+ {id:'book',arabic:'الدعاء',title:'Duolar va suralar',text:'Kundalik duolar va qisqa suralarni arabcha matn, o‘qilishi va o‘zbekcha ma’nosi bilan o‘rganing.'},
+ {id:'compass',arabic:'القبلة',title:'Qibla yo‘nalishi',text:'Qibla kompasidan foydalanib namoz yo‘nalishini aniqlang. Buning uchun telefoningizning joylashuv va kompas imkoniyatlari kerak bo‘ladi.'},
+ {id:'beads',arabic:'الذكر',title:'Elektron tasbeh va zikr',text:'Zikrlarni sanang, tasbeh hisobini kuzating va kundalik zikrni davom ettiring.'}
+];
+let person=null,current='splash',step=0;
+const KEY='avnivo-hidayah-profile-v1';
+function saved(){try{const p=JSON.parse(localStorage.getItem(KEY));return p&&typeof p.name==='string'&&Number.isInteger(p.age)&&p.age>=5&&p.age<=120?p:null}catch{return null}}
+function store(p){try{localStorage.setItem(KEY,JSON.stringify(p));return true}catch{return false}}
+function display(page){
+ for(const id of ['profile','tour','home'])$(id).hidden=id!==page;
+ current=page;
+ if(page==='tour')renderSlide();
+ if(page==='home')renderHome();
+}
+function push(page,index=0){history.pushState({page,index},'',location.pathname+location.search);step=index;display(page)}
+function renderSlide(){
+ const s=slides[step];
+ $('step').textContent=`${step+1} / ${slides.length} · IMKONIYATLAR`;
+ $('symbol').innerHTML=icons[s.id];$('arabic').textContent=s.arabic;
+ $('heading').textContent=s.title;$('description').textContent=s.text;
+ $('next').textContent=step===slides.length-1?'Hidayahga kirish →':'Keyingisi →';
+ $('progress').innerHTML=slides.map((_,i)=>`<i class="${i<=step?'active':''}"></i>`).join('');
+ const center=$('tourCenter');center.classList.remove('reset');center.style.animation='none';void center.offsetWidth;center.style.animation='';
+}
+function renderHome(){
+ $('greeting').textContent=person?`${person.name}, xush kelibsiz!`:'Xush kelibsiz!';
+ $('tiles').innerHTML=slides.map(s=>`<button class="tile" type="button" data-id="${s.id}"><span class="emoji">${({ai:'✦',prayer:'☪',book:'📖',compass:'◈',beads:'◎'})[s.id]}</span><strong>${s.title}</strong></button>`).join('');
+}
+$('profileForm').addEventListener('submit',e=>{
+ e.preventDefault();const name=$('name').value.trim().replace(/\s+/g,' '),age=Number($('age').value);
+ if(name.length<2||name.length>40){$('error').textContent='Ism 2–40 ta belgidan iborat bo‘lsin.';return}
+ if(!Number.isInteger(age)||age<5||age>120){$('error').textContent='Yoshni 5 dan 120 gacha butun son bilan kiriting.';return}
+ person={name,age};$('error').textContent='';
+ push('tour',0);
+});
+$('next').addEventListener('click',()=>{
+ if(step<slides.length-1)push('tour',step+1);
+ else{store(person);push('home')}
+});
+$('back').addEventListener('click',()=>history.back());
+$('settings').addEventListener('click',()=>{if(person){$('name').value=person.name;$('age').value=person.age}push('profile')});
+$('tiles').addEventListener('click',e=>{
+ const tile=e.target.closest('[data-id]');if(!tile)return;
+ const s=slides.find(x=>x.id===tile.dataset.id);
+ if(s)alert(s.title+' bo‘limi keyingi bosqichda ishga tushiriladi.');
+});
+window.addEventListener('popstate',e=>{
+ const state=e.state;
+ if(state?.page==='tour'){step=state.index;display('tour')}
+ else if(state?.page==='profile')display('profile');
+ else if(state?.page==='home')display('home');
+ else if(current==='tour')display('profile');
+ else if(current==='home')display('home');
+});
+window.setTimeout(function(){
+ $('splash').hidden=true;$('splash').style.display='none';
+ person=saved();
+ if(person){history.replaceState({page:'home'},'');display('home')}
+ else{history.replaceState({page:'profile'},'');display('profile')}
+},3000);
+</script>
+</body></html>

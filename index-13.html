@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071c25"><meta name="description" content="AVNIVO HIDAYAH — islomiy bilim va ibodatni o‘rganish">
+<title>AVNIVO HIDAYAH</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;--gold:#f1d18e;--muted:#c1d2d1;--deep:#061a23;--speed:390ms}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--deep);color:#f9f6ec}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+[hidden]{display:none!important}
+#splash{position:fixed;inset:0;z-index:100;background:#050d1b;display:flex;align-items:center;justify-content:center}
+#splash img{width:100%;height:100%;object-fit:contain;display:block}
+.screen{position:fixed;inset:0;min-height:100svh;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top)) 22px calc(20px + env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 20%,#214955 0%,#0b2a34 43%,#04151d 100%);opacity:0;transform:translate3d(18px,0,0) scale(.985);transition:opacity var(--speed) ease,transform var(--speed) cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.screen.active{opacity:1;transform:none;pointer-events:auto}
+.screen.leaving{opacity:0;transform:translate3d(-15px,0,0) scale(.99)}
+.screen::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M48 1L72 24 95 48 72 72 48 95 24 72 1 48 24 24Z M48 19L77 48 48 77 19 48Z' stroke='%23e7c47b' fill='none' stroke-width='1'/%3E%3C/svg%3E");background-size:96px}
+.screen::after{content:"";position:fixed;z-index:-1;inset:40% -20% -20%;background:radial-gradient(ellipse at 50% 100%,#d1aa5533,transparent 65%);pointer-events:none}
+.top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;flex-shrink:0}
+.logo{font-size:13px;font-weight:800;letter-spacing:.13em;color:var(--gold);white-space:nowrap}
+.back{border:1px solid #d7bd8170;background:#092833bd;color:#fff0d0;padding:11px 13px;border-radius:13px;min-height:43px}
+.progress{display:flex;justify-content:center;gap:5px;flex:1}
+.progress i{width:clamp(11px,4vw,23px);height:4px;border-radius:4px;background:#ffffff45;transition:background .3s,transform .3s}
+.progress i.on{background:var(--gold);transform:scaleY(1.2)}
+.center{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;max-width:520px;width:100%;margin:auto}
+.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:15px}
+h1{font-size:clamp(27px,7vw,38px);line-height:1.18;margin:0 0 17px;font-weight:760;letter-spacing:-.025em}
+.desc{font-size:16px;line-height:1.7;color:#d6e1df;max-width:365px;margin:0}
+.arabic{font-family:Georgia,serif;font-size:29px;color:#f6d58d;direction:rtl;margin:5px 0 12px;text-shadow:0 0 17px #f2bb5770}
+.art{width:min(67vw,270px);aspect-ratio:1;position:relative;display:grid;place-items:center;margin:5px auto 24px}
+.art::before,.art::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.art::before{inset:3%;border:1px solid #d5b16b77;box-shadow:0 0 0 12px #e3bd6910,0 0 45px #d9ac5736}
+.art::after{inset:13%;border:1px dashed #e7c8887a;animation:spin 32s linear infinite}
+.art svg{width:61%;height:61%;stroke:#f6d68e;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 12px #dca74d88);animation:breathe 3.6s ease-in-out infinite}
+.art .star{position:absolute;color:#f7d99c;font-size:15px;filter:drop-shadow(0 0 9px #ffce65);animation:twinkle 2.6s ease-in-out infinite}
+.art .star.a{top:6%;left:20%}.art .star.b{right:8%;top:32%;animation-delay:.7s}.art .star.c{bottom:8%;left:31%;animation-delay:1.4s}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes breathe{50%{transform:scale(1.045);filter:drop-shadow(0 0 23px #f0c26f)}}@keyframes twinkle{50%{opacity:.3;transform:scale(.65)}}
+.foot{position:relative;z-index:1;width:100%;max-width:520px;margin:22px auto 0;flex-shrink:0}
+.primary{width:100%;border:1px solid #ffe7ad;background:linear-gradient(135deg,#f5dca5,#c9a15c);color:#1c2b2a;font-weight:800;padding:16px;border-radius:16px;min-height:56px;font-size:16px}
+.primary:active{transform:scale(.99)}
+.form-title{width:100%;text-align:left;margin:18px 0 6px}
+.form-title p{color:var(--muted);line-height:1.6;margin:0}
+.form-area{width:100%;text-align:left;margin:23px 0 10px}
+label{display:block;color:#f8e6c3;font-size:14px;margin:0 0 8px}
+input,select{display:block;width:100%;min-height:53px;padding:13px 15px;border:1px solid #b8a4759a;border-radius:14px;background:#071f2bcf;color:#fff;font-size:16px;margin-bottom:20px}
+input::placeholder{color:#a8b9b6}
+select{appearance:auto}
+.hint{color:#c2d2cf;font-size:13px;line-height:1.6;margin:0 0 10px}
+.error{color:#ffb9ad;font-size:14px;min-height:22px;margin:0 0 9px}
+.home-title{position:relative;z-index:1;max-width:620px;width:100%;margin:35px auto 22px}
+.home-title p{color:#d4e0de;line-height:1.65}
+.tiles{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:620px;width:100%;margin:0 auto 25px}
+.tile{min-height:143px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:12px;background:linear-gradient(145deg,#17424bdf,#092631e8);border:1px solid #c6aa7290;border-radius:18px;color:#f8f2e6;padding:16px;text-align:left}
+.tile svg{height:37px;width:37px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tile strong{font-size:14px;line-height:1.45}
+.small{position:relative;z-index:1;font-size:12px;color:#c0d1cc;line-height:1.65;max-width:620px;margin:0 auto 24px}
+@media(max-height:720px){.art{width:min(46vw,180px);margin:0 auto 13px}.arabic{font-size:24px}.desc{font-size:14px}.kicker{margin-bottom:9px}}
+@media(prefers-reduced-motion:reduce){:root{--speed:0ms}.art svg,.art::after,.art .star{animation:none!important}}
+
+/* V8: individual motion for the ORIGINAL SVG icons, no replacements. */
+#tour .center{will-change:transform,opacity}
+#tour .art svg{overflow:visible;transform-origin:center;animation:iconReveal .68s cubic-bezier(.18,.9,.2,1) both}
+#tour .art svg>*{transform-box:fill-box;transform-origin:center}
+#tour .art[data-icon="ai"] svg path:first-child{animation:aiTalk 2.8s ease-in-out infinite}
+#tour .art[data-icon="ai"] svg path:nth-child(2){animation:aiLines 2.3s ease-in-out infinite}
+#tour .art[data-icon="ai"] svg path:nth-child(3){animation:aiSpark 1.8s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg path:first-child{animation:prayerRise 3.4s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg path:nth-child(2){animation:prayerDoor 3.4s ease-in-out infinite}
+#tour .art[data-icon="book"] svg path:first-child{animation:bookOpen 3s ease-in-out infinite}
+#tour .art[data-icon="book"] svg path:nth-child(2){animation:bookText 3s ease-in-out infinite}
+#tour .art[data-icon="compass"] svg path:nth-child(3){animation:needle 4s cubic-bezier(.4,0,.2,1) infinite;transform-origin:50% 50%;transform-box:view-box}
+#tour .art[data-icon="compass"] svg circle:nth-child(2){animation:compassRing 9s linear infinite;transform-origin:50% 50%;transform-box:view-box}
+#tour .art[data-icon="beads"] svg circle{animation:beadLight 2.8s ease-in-out infinite}
+#tour .art[data-icon="beads"] svg circle:nth-child(2){animation-delay:.15s}
+#tour .art[data-icon="beads"] svg circle:nth-child(3){animation-delay:.3s}
+#tour .art[data-icon="beads"] svg circle:nth-child(4){animation-delay:.45s}
+#tour .art[data-icon="beads"] svg circle:nth-child(5){animation-delay:.6s}
+#tour .art[data-icon="beads"] svg circle:nth-child(6){animation-delay:.75s}
+#tour .art[data-icon="beads"] svg circle:nth-child(7){animation-delay:.9s}
+#tour .art[data-icon="beads"] svg circle:nth-child(8){animation-delay:1.05s}
+#tour .art[data-icon="beads"] svg path{animation:beadTassel 2.8s ease-in-out infinite}
+@keyframes iconReveal{from{opacity:0;transform:scale(.78) rotate(-7deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes aiTalk{50%{transform:scale(1.035)}}
+@keyframes aiLines{50%{opacity:.35;transform:translateX(2px)}}
+@keyframes aiSpark{50%{opacity:.3;transform:scale(.85)}}
+@keyframes prayerRise{50%{transform:translateY(-4px)}}
+@keyframes prayerDoor{50%{opacity:.5}}
+@keyframes bookOpen{50%{transform:scaleX(1.075)}}
+@keyframes bookText{50%{opacity:.4}}
+@keyframes needle{0%,100%{transform:rotate(-14deg)}45%{transform:rotate(24deg)}70%{transform:rotate(-5deg)}}
+@keyframes compassRing{to{transform:rotate(360deg)}}
+@keyframes beadLight{0%,100%{stroke:#f6d68e;filter:drop-shadow(0 0 0 transparent)}35%{stroke:#fff5d6;filter:drop-shadow(0 0 7px #ffd36b)}}
+@keyframes beadTassel{50%{transform:rotate(12deg)}}
+@media(prefers-reduced-motion:reduce){
+ #tour .art svg,#tour .art svg>*,#tour .art::after,#tour .art .star{animation:none!important}
+ #tour .center{will-change:auto}
+}
+
+/* Responsive home: every card, icon and navigation item is a real element. */
+.home-screen{padding:0;display:flex;overflow:hidden;background:#061b24}
+.home-screen::before{opacity:.13;background-size:75px}
+.home-screen::after{display:none}
+.home-scroll{position:relative;z-index:1;flex:1;overflow-y:auto;min-height:0;padding:calc(14px + env(safe-area-inset-top)) 14px 24px;scrollbar-width:thin}
+.home-header{display:flex;align-items:center;gap:9px;min-width:0;max-width:720px;margin:0 auto}
+.brand-mark{width:48px;height:56px;display:grid;place-items:center;border:2px solid #d9ae65;border-radius:24px 24px 5px 5px;font-size:27px;color:#edca84;box-shadow:0 0 13px #dfae5240;flex-shrink:0}
+.brand-copy{display:flex;flex-direction:column;min-width:0;flex:1}.brand-small{font-size:9px;letter-spacing:.3em;color:#e9d5b0}.brand-copy strong{font-family:Georgia,serif;font-size:clamp(22px,5.5vw,33px);color:#f5d696;line-height:1.08;letter-spacing:.03em}.brand-motto{font-size:10px;color:#d1d5cd;white-space:nowrap}
+.profile-card{display:flex;align-items:center;gap:6px;min-width:0;max-width:47%;padding:8px;border:1px solid #cda75f8a;background:#071d28de;border-radius:17px;color:#fff0d0;text-align:left;box-shadow:0 0 12px #c6a25624}
+.profile-card>span:nth-child(2){min-width:0;display:flex;flex-direction:column}.profile-card small{font-size:10px;color:#d4d6cf;white-space:nowrap}.profile-card strong{font-size:13px;color:#f1cd8c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.profile-card>span:last-child{font-size:24px}.profile-icon{font-size:25px;color:#d9bb7b}
+.hero-arch{height:clamp(105px,25vh,230px);max-width:720px;margin:12px auto 8px;border:1px solid #bd985c75;border-radius:50% 50% 7px 7px / 80% 80% 7px 7px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 90%,#bb8c3b36,transparent 50%),linear-gradient(#06202c,#102c37);box-shadow:inset 0 0 24px #d6aa4633,0 0 22px #c29b4822}
+.hero-arch::before{content:"";position:absolute;inset:8px;border:1px solid #c6a46957;border-radius:inherit}
+.hero-moon{position:absolute;top:9%;left:50%;transform:translateX(-50%);font-size:40px;color:#f3d390;text-shadow:0 0 19px #f1be65;animation:moonPulse 4s ease-in-out infinite}
+.hero-mosque{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);display:flex;align-items:end;gap:8px;filter:drop-shadow(0 0 12px #c59a5670)}
+.dome{width:110px;height:70px;border-radius:70px 70px 0 0;background:linear-gradient(130deg,#b38a49,#173441 60%);border:1px solid #d5ae6b;position:relative}.dome::before{content:"☪";position:absolute;top:-29px;left:44px;color:#f2ce84;font-size:27px}.minaret{width:18px;height:100px;background:linear-gradient(90deg,#8d6b36,#102a36);border:1px solid #d7ac64;border-radius:9px 9px 0 0}
+.info-grid,.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:720px;margin:0 auto}.info-card{display:flex;flex-direction:column;gap:5px;text-align:left;border:1px solid #c8a66c8c;border-radius:17px;background:linear-gradient(140deg,#102e38ee,#061b25);color:#f4e6c9;padding:14px;min-height:105px;box-shadow:inset 0 0 15px #d8b26012}.info-label{font-size:12px;color:#d8d9d0}.info-card strong{font-family:Georgia,serif;font-size:clamp(16px,4vw,22px);color:#f1d292}.info-card small{font-size:11px;color:#b9cbc8}
+.section-title{max-width:720px;margin:20px auto 12px;font-family:Georgia,serif;font-size:20px;color:#f1d391}
+.feature-card{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;min-height:clamp(190px,29vh,280px);padding:15px 10px 14px;background:radial-gradient(ellipse at 50% 24%,#24505a88,transparent 70%),linear-gradient(145deg,#102d36,#061c27);border:1px solid #cfa965a8;border-radius:18px;color:#f8f1e2;text-align:center;box-shadow:inset 0 0 18px #cfaa4a17,0 0 12px #cda64a1a;overflow:hidden}
+.feature-card::before{content:"";position:absolute;inset:6px;border:1px solid #a88b5450;border-radius:13px;pointer-events:none}.feature-card::after{content:"✦";position:absolute;top:2px;left:50%;transform:translateX(-50%);color:#eac47d;font-size:14px;animation:twinkle 2.7s infinite}
+.feature-icon{width:clamp(76px,21vw,126px);height:clamp(76px,21vw,126px);border:1px solid #dfbb6b9c;border-radius:50%;display:grid;place-items:center;position:relative;box-shadow:0 0 18px #c7a45635;animation:softGlow 3.8s ease-in-out infinite}
+.feature-icon::before{content:"";position:absolute;inset:7px;border:1px dashed #d7b46b80;border-radius:50%;animation:spin 30s linear infinite}.feature-icon svg{width:69%;height:69%;stroke:#f1ce87;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px #e0ad57);animation:breathe 3.6s ease-in-out infinite}
+.feature-card strong{font-family:Georgia,serif;font-size:clamp(15px,3.8vw,20px);line-height:1.2}.feature-card small{font-size:11px;line-height:1.45;color:#cbd6d3;max-width:170px}
+.bottom-nav{position:relative;z-index:5;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;flex-shrink:0;padding:10px 5px calc(7px + env(safe-area-inset-bottom));background:linear-gradient(#092630,#041923);border-top:1px solid #d5ad668a;box-shadow:0 -8px 24px #d1a34a18}
+.nav-item{position:relative;min-width:0;border:0;background:transparent;color:#cad4ce;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:5px 0;min-height:55px;font-size:clamp(9px,2.4vw,12px)}.nav-item.selected{color:#f4d48f}.nav-icon{width:29px;height:29px;display:grid;place-items:center}.nav-icon svg{width:27px;height:27px;stroke:#dfbd7d;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;animation:navFloat 3.4s ease-in-out infinite}.nav-item:nth-child(2) svg{animation-delay:.5s}.nav-item:nth-child(4) svg{animation-delay:1s}.nav-item:nth-child(5) svg{animation-delay:1.5s}
+.nav-ai{color:#f5e3b9}.nav-ai .nav-icon{width:53px;height:53px;margin-top:-28px;border-radius:50%;border:2px solid #d5b16b;background:radial-gradient(circle,#14576a,#052733);box-shadow:0 0 0 5px #cda55a26,0 0 18px #35d1de70;animation:softGlow 3s ease-in-out infinite}.nav-ai svg{width:32px;height:32px;stroke:#d6f9f4}
+@keyframes moonPulse{50%{text-shadow:0 0 32px #f6d18a;opacity:.8}}@keyframes softGlow{50%{box-shadow:0 0 23px #e2bd666b}}@keyframes navFloat{50%{transform:translateY(-3px);filter:drop-shadow(0 0 5px #d9b262)}}
+@media(max-width:350px){.brand-mark{width:38px;height:45px}.profile-card{max-width:44%;padding:6px}.brand-copy strong{font-size:20px}.feature-card{min-height:180px}.home-scroll{padding-left:10px;padding-right:10px}}
+@media(prefers-reduced-motion:reduce){.home-screen *{animation:none!important}}
+
+/* V11: preserve original onboarding and splash; matching motion for feature icons */
+.hero-arch{height:clamp(78px,16svh,145px);margin:8px auto 6px}
+.hero-moon{font-size:31px}
+.hero-mosque{transform:translateX(-50%) scale(.76);transform-origin:bottom center}
+.section-title{margin:12px auto 9px}
+.feature-card{min-height:clamp(166px,25svh,236px);gap:7px;padding:12px 9px}
+.feature-icon{width:clamp(70px,19vw,112px);height:clamp(70px,19vw,112px)}
+/* Same SVGs and individual motion as in the introduction */
+.feature-icon svg{animation:iconReveal .68s cubic-bezier(.18,.9,.2,1) both,breathe 3.6s ease-in-out .68s infinite}
+.feature-icon svg>*{transform-box:fill-box;transform-origin:center}
+.feature-icon[data-icon="ai"] svg path:first-child{animation:aiTalk 2.8s ease-in-out infinite}
+.feature-icon[data-icon="ai"] svg path:nth-child(2){animation:aiLines 2.3s ease-in-out infinite}
+.feature-icon[data-icon="prayer"] svg path:first-child{animation:prayerRise 3.4s ease-in-out infinite}
+.feature-icon[data-icon="prayer"] svg path:nth-child(2){animation:prayerDoor 3.4s ease-in-out infinite}
+.feature-icon[data-icon="prayer"] svg circle{animation:beadLight 3.4s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg circle{animation:beadLight 3.4s ease-in-out infinite}
+.feature-icon[data-icon="book"] svg path:first-child{animation:bookOpen 3s ease-in-out infinite}
+.feature-icon[data-icon="book"] svg path:nth-child(2){animation:bookText 3s ease-in-out infinite}
+.feature-icon[data-icon="compass"] svg path:nth-child(3){animation:needle 4s cubic-bezier(.4,0,.2,1) infinite;transform-origin:50% 50%;transform-box:view-box}
+.feature-icon[data-icon="compass"] svg circle:nth-child(2){animation:compassRing 9s linear infinite;transform-origin:50% 50%;transform-box:view-box}
+.feature-icon[data-icon="beads"] svg circle{animation:beadLight 2.8s ease-in-out infinite}
+.feature-icon[data-icon="beads"] svg circle:nth-child(2){animation-delay:.15s}.feature-icon[data-icon="beads"] svg circle:nth-child(3){animation-delay:.3s}.feature-icon[data-icon="beads"] svg circle:nth-child(4){animation-delay:.45s}.feature-icon[data-icon="beads"] svg circle:nth-child(5){animation-delay:.6s}.feature-icon[data-icon="beads"] svg circle:nth-child(6){animation-delay:.75s}.feature-icon[data-icon="beads"] svg circle:nth-child(7){animation-delay:.9s}.feature-icon[data-icon="beads"] svg circle:nth-child(8){animation-delay:1.05s}
+.feature-icon[data-icon="beads"] svg path{animation:beadTassel 2.8s ease-in-out infinite}
+.nav-icon{width:36px;height:36px}.nav-icon svg{width:34px;height:34px;animation:navFloat 3.4s ease-in-out infinite,navLight 4.2s ease-in-out infinite}
+.nav-ai .nav-icon{width:60px;height:60px;margin-top:-33px}.nav-ai .nav-icon svg{width:38px;height:38px}
+@keyframes navLight{50%{stroke:#ffe7b3;filter:drop-shadow(0 0 5px #cda65d)}}
+@media(max-width:350px){.nav-icon{width:32px;height:32px}.nav-icon svg{width:30px;height:30px}.nav-ai .nav-icon{width:54px;height:54px}}
+@media(prefers-reduced-motion:reduce){.feature-icon svg,.feature-icon svg>*,.nav-icon svg{animation:none!important}}
+
+/* V12 — noninteractive user info; active-tab Islamic ornament, larger icons. */
+.profile-card{cursor:default;user-select:text;max-width:49%}
+.nav-item{isolation:isolate;min-height:68px;padding:9px 1px 7px;gap:5px;border-radius:15px;transition:color .28s ease,background .28s ease}
+.nav-icon{width:43px;height:43px}
+.nav-icon svg{width:39px;height:39px}
+.nav-item.selected:not(.nav-ai){background:radial-gradient(ellipse at 50% 40%,#a87e2a27,transparent 80%);color:#ffe0a2}
+.nav-item.selected:not(.nav-ai)::before{content:"";position:absolute;inset:0;border:1px solid #e3bd77b5;border-radius:15px;box-shadow:inset 0 0 14px #e2b76129,0 0 12px #d8aa543c;pointer-events:none;animation:activeFrame 4s ease-in-out infinite}
+.nav-item.selected:not(.nav-ai)::after{content:"✦";position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:13px;color:#f4d68e;text-shadow:0 0 8px #e5b968;pointer-events:none;animation:twinkle 2.8s ease-in-out infinite}
+.nav-item.selected .nav-icon svg{stroke:#ffe1a0;filter:drop-shadow(0 0 6px #d9ad5c)}
+.nav-ai .nav-icon{width:65px;height:65px;margin-top:-37px}
+.nav-ai .nav-icon svg{width:43px;height:43px}
+.nav-ai.selected .nav-icon{box-shadow:0 0 0 5px #d9b76755,0 0 20px #44d4dc99,0 0 30px #d9ad5b65}
+@keyframes activeFrame{50%{border-color:#f7dba6;box-shadow:inset 0 0 18px #e6c16b35,0 0 16px #e0b56065}}
+@media(max-width:350px){.nav-icon{width:37px;height:37px}.nav-icon svg{width:34px;height:34px}.nav-ai .nav-icon{width:58px;height:58px}.nav-ai .nav-icon svg{width:39px;height:39px}}
+@media(prefers-reduced-motion:reduce){.nav-item.selected::before,.nav-item.selected::after{animation:none!important}}
+#detail{padding-bottom:0}#detail .bottom-nav{margin:0 -22px;flex-shrink:0}
+
+/* V13 prayer curriculum: isolated styles, original theme and animations retained */
+#prayerLearn{padding-bottom:0}
+#prayerLearn .lesson-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:10px 0 28px;scrollbar-width:thin}
+#prayerLearn .bottom-nav{margin:0 -22px;flex-shrink:0}
+.learn-hero{position:relative;border:1px solid #d8b66b8a;border-radius:22px;padding:24px 19px;margin:12px 0 18px;overflow:hidden;background:radial-gradient(ellipse at 80% 0,#c7a14c29,transparent 60%),linear-gradient(155deg,#143b43,#071f2b)}
+.learn-hero:before{content:"";position:absolute;inset:0;opacity:.25;pointer-events:none;background:repeating-conic-gradient(from 45deg at 50% 50%,transparent 0 20deg,#cda85b24 21deg 22deg,transparent 23deg 45deg);mask-image:linear-gradient(90deg,transparent,#000)}
+.learn-hero svg{width:65px;height:65px;stroke:#f2d28e;fill:none;filter:drop-shadow(0 0 9px #e5bd6c66);animation:navFloat 3.4s ease-in-out infinite}
+.learn-hero h1{font-size:26px;margin:8px 0}.learn-hero p{line-height:1.65;color:#d3e0dd;margin:0}
+.learn-eyebrow{color:#f0d18d;font-size:12px;letter-spacing:.13em;font-weight:700}
+.learn-progress{margin:16px 0 3px;display:flex;gap:12px;align-items:center}
+.learn-progress-track{height:7px;border-radius:10px;background:#ffffff27;flex:1;overflow:hidden}
+.learn-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#a87a33,#ffe5a4);border-radius:10px;transition:width .5s}
+.learn-progress-label{color:#f2d69d;font-size:12px;white-space:nowrap}
+.learn-tabs{display:flex;gap:9px;overflow-x:auto;padding:5px 0 15px;scrollbar-width:none}
+.learn-tabs button{border:1px solid #bfa36b77;background:#0a2b35;color:#d7e2dd;padding:12px 15px;border-radius:999px;white-space:nowrap;min-height:44px;transition:background .25s,border-color .25s}
+.learn-tabs button[aria-selected="true"]{border-color:#f5d58f;background:#765b2c70;color:#fff3cf;box-shadow:0 0 12px #d6ad5b30}
+.learn-list{display:grid;gap:12px}
+.learn-card{border:1px solid #c5a56979;background:linear-gradient(140deg,#123842e8,#08242fdc);border-radius:17px;overflow:hidden;box-shadow:0 5px 20px #0002}
+.learn-card-head{display:flex;gap:13px;align-items:center;padding:17px;width:100%;background:transparent;border:0;color:#fff5de;text-align:left}
+.learn-card-num{flex-shrink:0;width:43px;height:43px;border:1px solid #e8c27d;border-radius:13px;display:grid;place-items:center;color:#f3d591;font-weight:800;background:#d9ae5710}
+.learn-card-title{flex:1;min-width:0}.learn-card-title strong{display:block;font-size:16px;line-height:1.4}.learn-card-title small{display:block;color:#b9d1cc;margin-top:5px;font-size:12px}
+.learn-chevron{color:#f0d18d;font-size:20px;transition:transform .3s}.learn-card.open .learn-chevron{transform:rotate(90deg)}
+.learn-body{padding:0 17px 18px;animation:lessonAppear .32s ease both}
+.learn-body p{line-height:1.7;color:#dce8e4;font-size:15px;margin:11px 0}
+.learn-body .arabic-verse{direction:rtl;text-align:right;font-family:serif;font-size:25px;line-height:2.1;color:#f6dfa9;background:#071e2a;padding:15px;border-radius:12px;border:1px solid #bfa46a45}
+.learn-body .translation{border-left:2px solid #d7b573;padding-left:12px;color:#e5d6b6}
+.learn-body .note{font-size:13px;color:#d4c29b;background:#d3ad5012;border-radius:12px;padding:12px}
+.learn-complete{margin-top:12px;border:1px solid #d5b879aa;border-radius:12px;background:#b68a382b;color:#ffebbd;padding:13px 15px;min-height:46px;width:100%;font-weight:700}
+.learn-complete.done{background:#215c4a;color:#d9ffe6;border-color:#78b99b}
+.learn-empty{color:#d9e3df;line-height:1.7}
+@keyframes lessonAppear{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.learn-hero svg,.learn-body{animation:none!important}}
+
+/* V14 prayer school. All surfaces inherit the approved navy/gold theme. */
+#prayerLearn .lesson-scroll{padding:14px 0 24px}
+.school-heading{text-align:center;padding:10px 8px 22px;animation:schoolEnter .5s ease both}
+.school-heading h1{font-family:Georgia,serif;color:#f4d69a;font-size:clamp(24px,6vw,32px);margin:8px 0}
+.school-heading p{color:#d4e1df;line-height:1.6;margin:0}
+.school-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.school-gender{border:1px solid #cfa963;border-radius:20px;background:linear-gradient(150deg,#173b46,#09222c);color:#ffe5b0;min-height:245px;padding:15px 10px;display:flex;align-items:center;flex-direction:column;gap:10px;box-shadow:inset 0 0 25px #d6aa2c13,0 7px 22px #0005;animation:schoolEnter .6s both}
+.school-gender:nth-child(2){animation-delay:.12s}
+.school-gender-art{width:min(100%,135px);filter:drop-shadow(0 0 10px #dfb96a88);animation:schoolFloat 3.8s ease-in-out infinite}
+.school-gender-art svg{width:100%;display:block}
+.school-gender strong{font-size:19px}.school-gender small{font-size:12px;line-height:1.5;color:#c7d6d3}
+.school-topics{display:grid;gap:11px}
+.school-topic{width:100%;min-height:80px;display:flex;align-items:center;gap:14px;text-align:left;padding:12px 16px;border:1px solid #c7a56c88;border-radius:16px;background:linear-gradient(115deg,#133a45,#08252f);color:#f5e4be;box-shadow:0 5px 17px #0003;animation:schoolEnter .5s both}
+.school-topic:nth-child(2n){animation-delay:.08s}
+.school-topic-num{width:44px;height:44px;border:1px solid #d8b777;border-radius:50%;display:grid;place-items:center;flex-shrink:0;color:#f4d59a}
+.school-topic-title{display:flex;flex:1;flex-direction:column;gap:5px}
+.school-topic-title strong{font-size:17px}
+.school-topic-title small{font-family:serif;font-size:19px;color:#f1d49b;direction:rtl;text-align:left}
+.school-topic-arrow{font-size:28px}
+.school-lesson-title{padding:10px 0 17px;text-align:center}
+.school-lesson-title h2{color:#f3dbab;margin:8px 0;font-family:Georgia,serif}
+.school-lesson-title p{font-size:13px;line-height:1.6;color:#c6d8d4}
+.school-ar{font-family:serif;font-size:29px;color:#f5d99b}
+.school-stepper{display:flex;gap:9px;overflow-x:auto;padding:5px 0 15px}
+.school-stepper button{min-width:42px;height:42px;border-radius:50%;border:1px solid #ba965a;background:#0b2933;color:#ead6a9}
+.school-stepper button.current{outline:2px solid #f7dc9f;outline-offset:2px}
+.school-step-card{border:1px solid #cfac6e;border-radius:20px;padding:19px;background:linear-gradient(150deg,#143944,#071f2b);animation:schoolEnter .35s both}
+.school-instruction{font-size:17px;line-height:1.75;color:#f4f0e5}
+.school-demo{border:1px solid #bd9c5b66;border-radius:17px;padding:12px;background:radial-gradient(circle at 50% 30%,#286070,#071b26 80%)}
+.school-demo-label{color:#eacb8c;text-align:center;font-size:13px}
+.school-stage{height:210px;position:relative;perspective:600px;overflow:hidden}
+.school-stage:after{content:"";position:absolute;bottom:20px;left:15%;width:70%;height:20px;border:1px solid #d8b77570;border-radius:50%;transform:rotateX(65deg)}
+.school-figure{position:absolute;left:50%;top:25px;width:100px;height:170px;transform:translateX(-50%) rotateY(-14deg);transform-style:preserve-3d;animation:schoolFigure 3s ease-in-out infinite}
+.school-figure span{position:absolute;display:block;background:linear-gradient(110deg,#e5c27c,#a87939);box-shadow:inset -8px 0 10px #4e3a2777}
+.figure-head{width:34px;height:34px;border-radius:50%;left:33px;top:0}
+.figure-body{width:48px;height:76px;border-radius:20px 20px 8px 8px;left:26px;top:32px;transform-origin:50% 8px}
+.figure-arm{width:14px;height:63px;border-radius:10px;top:39px;transform-origin:top}
+.figure-arm.left{left:19px;transform:rotate(16deg)}
+.figure-arm.right{right:19px;transform:rotate(-16deg)}
+.figure-leg{width:18px;height:65px;top:101px;border-radius:8px;transform-origin:top}
+.figure-leg.left{left:30px}.figure-leg.right{right:30px}
+.pose-2 .figure-body{transform:rotate(64deg)}.pose-2 .figure-head{transform:translate(29px,30px)}.pose-2 .figure-arm{transform:rotate(58deg)}
+.pose-3 .figure-body{transform:translateY(58px) rotate(75deg)}.pose-3 .figure-head{transform:translate(43px,95px)}.pose-3 .figure-leg{transform:rotate(85deg) translateY(13px)}
+.pose-4 .figure-body{transform:translateY(22px)}.pose-4 .figure-leg{transform:rotate(80deg)}
+.school-demo-note{display:block;font-size:11px;color:#c5d8d6;line-height:1.6;text-align:center}
+.school-audio{margin-top:17px;border:1px dashed #ba985e;border-radius:13px;padding:14px}
+.school-audio strong{color:#f2d498}.school-audio p{font-size:13px;line-height:1.6;color:#d1dbd8;margin-bottom:0}
+.school-controls{display:flex;gap:12px;margin-top:17px}
+.school-controls button{flex:1;min-height:46px;border:1px solid #cba766;border-radius:12px;background:#cba76622;color:#f9e6b9;font-weight:700}
+.school-controls button:disabled{opacity:.35}
+.school-gender:focus-visible,.school-topic:focus-visible,.school-controls button:focus-visible{outline:2px solid #ffe2a4;outline-offset:3px}
+.bottom-nav .nav-item.selected{background:transparent!important;color:inherit!important;box-shadow:none!important}
+.bottom-nav .nav-item.selected:before,.bottom-nav .nav-item.selected:after{background:transparent!important}
+.bottom-nav .nav-item.selected .nav-icon{border:1.5px solid #e5c17d;border-radius:13px;box-shadow:0 0 0 2px #b9934d26,inset 0 0 10px #b9934d17}
+@keyframes schoolEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes schoolFloat{50%{transform:translateY(-5px)}}
+@keyframes schoolFigure{50%{transform:translateX(-50%) rotateY(14deg)}}
+@media(prefers-reduced-motion:reduce){.school-heading,.school-gender,.school-gender-art,.school-topic,.school-step-card,.school-figure{animation:none!important}}
+
+/* V15: keep the navigation visible on every prayer-school level */
+#prayerLearn{height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;display:flex;flex-direction:column;padding-bottom:0}
+#prayerLearn .top{flex:0 0 auto}
+#prayerLearn .lesson-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding-bottom:18px}
+#prayerLearn .bottom-nav{flex:0 0 auto;margin:0 -22px;position:relative;z-index:10;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+.school-gender-art{width:min(100%,160px);height:180px;display:grid;place-items:center}
+.school-gender-art svg{max-height:180px}
+.school-gender{min-height:275px}
+.school-extra{margin-top:17px;padding:16px;border:1px solid #cba7688f;border-radius:17px;background:linear-gradient(145deg,#143744,#071e28);animation:schoolEnter .4s ease both}
+.school-extra h3{color:#f4d89c;font-size:19px;margin:0 0 12px}
+.school-extra p{font-size:14px;line-height:1.7;color:#e1e8e3}
+.school-rakat{padding:13px 0;border-top:1px solid #d0ae6b52}
+.school-rakat strong{color:#f7d9a3}
+.school-phrase{border-top:1px solid #b89a6455;padding:10px 0}
+.school-phrase summary{cursor:pointer;color:#f5dbad;min-height:35px}
+.school-phrase-ar{font-family:serif;font-size:25px!important;line-height:2!important;color:#ffe1a4!important}
+.school-audio-player{display:block;width:100%;height:46px;margin-top:10px;color-scheme:light}
+.school-audio-status{color:#f0b2a7}
+.school-caution{padding:14px;border:1px solid #d4a86b70;border-radius:12px;color:#e7d6b3;line-height:1.7;font-size:13px}
+.bottom-nav .nav-item.selected:not(.nav-ai){background:transparent!important;color:inherit!important}
+.bottom-nav .nav-item.selected:not(.nav-ai)::after{content:none!important}
+.bottom-nav .nav-item.selected:not(.nav-ai)::before{border:1px solid #e3bd77b5!important;box-shadow:0 0 12px #d8aa543c!important;background:transparent!important}
+@media(prefers-reduced-motion:reduce){.school-extra{animation:none}}
+
+/* V16 original human illustrations, animated gently without misleading 3D claims */
+.school-illustration{position:absolute;inset:0;display:grid;place-items:center}
+.prayer-avatar{width:100%;height:100%;max-width:300px;overflow:visible;filter:drop-shadow(0 7px 8px #0005)}
+.prayer-avatar-figure{transform-origin:50% 90%;animation:prayerBreath 3.2s ease-in-out infinite}
+.school-stage{height:245px}
+.school-gender-art{animation:schoolFloat 3.8s ease-in-out infinite}
+.school-motion-guide{margin:15px 0;padding:10px 15px;border:1px solid #c9aa746b;border-radius:13px;background:#0a2832}
+.school-motion-guide p{line-height:1.75;color:#e9e3d3;font-size:14px;margin:9px 0}
+.school-motion-guide p+p{border-top:1px solid #c8a86c2f;padding-top:9px}
+@keyframes prayerBreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.prayer-avatar-figure{animation:none!important}}
+.school-3d-canvas{position:absolute;inset:0;margin:auto;z-index:2;max-width:100%;height:100%!important;object-fit:contain}
+.school-illustration{position:relative}
+
+/* V18: approved mockup-inspired 3D-cartoon character selection */
+#prayerLearn .school-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:stretch}
+#prayerLearn .school-gender{min-width:0;min-height:315px;padding:0 0 15px;overflow:hidden;justify-content:flex-start;gap:8px;border-color:#e4bb75;background:linear-gradient(155deg,#183b47,#061b28)}
+#prayerLearn .school-gender-art.school-portrait{width:100%;height:225px;min-height:225px;overflow:hidden;display:block;border-bottom:1px solid #d3aa64;filter:none;animation:none}
+#prayerLearn .school-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+#prayerLearn .school-gender strong{font-size:16px;padding:0 7px;color:#ffe0a2}
+#prayerLearn .school-gender small{padding:0 10px;font-size:11px;line-height:1.5}
+#prayerLearn .school-stage{height:310px;perspective:none;background:radial-gradient(ellipse at 50% 85%,#d1a66333,transparent 60%),linear-gradient(160deg,#163845,#081f2b);border-radius:16px}
+#prayerLearn .school-illustration{overflow:hidden}
+#prayerLearn .school-3d-canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+#prayerLearn .school-illustration.has-real-3d>svg{display:none}
+#prayerLearn .school-step-card{background:linear-gradient(145deg,#0c2835,#051a24);border-color:#e1ba77}
+#prayerLearn .school-stepper{overflow-x:auto;scrollbar-width:none}
+#prayerLearn .school-stepper::-webkit-scrollbar{display:none}
+@media(max-width:355px){#prayerLearn .school-gender-art.school-portrait{height:190px;min-height:190px}#prayerLearn .school-gender{min-height:280px}}
+</style>
+</head>
+<body>
+<!-- LOCKED APPROVED SPLASH: exact splash.png, static, no sound, no animation, 3000ms -->
+<div id="splash"><img src="./splash.png" alt="AVNIVO HIDAYAH" fetchpriority="high"></div>
+<section class="screen" id="profile" hidden>
+ <div class="top"><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="center">
+  <div class="form-title">
+   <div class="kicker" data-i18n="welcomeLabel"></div>
+   <h1 data-i18n="welcomeTitle"></h1>
+   <p data-i18n="welcomeDesc"></p>
+  </div>
+  <form id="profileForm" class="form-area" novalidate>
+   <label for="language" data-i18n="languageLabel"></label>
+   <select id="language" name="language" aria-label="Til / Тил">
+    <option value="uz-Latn">O‘zbekcha (lotin alifbosi)</option>
+    <option value="uz-Cyrl">Ўзбекча (кирил алифбоси)</option>
+   </select>
+   <label for="name" data-i18n="nameLabel"></label>
+   <input id="name" name="name" maxlength="40" autocomplete="given-name" required>
+   <label for="age" data-i18n="ageLabel"></label>
+   <input id="age" name="age" type="number" min="5" max="120" step="1" inputmode="numeric" required>
+   <p class="hint" data-i18n="privacy"></p>
+   <p class="error" id="error" role="alert" aria-live="assertive"></p>
+   <button class="primary" type="submit" data-i18n="continue"></button>
+  </form>
+ </div>
+</section>
+<section class="screen" id="tour" hidden>
+ <div class="top">
+  <button class="back" id="back" type="button" data-i18n="back"></button>
+  <div class="progress" id="progress"></div><span class="logo">HIDAYAH</span>
+ </div>
+ <div class="center">
+  <div class="kicker" id="step"></div>
+  <div class="art" id="art"><span class="star a">✦</span><span class="star b">✧</span><span class="star c">✦</span><div id="symbol" style="display:contents"></div></div>
+  <div class="arabic" id="arabic" lang="ar"></div>
+  <h1 id="heading"></h1><p class="desc" id="description"></p>
+ </div>
+ <div class="foot"><button class="primary" id="next" type="button"></button></div>
+</section>
+<main class="screen home-screen" id="home" hidden>
+ <div class="home-scroll">
+  <header class="home-header"><div class="brand-mark" aria-hidden="true">☪</div><div class="brand-copy"><span class="brand-small">A V N I V O</span><strong>HIDAYAH</strong><span class="brand-motto" data-home="motto"></span></div><div class="profile-card" role="group" aria-label="Foydalanuvchi ma’lumotlari"><span class="profile-icon" aria-hidden="true">♙</span><span><small data-home="salaam"></small><strong id="homeName"></strong><small id="homeAge"></small></span></div></header>
+  <div class="hero-arch" aria-hidden="true"><div class="hero-moon">☾</div><div class="hero-mosque"><span class="minaret"></span><span class="dome"></span><span class="minaret"></span></div></div>
+  <div class="info-grid"><button class="info-card" data-go="dates" type="button"><span class="info-label" data-home="date"></span><strong id="todayDate"></strong><small id="todayWeekday"></small></button><button class="info-card" data-go="times" type="button"><span class="info-label" data-home="prayerTimes"></span><strong data-home="timesPending"></strong><small data-home="timesNote"></small></button></div>
+  <div class="section-title" data-home="explore"></div><div class="feature-grid" id="homeFeatures"></div>
+ </div>
+ <nav class="bottom-nav" id="bottomNav" aria-label="Navigatsiya"><button type="button" data-go="home" class="nav-item selected"><span class="nav-icon" id="navHome"></span><span data-home="main"></span></button><button type="button" data-go="times" class="nav-item"><span class="nav-icon" id="navTimes"></span><span data-home="prayerTimes"></span></button><button type="button" data-go="ai" class="nav-item nav-ai"><span class="nav-icon" id="navAI"></span><span>AI</span></button><button type="button" data-go="reminders" class="nav-item"><span class="nav-icon" id="navReminders"></span><span data-home="reminders"></span></button><button type="button" data-go="settings" class="nav-item"><span class="nav-icon" id="navSettings"></span><span data-home="settings"></span></button></nav>
+</main>
+<section class="screen" id="prayerLearn" hidden>
+ <div class="top"><button class="back" type="button" id="prayerBack"></button><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="lesson-scroll" id="lessonScroll">
+  <div id="prayerContent" aria-live="polite"></div>
+ </div>
+ <nav class="bottom-nav" id="prayerNav" aria-label="Navigatsiya"></nav>
+</section>
+<section class="screen" id="detail" hidden>
+ <div class="top"><button type="button" class="back" id="detailBack">← Orqaga</button><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="center"><div class="art" id="detailArt"><span class="star a">✦</span><span class="star b">✧</span><div id="detailSymbol" style="display:contents"></div></div>
+ <h1 id="detailTitle"></h1><p class="desc" id="detailDesc"></p></div>
+<nav class="bottom-nav" id="detailNav" aria-label="Navigatsiya"><button type="button" data-go="home" class="nav-item selected"><span class="nav-icon"></span><span data-home="main"></span></button><button type="button" data-go="times" class="nav-item"><span class="nav-icon"></span><span data-home="prayerTimes"></span></button><button type="button" data-go="ai" class="nav-item nav-ai"><span class="nav-icon"></span><span>AI</span></button><button type="button" data-go="reminders" class="nav-item"><span class="nav-icon"></span><span data-home="reminders"></span></button><button type="button" data-go="settings" class="nav-item"><span class="nav-icon"></span><span data-home="settings"></span></button></nav>
+</section>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const KEY="avnivo-hidayah-profile-v2",LANG_KEY="avnivo-hidayah-language-v1";
+const I18N={
+ "uz-Latn":{
+ welcomeLabel:"Hidayahga xush kelibsiz",welcomeTitle:"Avval tanishib olaylik",welcomeDesc:"Ismingiz bilan murojaat qilamiz va tushuntirishlarni yoshingizga moslaymiz.",
+ languageLabel:"Ilova tili",nameLabel:"Ismingiz",ageLabel:"Yoshingiz",namePlaceholder:"Ismingizni yozing",agePlaceholder:"Masalan, 20",
+ privacy:"Ism va yosh faqat shu qurilmadagi brauzerda saqlanadi. Yosh diniy hukmlarni emas, tushuntirish uslubini belgilaydi.",
+ continue:"Davom etish",back:"← Orqaga",next:"Keyingisi →",enter:"Hidayahga kirish →",
+ profile:"Profil",salaam:"Assalomu alaykum",greeting:", xush kelibsiz!",homeDesc:"Ilm, ibodat va zikr yo‘lingizdagi yordamchi.",
+ placeholder:"Bu bo‘limlarning asosiy funksiyalari keyingi bosqichda yaratiladi. AI javoblari malakali diniy mutaxassis maslahatining o‘rnini bosmaydi.",
+ stage:"IMKONIYATLAR",errorName:"Ism 2–40 ta belgidan iborat bo‘lsin.",errorAge:"Yoshni 5 dan 120 gacha butun son bilan kiriting.",unavailable:" bo‘limi hali ishlab chiqilmoqda.",
+ items:[
+  {title:"Islomiy savol-javob",desc:"Qur’on, hadis, ibodat va odob haqida savollar bering. AI yordamchisi tushunarli javoblar va tekshirish uchun manbalar taqdim etishga mo‘ljallangan."},
+  {title:"Namozni o‘rganish",desc:"Tahoratdan namozning yakunigacha bo‘lgan tartibni, harakatlarni va o‘qiladigan suralarni bosqichma-bosqich o‘rganing."},
+  {title:"Duolar va suralar",desc:"Kundalik duolar hamda suralarni arabcha matni, o‘qilishi va o‘zbekcha ma’nosi bilan o‘rganing."},
+  {title:"Qibla kompasi",desc:"Namoz uchun qibla yo‘nalishini toping. Bunda qurilmangizning joylashuv va kompas imkoniyatlaridan foydalaniladi."},
+  {title:"Tasbeh va zikr",desc:"Elektron tasbeh orqali zikrlarni sanang va kundalik zikrlaringizni kuzatib boring."}
+ ]},
+ "uz-Cyrl":{
+ welcomeLabel:"Ҳидояга хуш келибсиз",welcomeTitle:"Аввал танишиб олайлик",welcomeDesc:"Исмингиз билан мурожаат қиламиз ва тушунтиришларни ёшингизга мослаймиз.",
+ languageLabel:"Илова тили",nameLabel:"Исмингиз",ageLabel:"Ёшингиз",namePlaceholder:"Исмингизни ёзинг",agePlaceholder:"Масалан, 20",
+ privacy:"Исм ва ёш фақат шу қурилмадаги браузерда сақланади. Ёш диний ҳукмларни эмас, тушунтириш услубини белгилайди.",
+ continue:"Давом этиш",back:"← Орқага",next:"Кейингиси →",enter:"Ҳидояга кириш →",
+ profile:"Профил",salaam:"Ассалому алайкум",greeting:", хуш келибсиз!",homeDesc:"Илм, ибодат ва зикр йўлингиздаги ёрдамчи.",
+ placeholder:"Бу бўлимларнинг асосий функциялари кейинги босқичда яратилади. AI жавоблари малакали диний мутахассис маслаҳатининг ўрнини босмайди.",
+ stage:"ИМКОНИЯТЛАР",errorName:"Исм 2–40 та белгидан иборат бўлсин.",errorAge:"Ёшни 5 дан 120 гача бутун сон билан киритинг.",unavailable:" бўлими ҳали ишлаб чиқилмоқда.",
+ items:[
+  {title:"Исломий савол-жавоб",desc:"Қуръон, ҳадис, ибодат ва одоб ҳақида саволлар беринг. AI ёрдамчиси тушунарли жавоблар ва текшириш учун манбалар тақдим этишга мўлжалланган."},
+  {title:"Намозни ўрганиш",desc:"Таҳоратдан намознинг якунигача бўлган тартибни, ҳаракатларни ва ўқиладиган сураларни босқичма-босқич ўрганинг."},
+  {title:"Дуолар ва суралар",desc:"Кундалик дуолар ҳамда сураларни арабча матни, ўқилиши ва ўзбекча маъноси билан ўрганинг."},
+  {title:"Қибла компаси",desc:"Намоз учун қибла йўналишини топинг. Бунда қурилмангизнинг жойлашув ва компас имкониятларидан фойдаланилади."},
+  {title:"Тасбеҳ ва зикр",desc:"Электрон тасбеҳ орқали зикрларни сананг ва кундалик зикрларингизни кузатиб боринг."}
+ ]}
+};
+const icon={
+ ai:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M20 30Q20 15 35 15H65Q80 15 80 30V61Q80 75 65 75H48L31 88V75Q20 72 20 61Z"/><path d="M35 37H65M35 49H65M35 61H54"/><path d="M73 8L75 3M84 15L92 12"/></svg>',
+ prayer:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M13 88H87M19 85V44Q50 12 81 44V85"/><path d="M28 48Q50 25 72 48"/><circle cx="50" cy="51" r="8"/><path d="M40 63Q50 59 60 63L65 80H35Z"/><path d="M40 67L29 79M60 67L71 79M36 83H64"/></svg>',
+ book:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 21Q30 9 12 19V77Q35 68 50 84Q65 68 88 77V19Q70 9 50 21Z"/><path d="M50 21V84M23 35Q33 31 42 36M58 36Q67 31 78 35M23 49Q33 45 42 50M58 50Q67 45 78 49"/></svg>',
+ compass:'<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="37"/><circle cx="50" cy="50" r="28" stroke-dasharray="3 7"/><path d="M63 35L55 56 36 65 45 44Z"/><path d="M50 6V14M50 86V94M6 50H14M86 50H94"/></svg>',
+ beads:'<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="15" r="7"/><circle cx="70" cy="25" r="7"/><circle cx="81" cy="45" r="7"/><circle cx="76" cy="65" r="7"/><circle cx="57" cy="80" r="7"/><circle cx="35" cy="76" r="7"/><circle cx="21" cy="56" r="7"/><circle cx="26" cy="34" r="7"/><path d="M57 87L61 97"/></svg>'
+};
+const ids=["ai","prayer","book","compass","beads"];
+const arabic=["العلم","الصلاة","الدعاء","القبلة","الذكر"];
+let person=null,lang="uz-Latn",page="profile",step=0,transitionToken=0,ready=false;
+function safeGet(k){try{return localStorage.getItem(k)}catch{return null}}
+function safeSet(k,v){try{localStorage.setItem(k,v)}catch{}}
+function saved(){try{const p=JSON.parse(safeGet(KEY));return p&&typeof p.name==="string"&&p.name.length>=2&&Number.isInteger(p.age)&&p.age>=5&&p.age<=120&&I18N[p.lang]?p:null}catch{return null}}
+function tr(){return I18N[lang]}
+function setLanguage(value){
+ lang=I18N[value]?value:"uz-Latn";
+ document.documentElement.lang=lang;
+ $("language").value=lang;
+ safeSet(LANG_KEY,lang);
+ for(const el of document.querySelectorAll("[data-i18n]"))el.textContent=tr()[el.dataset.i18n];
+ $("name").placeholder=tr().namePlaceholder;$("age").placeholder=tr().agePlaceholder;
+ $("error").textContent="";
+ if(page==="tour")renderTour();
+ if(page==="home")renderHome();
+ if(page==="detail")renderDetail(history.state?.id||"ai");
+ if(page==="prayerLearn")renderPrayer();
+}
+function show(next){
+ const old=document.querySelector(".screen.active"),target=$(next);
+ transitionToken++;const token=transitionToken;
+ if(old===target){page=next;return}
+ target.hidden=false;target.classList.remove("leaving");
+ requestAnimationFrame(()=>{if(token===transitionToken)target.classList.add("active")});
+ if(old){old.classList.remove("active");old.classList.add("leaving");setTimeout(()=>{if(!old.classList.contains("active")){old.hidden=true;old.classList.remove("leaving")}},420)}
+ page=next;
+ if(next!=="prayerLearn")$("prayerContent").querySelectorAll("audio").forEach(a=>a.pause());
+ if(next==="home")startGlow();else stopGlow();
+}
+let tourMotion=Promise.resolve(), tourSequence=0;
+const reduced=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+async function switchTour(index, direction=1){
+ const seq=++tourSequence, center=$("tour").querySelector(".center");
+ center.getAnimations({subtree:false}).forEach(a=>a.cancel());
+ if(reduced()||$("tour").hidden||!$("tour").classList.contains("active")){
+  step=index;renderTour();return;
+ }
+ const out=center.animate([{opacity:1,transform:"translateX(0) scale(1)"},{opacity:0,transform:`translateX(${-direction*34}px) scale(.965)`}],
+ {duration:200,easing:"ease-in",fill:"forwards"});
+ try{await out.finished}catch{return}
+ if(seq!==tourSequence)return;
+ out.cancel();step=index;renderTour();
+ const enter=center.animate([{opacity:0,transform:`translateX(${direction*36}px) scale(.97)`},{opacity:1,transform:"translateX(0) scale(1)"}],
+ {duration:390,easing:"cubic-bezier(.16,1,.3,1)",fill:"both"});
+ try{await enter.finished}catch{return}
+ if(seq===tourSequence)enter.cancel();
+}
+function navigate(next,index=0){
+ const previous=step,wasTour=page==="tour";
+ history.pushState({page:next,index},"",location.href);
+ if(next==="tour"&&wasTour){switchTour(index,index>=previous?1:-1);return}
+ step=index;
+ if(next==="tour")renderTour();
+ if(next==="home")renderHome();
+ show(next);
+}
+function renderTour(){
+ $("art").dataset.icon=ids[step];
+ const s=tr().items[step];
+ $("step").textContent=`${step+1} / ${ids.length} · ${tr().stage}`;
+ $("symbol").innerHTML=icon[ids[step]];
+ $("arabic").textContent=arabic[step];
+ $("heading").textContent=s.title;$("description").textContent=s.desc;
+ $("next").textContent=step===ids.length-1?tr().enter:tr().next;
+ $("progress").innerHTML=ids.map((_,i)=>`<i class="${i<=step?"on":""}"></i>`).join("");
+}
+const HOME_TRANSLATIONS={
+ "uz-Latn":{motto:"Ilm · Amal · Taqvo · Hayot",salaam:"Assalomu alaykum",age:"yosh",date:"Bugungi sana",prayerTimes:"Namoz vaqtlari",timesPending:"Hali ulanmagan",timesNote:"Keyin sozlanadi",explore:"Ilm va ibodat",main:"Asosiy",reminders:"Eslatmalar",settings:"Sozlamalar",descs:["Namozni bosqichma-bosqich o‘rganing","Qur’on suralari va duolar","Qibla yo‘nalishini toping","Zikrlarni sanang"]},
+ "uz-Cyrl":{motto:"Илм · Амал · Тақво · Ҳаёт",salaam:"Ассалому алайкум",age:"ёш",date:"Бугунги сана",prayerTimes:"Намоз вақтлари",timesPending:"Ҳали уланмаган",timesNote:"Кейин созланади",explore:"Илм ва ибодат",main:"Асосий",reminders:"Эслатмалар",settings:"Созламалар",descs:["Намозни босқичма-босқич ўрганинг","Қуръон суралари ва дуолар","Қибла йўналишини топинг","Зикрларни сананг"]}
+};
+const homeIcons={
+ home:'<svg viewBox="0 0 100 100"><path d="M16 48L50 18 84 48V85H16Z M35 85V57Q50 38 65 57V85 M50 18V9"/></svg>',
+ times:'<svg viewBox="0 0 100 100"><rect x="15" y="20" width="70" height="65" rx="7"/><path d="M15 40H85M31 11V28M69 11V28"/><circle cx="50" cy="61" r="13"/><path d="M50 53V62L58 67"/></svg>',
+ ai:'<svg viewBox="0 0 100 100"><path d="M25 38Q25 17 50 17Q76 17 76 43V62L87 77H64V87H39V76Q25 65 25 38Z"/><path d="M42 42Q38 32 48 30Q55 25 60 33Q70 30 70 41Q75 51 65 55Q63 64 53 58Q43 63 40 54Q31 50 42 42Z"/></svg>',
+ reminders:'<svg viewBox="0 0 100 100"><path d="M25 73H75L68 63V41Q68 22 50 22Q32 22 32 41V63Z M43 80Q50 90 57 80"/></svg>',
+ settings:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="15"/><path d="M43 10H57L60 22 71 27 82 20 92 31 84 42 88 54 99 58 96 72 83 74 75 84 78 96 64 100 58 88 44 88 38 100 24 96 27 84 19 74 6 72 3 58 14 54 18 42 10 31 20 20 31 27 40 22Z" transform="translate(5 2) scale(.9)"/></svg>'
+};
+function updateActiveTab(id){
+ const target=["home","times","ai","reminders","settings"].includes(id)?id:"home";
+ for(const n of document.querySelectorAll(".bottom-nav")){
+  for(const b of n.querySelectorAll(".nav-item")){
+   const active=b.dataset.go===target;
+   b.classList.toggle("selected",active);
+   if(active)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+  }
+ }
+}
+function renderHome(){
+ updateActiveTab("home");
+ const t=HOME_TRANSLATIONS[lang];
+ document.querySelectorAll("[data-home]").forEach(el=>{el.textContent=t[el.dataset.home]||""});
+ $("homeName").textContent=person?.name||"";
+ $("homeAge").textContent=person?.age?`${person.age} ${t.age}`:"";
+ const now=new Date();
+ $("todayDate").textContent=new Intl.DateTimeFormat(lang==="uz-Cyrl"?"uz-Cyrl-UZ":"uz-Latn-UZ",{day:"numeric",month:"long",year:"numeric"}).format(now);
+ $("todayWeekday").textContent=new Intl.DateTimeFormat(lang==="uz-Cyrl"?"uz-Cyrl-UZ":"uz-Latn-UZ",{weekday:"long"}).format(now);
+ const order=["prayer","book","compass","beads"];
+ $("homeFeatures").replaceChildren(...order.map((id,i)=>{
+  const b=document.createElement("button");b.type="button";b.className="feature-card";b.dataset.go=id;
+  const art=document.createElement("span");art.className="feature-icon";art.dataset.icon=id;art.innerHTML=icon[id];
+  const title=document.createElement("strong");title.textContent=tr().items[[1,2,3,4][i]].title;
+  const desc=document.createElement("small");desc.textContent=t.descs[i];
+  b.append(art,title,desc);return b;
+ }));
+ for(const [id,svg] of Object.entries(homeIcons)){
+  const node=$({home:"navHome",times:"navTimes",ai:"navAI",reminders:"navReminders",settings:"navSettings"}[id]);
+  node.innerHTML=svg;
+ }
+ const detailNav=$("detailNav");
+ for(const b of detailNav.querySelectorAll(".nav-item")){
+  const original=$("bottomNav").querySelector(`[data-go="${b.dataset.go}"]`);
+  if(original)b.querySelector(".nav-icon").innerHTML=original.querySelector(".nav-icon").innerHTML;
+ }
+ for(const el of detailNav.querySelectorAll("[data-home]"))el.textContent=t[el.dataset.home]||"";
+ const prayerNav=$("prayerNav");
+ prayerNav.innerHTML=detailNav.innerHTML;
+ for(const b of prayerNav.querySelectorAll(".nav-item"))b.classList.toggle("selected",b.dataset.go==="home");
+
+}
+function startGlow(){}function stopGlow(){}
+
+
+/* Prayer school v14: three navigable levels, shared bottom nav, local state. */
+const SCHOOL={
+ "uz-Latn":{
+  title:"Namozni o‘rganish",choose:"O‘quv yo‘nalishini tanlang",men:"Erkaklar",women:"Ayollar",
+  menDesc:"Erkaklar uchun namoz tartibi",womenDesc:"Ayollar uchun namoz tartibi",
+  back:"← Orqaga",guide:"Bosqichma-bosqich qo‘llanma",step:"Bosqich",
+  posture:"Harakatning ko‘rgazmali modeli",audio:"Sura tilovati",audioSoon:"Qori tilovati hali ulanmagan. Noto‘g‘ri talaffuzni oldini olish uchun sun’iy ovoz ishlatilmaydi.",
+  info:"Namozdagi ayrim amaliy tafsilotlar mazhabga qarab farqlanadi. Quyidagi matnlar boshlang‘ich o‘quv qo‘llanmasidir.",
+  demo:"Bu 3D uslubdagi sxematik harakat namoyishi, aniq anatomik yoki diniy videodars emas.",
+  tabs:["Tahorat","Azon","Bomdod","Peshin","Asr","Shom","Xufton","Vitr","Qazo"],
+  explanations:[
+   ["Tahoratga niyat qiling va pok suv tayyorlang.","Qo‘llarni yuving, og‘iz va burunni chaying.","Yuzni yuving, qo‘llarni tirsaklari bilan qo‘shib yuving.","Boshga mas’h torting va oyoqlarni to‘piqlari bilan yuving."],
+   ["Namoz vaqti kirganini tekshiring.","Azon ibodatga chaqiriqdir; uning lafzlarini ishonchli ustoz yoki qori orqali o‘rganing.","Azondan so‘ng namozga tayyorlaning. Jamoat namozida iqomat aytiladi."],
+   ["Bomdodning 2 rak’at sunnati va 2 rak’at farzi bor.","Niyat qilib takbir ayting, tik turib Fotiha va qo‘shimcha sura o‘qing.","Ruku qiling, tik turing, ikki marta sajda qiling.","Ikkinchi rak’atni ado etib, oxirgi o‘tirishda tashahhud, salovat va duo o‘qib salom bering."],
+   ["Peshinning odatiy hanafiy tartibi: 4 sunnat, 4 farz, 2 sunnat.","Har rak’atda qiyom, ruku va ikki sajda tartibiga rioya qiling.","To‘rt rak’atli namozda ikkinchi rak’atdan keyin birinchi o‘tirish, oxirida yakuniy o‘tirish bo‘ladi."],
+   ["Asr namozining farzi 4 rak’at.","Farzdan oldin 4 rak’at g‘ayri muakkad sunnat o‘qilishi mumkin.","To‘rt rak’atli farzning qiyom, ruku, sajda va o‘tirish tartibiga rioya qiling."],
+   ["Shom namozining 3 rak’at farzi va 2 rak’at sunnati bor.","Farzning dastlabki ikki rak’atida Fotiha va qo‘shimcha sura o‘qiladi.","Uchinchi rak’atdan keyin yakuniy o‘tirish va salom bilan namoz tugaydi."],
+   ["Xuftonning 4 rak’at farzi va 2 rak’at sunnati bor.","Farzdan oldin 4 rak’at g‘ayri muakkad sunnat o‘qilishi mumkin.","Xuftondan so‘ng vitr namozi ado etiladi."],
+   ["Hanafiy mazhabida vitr 3 rak’at vojibdir.","Uchinchi rak’atda Fotiha va qo‘shimcha suradan keyin takbir aytilib qunut duosi o‘qiladi.","So‘ng ruku, sajdalar, oxirgi o‘tirish va salom bajariladi."],
+   ["Qazo — vaqtida ado etilmagan farz yoki vojib namozni keyin o‘qish.","Qaysi namozning qazosi ekanini niyat qiling.","Rak’at soni va tartibi asl namozga mos bo‘ladi.","Qazo namozlari bo‘yicha o‘z holatingizga mos fiqhiy maslahat oling."]
+  ],
+  positions:["Tayyorgarlik","Qiyom","Ruku","Sajda","O‘tirish"],
+  actions:["Tayyorlanish","Tik turish va qiroat","Ruku","Sajda","Oxirgi o‘tirish va salom"]
+ },
+ "uz-Cyrl":{
+  title:"Намозни ўрганиш",choose:"Ўқув йўналишини танланг",men:"Эркаклар",women:"Аёллар",
+  menDesc:"Эркаклар учун намоз тартиби",womenDesc:"Аёллар учун намоз тартиби",
+  back:"← Орқага",guide:"Босқичма-босқич қўлланма",step:"Босқич",
+  posture:"Ҳаракатнинг кўргазмали модели",audio:"Сура тиловати",audioSoon:"Қори тиловати ҳали уланмаган. Нотўғри талаффузнинг олдини олиш учун сунъий овоз ишлатилмайди.",
+  info:"Намоздаги айрим амалий тафсилотлар мазҳабга қараб фарқланади. Қуйидаги матнлар бошланғич ўқув қўлланмасидир.",
+  demo:"Бу 3D услубдаги схематик ҳаракат намойиши, аниқ анатомик ёки диний видеодарс эмас.",
+  tabs:["Таҳорат","Азон","Бомдод","Пешин","Аср","Шом","Хуфтон","Витр","Қазо"],
+  explanations:[
+   ["Таҳоратга ният қилинг ва пок сув тайёрланг.","Қўлларни ювинг, оғиз ва бурунни чайинг.","Юзни ювинг, қўлларни тирсаклари билан қўшиб ювинг.","Бошга масҳ тортинг ва оёқларни тўпиқлари билан ювинг."],
+   ["Намоз вақти кирганини текширинг.","Азон ибодатга чақириқдир; унинг лафзларини ишончли устоз ёки қори орқали ўрганинг.","Азондан сўнг намозга тайёрланинг. Жамоат намозида иқомат айтилади."],
+   ["Бомдоднинг 2 ракъат суннати ва 2 ракъат фарзи бор.","Ният қилиб такбир айтинг, тик туриб Фотиҳа ва қўшимча сура ўқинг.","Руку қилинг, тик туринг, икки марта сажда қилинг.","Иккинчи ракъатни адо этиб, охирги ўтиришда ташаҳҳуд, саловат ва дуо ўқиб салом беринг."],
+   ["Пешиннинг одатий ҳанафий тартиби: 4 суннат, 4 фарз, 2 суннат.","Ҳар ракъатда қиём, руку ва икки сажда тартибига риоя қилинг.","Тўрт ракъатли намозда иккинчи ракъатдан кейин биринчи ўтириш, охирида якуний ўтириш бўлади."],
+   ["Аср намозининг фарзи 4 ракъат.","Фарздан олдин 4 ракъат ғайри муаккад суннат ўқилиши мумкин.","Тўрт ракъатли фарзнинг қиём, руку, сажда ва ўтириш тартибига риоя қилинг."],
+   ["Шом намозининг 3 ракъат фарзи ва 2 ракъат суннати бор.","Фарзнинг дастлабки икки ракъатида Фотиҳа ва қўшимча сура ўқилади.","Учинчи ракъатдан кейин якуний ўтириш ва салом билан намоз тугайди."],
+   ["Хуфтоннинг 4 ракъат фарзи ва 2 ракъат суннати бор.","Фарздан олдин 4 ракъат ғайри муаккад суннат ўқилиши мумкин.","Хуфтондан сўнг витр намози адо этилади."],
+   ["Ҳанафий мазҳабида витр 3 ракъат вожибдир.","Учинчи ракъатда Фотиҳа ва қўшимча сурадан кейин такбир айтилиб қунут дуоси ўқилади.","Сўнг руку, саждалар, охирги ўтириш ва салом бажарилади."],
+   ["Қазо — вақтида адо этилмаган фарз ёки вожиб намозни кейин ўқиш.","Қайси намознинг қазоси эканини ният қилинг.","Ракъат сони ва тартиби асл намозга мос бўлади.","Қазо намозлари бўйича ўз ҳолатингизга мос фиқҳий маслаҳат олинг."]
+  ],
+  positions:["Тайёргарлик","Қиём","Руку","Сажда","Ўтириш"],
+  actions:["Тайёрланиш","Тик туриш ва қироат","Руку","Сажда","Охирги ўтириш ва салом"]
+ }
+};
+const PRAYER_AR=["الوضوء","الأذان","الفجر","الظهر","العصر","المغرب","العشاء","الوتر","القضاء"];
+let schoolLevel=0,schoolGender="men",schoolTopic=0,schoolStep=0;
+function schoolT(){return SCHOOL[lang]||SCHOOL["uz-Latn"]}
+const AVNIVO_PORTRAITS={men:"data:image/webp;base64,UklGRnRDAABXRUJQVlA4IGhDAABQDAGdASr+AHQBPjEWiUOiISETiDXQIAMEsbVAZAegEa6ROW/en8/8qPak5P7wvgGU7t27O81jo3/zf5L8uPmz/vfXn/W/9Z/3PcK/qH9x/5v+O67/7q+pH9uf3A91D/sfuT7x/61/s/YI/s3+M///ZFehR5c37ifDd/U/+d+53tcf//UnpXnN/9x+TnnT5rfgH8F+5P+A+ML9X/1PIF6R/e/+j/S+pX8w/HX6j/BfvF/iPfrxj+b/+d6in5R/V/9V/f/3W9HXiDAO+xX7K+Svl8fq/SR/gOUyoIeSd/o//H0vfnX+u/8XsY/3P/g/cAAK/GAuWR7q1wH1h3v/k6IDGexYNI1MHIr8Itfx60sb8DKQ8CDLFZL6HUX/WRYNON3+DfhMZOI6bkmPNLoMWZfNZW3s9rGAgXXb0sYfegZSxv2lI2X44RvPDWNema+fCFd5XV8QeuWL0tWum/gSAo3jjsj0rsPLeTmXNtcUoK4nG/T/RRtyA8VgEzvuQKWVpYYCtRtlzwL2NikzY1djojCi9lHX7PFkjcoF24SjfHlAo7DdQRqFcneNxBxUktxP7FoFSQG7VvKb/le6xekImBC3//CbYzMR9Uw+55PTMku9OCjl2A+994jvkG3ou07ksVfzYNqFpl3pEwFa2/EXaAwDxvu8TVKOgzbgaX1u2qq4YXanemE7XHIzRAUQHi3gZflNZIlQ7XN5ZE0u72/LP5blJQTJ4mfnUtEBWXbRuZxygXVSvQUMJWBVZKMhn756YZ+M4rf0/5jEj4z6UQ2R4V44Qko5QX/sGihLFpxx4CtVDglLfi5+7mIykZd3SIIUA/7ZI0ppoTKnS/yrhS9XzWFgZycRzAfuyVd9hQTt3sqCcO1jGHtrvd7pCrtAnWxNwDssSCdPYE6mayfNMVIQUmGGqxKN49oW/2240lXPz4VIbVFPwfXknJZiZrsr3k2H8iy0MrnDo3tASE4Mfhec9lIK3JfsuKVV6oQl9HAwMm2O7+s+Xjr98uZTZn0na49t8OIsB6aoh2+Rqot4EU+yJNxqt3DjWqNDp2m65wDfnG1drao48ns2lTiCOI4uc6CCImB0fIO/o+jCdsZRAw8/BltchCnR0gahuHMqd6i1Na3hkxw0XplJFQqz2peLnJ6wg944pqfMjRIWpcG/0QzXjTJk8JTAskqd0V3EPeregTYJ8XjWBjr0uNUxR8eVBveaFjOn5gqrlsmmYyuZLg4r0MOmMkDNe50dy4ZwJxxJHEq1cKpArlEc+5wrjOA8vkrhdkuHHpJeV5nlYr1ovCqUnO4ROTkX7EMfTLIP1lmU7ndB7GCXMQ05Xl9FhIPRf/GBdE8vgntg0M48Kd9hkK82A2DF6XE1i1cLHGSLESi2SBeH8FZGRp1XpmujjpBaappwfBPNzTGf0dJJVD9275im8c4jGZludfxrs/F/4ajdEWueMOYT3g90PV8obydNcLu15VgJ6WkcgTjbRMS6cDgO8X4ppBtd/tI/7svudoc5/ZEsqoQtfeAyFMSz5ACtKGji4Io+vjKpHp513EDxl2EVrUVUeudX9ZWdlprntDB4me6TVBc8URJPxtp5xOpwE134NuiNpm8H5IOxc0TgR2VjAZV8jF2PC3ZgggWtff0AStAs1y86k/4cNb8HXK3JrPCJRBRfXzE2aqidBkKi6d25rzDNTYyOfn41KuE+aAnOW32yajv426bgsS0LeNVucdYvWv950XF2vioEemLLEQlaDne3oMe3C2ylCLT+drgZOubNqwxo3cTXSnN98eyI3vbPwhpvw3hyN5lPRY5r+kFZT25WMGZitdg/8//3oYKJA37VEBs2vQXJsxLX4w+Z1EstalfCDZssG0SuVnLdQxLk4FS/oZdn/sh2HvT+w1Q2zbbdZ1L+kFGL5paoEeLqzP/+WO/iDA88qVrB/5zZL2q+8xFzkvDUxJJZym7dsZ7fvBf9FUC8QEx3hMeHphs3hHbBtYv/53QtsEJ8pVnOdSnWQ5OsTdGJiOAYf7gPEtMsXU1VSps7CGnyQlGdPUVWSDfkX3J+Mb67Yoc70wlSYJpM3v20j90bZKxACOJRLk/Vi7WLPl3XI10gvLyAVNz+ugeDowpujPrD85vqlRX0e0APnIy7p8Mk8q0Wxp0hE7MzDMQahmmc15XuURIW6Mm0CV+NyxqaN/OX1zYLSJ5SykVTEGXPgAl6mp29JWmESE/TFR2awCpQ278YvIknr1qTXpp7vJTaOwJ2HjVo+vI/g+DV26r1ls1OjR/+Ral0v0Rp0jTIJV5RVH81kughWOUhTlMRc7pHkWzSh13TIoIfVa71lHoo0zxJiv2AuQyXYLKsPbUQbspoJPSd47LXNpdF3sco1xK3cj3O7MjMxfOafYh8ISiow26qPPrsZlFAh3tC3ARwDK2GKcs9NWD13G4eepVnrG75WKCpdgcaJhMhH3f3/FM8eBx05qlMHaslFvWuQu4av4rMPmrYKkqYWvUcPJ/40UzxluCxVoT1cGX10tlTydGpmXLom2reO5wmb+7kaiD5gXC8ooe/T71dimp2txDI6NfzcZg57kLLLe466zNbqbfEtGXJJMOqDe7FHV5c09PaAj5BTI87zFHbW19dXu7eRNIO7l4g27f7v1kQZqeKmAGcJL3iw/S4irrxtM4GN0WVuEI5zhdRKVmi9KUQ8wEkFcljVm5BGtZqhUOEcd52shpY/UTcdO1MNpEgj5hBMTEYfmQTq69KIGYS50x1yq+n/LaALdIg++aB6rfUD4JJYoA71UUNiMRiBjTQ4/Jj+9gD8GDpyaPJO1/OJPiRR1kEcvDyRlhwu6TMgQ/f8c2kEMZDl1JFreca/lTNhjs9Jgg9qFoF3IVwHqydxbAAAP7psfRZgBsFQ67lwUuBRJSbEnfbCPL6bwU2tVPOMriuCd0zOxtBG2cFgbwWBgs/0QeE0l2EmvmdW6UaMaGckeMSd61a74hwZhLHR3/82zS1NW5c0EBdBTN4XPnpB4lxciMLJT/y0OMLsNrARwWk1g9Wr+o5i2H0j6eZQltXNjI/iewwpUlGR7OfAqzwg2cBEqWhBftzecX5CRgcjcOFVkbBXdZD9/nV7AtgE76M57n9yqIp8CKKdNqDJ+238R0fbwOPsJnqfngzehgKb/mV8/0NWvSr2FPUvtaC4Emw5i1KPhP+5v1rhhWn9s6QeUhldfsb4TKdpQu9fSE+/gfVfGURWk2VVNt77v7YG4B0Rnk6fJ4/GMw7CRQxjPqLSOz769tJQQ3fz1mzuPtx2LW7sYg3n609j3Lnq6vUf/wns7UhywNMrLqiYZLUFH30qLLcBIZlMcNRp3KX6BFKBU48hEw9DaBSg6P8kmudduY2uzd2qVmrPbk2d8rq3lLfcYSNM379a2XF5DHvBXMCCb7vLOEXp4tDkFpyMdpg1In+NlVxlk8E4eWp/tKHLSx23zScu7uZlpG8Tz0XkfSZuMMTdstD2kYxeGF86LVECsi3qFDMEaoeGxgq9o0nqJwqnF3SXIUTaeOMQzq2m5mJS/nI6Ivniz7CxemPRatWlRW93KMQCB2dz/iGVsVd1h9lrABe+eaWvKobhlwQPLq+jYwTGaKJ5wreW7VgCeSg06+J2PhgjbYyr5++L4buT9PMpwADUNJXFQd/9Z/tgP/cuS3/jnZexAw7bxcWsxByTECAzdDmU/dUjyYH+g7IZEUR3ADEl55BHDNVZJy8jRr3EDK50I4avOi+4x/Mk9vtahRfiJF7UaCusjCSbrXfKkbtUPjp5HM8d9Vm9jcO8ofUqj2eotTJLFDbZQjtTRfbPd55fiIXrWO6aBfzMl/jwjKD5OHahwtrgWuDU3pkkz43u97p2RkXuRodbbyuMvc9Qdf+gxDxlD131nQT8lSgm81GftooUAloU5J/JyK8Z65+7ysMTOyADgydat/S95WUf8AhmSiQFIEcn0Y/znL/nMzL67jQ539m30zId3XZ6La1Z6uFzmQ8Ke9E/t566Iy/AP6KMPCsEaBUqXlYou7PnjLPTqtkUjU3s/RVtk82W8bDUGCedVZtvTYv/UKq9+c067dHy6O6WST66ado3wqNGnnezM6V/gAO0sKgX3GdA2BfTYEZINvt0On2crFJ7GN/a671lpaGpCqQSrcyZRdCQstrO/mhRdPW6YOXEwWBkU3erwricOvkyom1Vbx2iqksaZKPusFFhPdLpaDNX9Et422vl//JgyEGZIWEpeFOs5ESnMIuzFGQ2HnXjwbX8jV/hW+omQpn/X7yvZzLSoroGyDfxyc91oY8y5IBrT1FjrBbGFPkjMeWipQV+Gau1Gi2qOc9EzVMnuU/yV2xn6lRPZcQVeQPm6YvypOD8cyMDn1WnLzlzYv5wCVpKwUchsQxEr1bGOxhbkDAoMKmfg3gy43tBnpgdAvqdd89Y9KzplM0MgAzgNdlY8SbBs+opZPSgmz6TcMuvY+z+TtZB8bfolvNVEWxKueIIU1EsuoiiSI4lEvwLWHn+gOaDtuvzvm0I6i0geX8Gx24f2QePeNx/fOwGJL4Q6697jxqWB7yc6EeVENrqfLMJDZ3bNDlDahvHCFviOjVlW5caRAoHYBKjm0G/1wpaWP512IZvSPeqZkncsIcfY1sgw+Eb90F9nDA9MGjkkhjPv5FRPM9k0Akj81r2zLsJJQz0zGb4sU3xWHn50xdXMX9lyiuzdMNtZxyAVpUNWcNk2Rq6hlKNuspnHHumvDN23ceK10xaLw9CfKpCBivYO82a60EGMzJ69mI1mksuXSN8nVKsrgMyph9NT1avp89lVEgsEJKcuZxJCWgKMqQGT7qEiBaVXsRBw1Dv9T81/dGgeIecEQxbMXDncq2gY3ET+w1dWku7BPudZwVYVUY4mJiQx6NFaDVh8r4RtwutwKu32x69/0gTEd3PAGeUM/lo9EVJgXYrX9Z8LgEPvz5LoVBns09cWYN9Tq/qoTjetl3d5TK/08txVj3dFXX4IxSqb9tGkUhMS5WwEQFoLyM6z/CsOhSPGbSSZICPvQqOu5rjMfP7mIeQNXIWd8rD98AdLnxHbZXRt4VhzPXbErA+MLTughRU2AhhC+CPHPsRL4aNHLzsCYT+oUFUQiIbv5or9lLGeT1uazj7yNdnd7YSANzG5qjDstmd6QYIdHzXhIMlrXza8pNDNGB9x9D13wnxESyE0/BCOPsVymhQkARqm6uZ0j97QQI6k3e8M4q0Mo83Yca+cl9QENO6WYMfI9vepbUHiWlwHvWcWwQ/JbQDoru/B19bOl+pFDy6g+n6nVWhEFJW4wKXXwzdQovRKAkOgJMqvmtxh/1+qsCyU3PQMCkljmdMLNYK4Ty7V5K+tZdHnZggAqvfrNLP3yPJIR626fgmXYJg7npQm05PmNqYgnv0bWSPvGq3uE7fm7k23AXc2IhHkxHsBzo1i1bEIlCvuL37ZxivMdCzmzCQvg+cCVw3tlzujcEIEV9r/WuILDW+ZIiGVbChk25Qi0BaMQQgQPPP7mWl2aCm9dQPXs6vIM6hmXFUmESH2i5fXQbQ59YbEmKqEfqy2TrDuGCdC7STLQl5ZseUaX5zbKGP33iMexkk/uV8HcVMEkRHaH8g0GwLQTt+LS3SYbpcKWu7UOtx9UDhqjJxoraV/7g0I33B/D7FNAjlogMsBMe47NoSSr53QNU1N/0mbtk/TBmdK8DeDL3MkIGnmqcXDDU49jd+blTpmZ7yIfYfjpXTOwS4h7KcaFO2De1ROAYEbkh9XrxIYEtb2GDc6AF8iAIPSTmhfatCSkJYtSGYVtjtqbjANuFXSoFX4jggYMKcrHLwUvrphwpgFDdWehM9T6oO6wN0Al0upTBJKLK8HFUFmqu7XE/0juCndt9G8+nDd0MT+FA/Y532CJrBvUatCHz8RSA4bEH2dIEbfe1r0bDaHdZLB6xhtNiZvEliXET2bYeLDcGjD0y0mq93978A4kz7xrYWg0ajXAW12muEImAu/Wg1Y/eCLSDh81vOSmAOkjdviYGrC3Z+LPOtKWIKi51vaHNFSyrwZn/3Lk1tydiLDBs7710mVcgw+dUSML9VCgo4722Pzv0UTvl1JtZGKWozivTxPr8fK7cKXPBoPjDmdi04XFbh/GM5dtoU5h1QmI1J2v6Ear8Mwg06EgBQCq82VetWuaLLjEZ/4pP8rXZvQ1hGfgSQO7/xWPL+nd31IiQj7BLXFXWC5obyQhJzyf8FJSvnSqF19b0OtnncSlBbgX6ojW/UYGgu8IyboLY9/6NCWLm5DmqUBGZm74/8fj3jzbMLGaMiPe5+a4QmPHk0ItDRMaNqJmGrGLJz87UQIxKmSNS6qhTqSOVXuZQwxu3t/7AXzNsW8Vbh3zJ3HeSkzMEjGuoJS9Nwyyu4+Vi9r1nSAqx1ZHOdyMpCWFwRTA8bVEvAQlhZ8VVimw9aeu+QCcZe88fknKRmkyfr2om0N5CZBygcg8Zq3SvTaBGaZjYXndQMb4farfBDRU8sl+0sekxy09bxudueAt/2UMOtz0CH6XL7IUdWJAO+UKRghLdVxyYiXFPxC8u+PQwJZW2oji25xYKa0QCFdNAW8D7xL8PglJuBpo4s66z2HEObEusgRmqP3uC5pB1YCD9V6fTuAZehAod6OS33DsLK3H09MvMpf0VRUvAFav0bmV1go75c9dJVpPdgkRwz6LDrc4CPVSTlbBHR9fdh5QnWazybm3zYGsrqgitxetJYVTskkJi4BVh7RtlMgAXAzdUti3SvqenykSNy4Zxnxtg+pamSUAmD6O7oqZX9HweLLKTNRwLOkMMbKnYmEUIAVDAwuVHHbE7Yvq7XL4rYAnAZnkGPlzrKvyOr1BC6iRoT2pz1Plv3EYJVhw1Gxi6EXpASuixPacHyN+1RdtYdW+XzTU0WwLeqNxpxrRDm39nuPyROqajSH9pCLp15BvczEg6CHwSJNkZaddH06dj86hcyOV9hZdJkaS/otAxqFBxS+cSoLimdF5zwiPLsCMoMVIqeyCag/iDdjYjJJ0HszxsK23zxmMOEgwrZfBxLW7Cx+NHwHUKDJUvIOGzKPk7kUTWkAh1MdcFGnIxELWouFjmooIWBVXDC6p/+WtPo/PxR2Vy1Na/TH/1L/8Tjy3Jc+jQI8Z0j9UeMMwGkFeGDvzRlB653WQl/1jVbXpktJeqdrsUX/fsAHguLsy0EAaRUP2gk27dDJEPVh4bhcq+7KwCMGq1OA4F3d99SKIebl4DOtbX2s9kCZV3WnGBaKxzm/kYp/Ob1kPPEr9Wg6+kTk2deXbAHmrVHYEFq7WpwH4J7eXDofvPWslAVimhfZpxPmp40rzWRPHwCNRCyuVGwAD5E+EqHFwQTFML2rFOVQd9aD9us2OuicVNZKoqM7kKirTimdfPZXLealyiE5BaOmWdDjm1o4zS4pfVSOxFqm+vMsJvOWUy610SC1IlC9Lh9S4reZZXc34yplXc50MDAjaXQPjKkSoiLbXzp+smGmkhfBrZfTz21HWhqE9zD47opNaXaJu7b8q5qTVI5J5I9gnoCJo75Q7Pzi0rOW87QElsUTS5eJOLBn8cMx4pSRoIMTCkfxHflyuCuYHhyEMyYgQIl3awSlRAi7ouKqNcrJGZzH7KES65higtR/p0wGJDGoZGXrheiJZ2AmDffNWrzMJhLQA55VRRfeqov2AAu7iARzIO9iIgL6spjmrcVIpR64NyWXz1MvgRU1rQbggztg5cN9yxO+bsUUjJsl2H8gn8WzZxQ+6SLx3oviCA4L8+a4OCvKoXVLUz0NjtZ7yauwqtkQzR4Tkz9UrZyle4nzjWT74riZylTTjWJ8bIm3dDnud9SyV7HifRdclBVqNu5QVSnGMVYJMiLUbJxAdNzI3GMT46VspJjZivgtkccIOkbUH7GZDzNB6QsxFuldQurwJb3w1ylz9Y6K4XDxvp2XR6cN//XdIabW1jIPI3X/HUKTyU4KYh18K4vRfhtUo21HtFRkWCE63a5fIqVkcg1oaAdQzKACB+owOgrjcfoLW5Y4P7Nj2M8r1/uWVGdC/M3OKNqGjNnL7Sinb3WZTC43PFjRFK+ZVLrS43UVXYAtJpnVZmzze36PRiyvtjojfVtXp29htRMRurj9NWHs+cNplQeUQhDV55ROfDbJM5J3v+CppNYwgQgC9xMXLfaMMKht08GSvxqHCV1Ztnnm+hqWjSoU9m/qILzpGgS0Qp33k2DW/iaplmV58KcWvfsYgCMDxDksYKr+EgmUvKtKOo6TATs1OfU4RyLST3l7PsRMFEocL/TJ38HLClLLO275fl+jt+HqnGcuyf54M2r4u0WhgllsdBu2BkgVUD8BaoAG6Q4/pzaOgk+VwG5F2ekfnsOtGwv8doF6EzRh+1sAdECK1tGNRnLqIB/83sQoj7Lzo/y2sdwKuMtiaJw43B7mLZtkn9jFHjWWphMmwfvgkeCMH+rGBn2v+IjunDO1X99ESDcmtD8yUXT4eWDRT85UAr/nJQyDcTjzqlOuEBo5AhGoE43eWtAo6vmcyJ1n8O6qYQYPAyX2JdeMU4DEuK2fh0LgvH1GIwfm7e9PZJ+CtF/5syLO7ZsBb7/1NwkXf51oba8i5L/bvShmujcQqUB3pOx/6DBNdQB+Nte+R1FoU8yflOrbhG1bHRnxeiFcTbCHUXcS9Qs+TJvoqBPM4WVSDPa/I8FNLAWNDArCJjwDSuCSOKSwzjJwd7W9VzdQtY25ULBl5bRVpGYl3sfLR5z40vYLborI+6L4JEdcnpb4duOXDDczns91/1/lR5pKEyzS9SpT9Qng0zmc4hh/9n7va3agoKl1h5IZO1Q0Yb3/rlu8D36+i0xTFHzAhLfzozHETgTVq6ZAxdJBUUWRg8zeJ8WW7k70fif2/4P7KFzzWzDdW+w87b7Aa/gvr1E/oyrAryamd25R7uR5NoYQkraXZeZ0JbqG4/wGQHaEx6i3t83ZZ8WgVOa2yS1OgQXRpfYxi4w4oCPvj+2YrLd+BYluGjFFMo4mkVvaZTq1+wSYRrmYwvo4fRSKcH/rG1IOSYDcvmf1h8eNjkkLYL2XRob/zxDBWGY7MxNDHQAK5fm3wwxY4m1yP1HvIaQdRQ/6IZ/5AUU/b6oml+ZAx6YVariukDBfASYRPcRBitokGOQ/dMJFysAsYVcb2CNl8EPFjg+VrENnLbGE+TmVmw7Rb9ZkoX7qK63Z+mEDMpVNl3B30tKOmeDxLrawjWQJR4850Vws4YsVyi+nL73xvyOBvr4aBvth/hZrjjc0N9PtFtMeig6mm3Oy1oFDyuS9FXD2n5/m3N5fb5oCCSJiZtWRcGtMR3Dh/jCJUbPS4qrTeYiJZKdBiDu1zfnzmTCTYhgEl491QKvrxI78XRKMiGzA/k8YwjYn8QregFZsJoLxGB2tSZaXqu3Hj01feh1aU92m1grLyxKJK0XJTeLUSIJ4hwDdk07BlZQySGmniIgqNNNyqkD/v52ob8hfElcpa/1ZWxB7taIKKskNU8KlLUf+7rfSyT5vXRf1MX14RZw1yQJirzFgRsYjwg1uHGdlAmJub4nipcRoJGZ62WKOzBnO5EkcESln755CQZ1pAckEZfhCvwXugubG5PwnOQewXv518vVc/a4XMtLVSvuoO4yQHC5RsZz/400FKHZtC45JBZWEzxwnkSg9Lkfz5PJtDsU6v2560o9uO1ROeCfgkf/tf8yvPlJxWKTLy9lWNJ2zF3EmVSdL2wrUK1/2AF9nIrcNwitE01XB4FFOAR2P2ioGnMxRzDIJI0FfgCTbohmcWIWGgyM+hqW6zU27t1JA7xDqXSnH92+g/OXvEH0ontdrEi8uFa/bRkNUMTcXl8MaCYbmkSjkdPnY9gGtqcT0ZaIJlEAz+v4L+Q/KX1E2LdlQmGBiUc7fPCWE35Z7EufZMHn+eYdtoIEeibvADQNPkMo6QyaBM2I1O6Ai9fuNtXH7ylyVakrSXiIvw7eI93NhaDiR9aASj3k1JmdkQuyskjtRIFkcPe2PWFeOoufCZeEM+HC5pfuLV/hr62V27XcRtlSGdzXPum5yBBLIr6zYOjsfbKxtngH+bpe/V6Or6mH6kXABdwX20QzL98LBQ5t/8arQ1IXnH7VG8U5LcBhuptEXuovOvTyJo9m27eWLy2cLcalzUoa6kXx/9HpHXOW2wHfrqI/ICmAAnHQju+vcQ2jW1xDsYVIY7hfKBMVTLBAS+jkHnZnQDBOL0pxSnf431/w23wa+MWV5oxehhoTMf6ju7z8/e/9wue1cDrMldGevOJd0D01vkPT/CvqNzIt32vQT+NOdWZtfr3102u/Kg/1yGeMqJqsNwjcIBRmWHGk7n84owy4lXCeXuyGqDB/utqrtbv66QMmMKWX/6OepRd7Nbpy8WdzeYc+1QVUzDg9IeKi/c17X4xaE/k625DR0dYnrLwG+CjxYbWNtSQDgYSzbG8TJFJnF2Mbx00pNzSbVAXfNkT3KCLHsbV+sBU6lXv9duHXaKZiyCzG+0aRA155dsiQDbHIoDcGem7fL8krMj3Loa7yA6AqwV2jemK+Q+HqsuPxbLS3KXhZWDRqiYMvMIZql5fviLXn+3QZQ56UqV3g9w5qov28q4EqlEjFmv8/740CBANgsh/Q/zIhuUvis67hLVfsZA9Se48dK4mevku5/WVCX+dWGnrHf5ysvt0v/ITCISm6lkbjNIbi17qCWtx7hdu4L0uuxAgiOWbbr8oYSX1C04O4jL/pOY3Z8iDASITC2AVZFt3TghACAZTEcr1TM+KuHdI59jlmwHX50qbp6njDQdDQ5SnYWNCykQqcudo7/QRm3MLRC01zU/6Ngsa9Z+xaKlPJjxXkxLziGFZ5QrPWzs31tIzFRXG3GIWtrq4EbW8tqlvaj31oMH8pMVAP83JAmfz3uGSrrQIZrx4bF1fxX8Hm/rjhFa469Z7epgnbuiPak5KtHvpfW9k/19Y++NtM5ftK6bdsulG359PjevLiimTGqxPONRrGyBrXq8/xxRfhXPV2J6rOhXijhAlLxIvbH9pFk7ZL3ut9iN54SUfdn5pi6kJrKK7eQurAymdejaSjg3UWel4sy4G9IswQ2prxfxZrk2AbkKjZ0IlWuo3z/Tq/HfRH6eSc94xgtyAQZuw53FryHYFyz6KZyep79oFi/MkNMgkY50bWzkzkM4q89hp78oaVY17i1mFCqkZ8NvLcg9ay9Z3yCnyKj4+/IspeGEA0yA++JZzRpflgIG9Yt+tcSrSJSxM80/4xCqTOMY8dXRnH7S2qUt8p+LR3SmuxudZw5AOSVUzhV9L+zFIJbFwXrfQ5ZcGtWhqoGxAQ91ye0UQeVkMQATFRBEGgTtmdEoNXLysb1kvXJWtdqJLYQc5QF1wepfYgQYWijPd6D8ogPstsQiXked6UnC1z6w+vSsQ6i04UxMOCBYDSFBMVbzSrOEBQrWxumse+EFqGHT6T1ZP3zdJ8ERtI726DkteKAZRCPDcAw+q4mnivz8/CFAEXNtaugfB78zjoed/yc0cns5RoNz2w90wZZ4cWTks1NBWWVOwaTFniooPrfnqtlaP68ZaqvTpc/889JLdVlbfESsnyh/3/hXIwfxy6+gAOqHZsTmXakttAsDLOLMgYu8rpJhZ18tLwvzeLonXon9CyD9dPuUBKugFPK8le+0jmpcoGcbiE/oENER3eMO+AdZnZgSxpTkhE+z/M6kJrFZMDsF/avRX/Ic9AkiGFU0CLG9nHoTyr87E2mn+uj6+QgD+4Q4EYexSn4iFhBhfL1b9cVyVWySIcdthFLh7/4ip0fhVCSdROv3e5/TInhrCCnHv3MM++Im/6sAZ/iKFed8SljbL/003RU2Pe9mfF13ZaGT5AYxrr0pV9Jn0yWK7/Pn8cdnxMf5TZsIFS7z1qdH/6/sVCIGT5Y3JUwDELOTkzSsr33T8jFggQ+XZPdFFxw3VZ+0ext0d2ccQ/63Izv/uj6EOfFB21lS/i5/d8JfIzx+Xzx++hd6AfNqhTr9MJ5ogbAdrGZx1qDUbjDhtz+o1ZFUt0TuD5tGt18BjSNDtzlHR3e9Z2f2rN3GezvJJYS3++gTs872QqhBniUBcHbkEwd6mmRowr4bChDwoxVwf2lJaLS3QegXQQN29+KEkDKTBLrUb+v2s+4bcwnYlvpzfsQXFanUzSKrILh7wFt3BZZNrpx5R/uqUhwH7meK38g4UoCgFZwGpqzDR6kVUEE1Q4A1WRF6TSMQrJ0SbR94UzLGYgDYqsVuvrdvCT6AQmkwxmTv/NW2EE8/Us8ou5R6N32xr35HKvr4WonTAZQ4efmuy6Uw0Sg8kWzgKhqw7Xxo1MNMh66E2nmV2+SK1Ycby18DxMn06lKP6aR4t0CqSqMLLqfB1DEGHxpUE1FuHsRWTrj1mgMkkB9FfB8R09cPnqcJzkObENWLl+n8gdgDXZSQCMpfbCgusrjZoTBqz/ByzaJvGLi3+Ab75R1NVKrJDoG8wAglXkMMZid2LGSiqoxmRtC888sGXnuXGP4yqfigfK+1JVoLkTH13BJHcqWsMTKVTyf7W2chMTYMPF0Lp/HierhhNOZ32BLfBywgOtbPIEB2UvkYFH95zP7HSLI6T/7gIQWTYrP3d77scvei7k9dw3aeMlkkZFI0rb/Wxrb7uVdROjDuDuHwP0AxHcsk0UeteBJ/mfujMM5gEDHYKR/lLP/FAyuOmniMVMfwX91kvamWp8687ZmK3kqt8Vx3gazgBYbF8icA+FKCR/lsPyRz3I88dRvZeX9xdtfTjRTtydkyi4KW7qFI+NHz23cRgS5sd0v1dUcGTmGD/Q2fNUO76UDTCYWJJC4jKpnMF3+9HrYqFTMt6seSmAPMAnAMPAIuMGsE4PFYZ0ifkjznIkMUOFFTDRZqMak2uc2ECcQGujvoN/7oQuh2wL8dMcMKnEAOhy3oncZkfgpNom3M69B8IaihMOkFSQ6coR/BO34o8MsH3sivBZ0iFqw6e7UrSyuRT8U632uVu8YYbVDxIYC9QAdpQi28ihXlYHPbh+bUsOL9YHquMSr4E3l3cEeEqUZ0mqEpvfiFVGGgdbQtTVovHNWdTDxO+yXjp9Cys0Zs6QNaGnZxSynXyczlNtJV5HQuW5vb6uQn+0a9fg/5OVefm6VN9tqYTrcQxX7mK4WWqvSCGFelNBuAMN7qcUqf6MAHbnghnJK1cMQsKF5O4r3TBBQZYAKQZ1C5JqgIL/J86xnDfJuu1tsX9IN+eAyqMLuk3JzBF8m26p+3IVDyXdYVoj2Ew+S14ohEu9Gb8uIIUVmjcXApzjmLHTNZyyDcrq++BQx7hvrJgi06oiw39gOnuLrlsQq6ymc51Cfh1jrzO58BcFFsejQg9W7VGqZ8lxijaioZhDcJWOUOpGNjrWVFj1ecKTIrf3tw7a4igXyhE8gozWhwem9FQ0XtJKb8ofXgjN+MpH4agaiOA8p32JiApyBKmSXjPTPFk/5ugOA+jsh+zD1vi80r6fV9J5byQGnPdHbkPGJbTvJyEvYj/BF7g0G6QN1t+bSbS8P4VenxYhyjZ2nWhAlLlRRETB4gMw2YwOQ8RCDjrHbHwJd1szOvXwuzy0Q8p2FLoOzCMFXYBAEmQA/YG5P5nHhMOFoT6rg6ce5YsCuSkfGluGrFmSdbOKi+ch+hHpqJ1HjCUgXEm1lp01AVpqA9VBeQ+pcCB0Lg/QGZVhbCmivJDey/ynzeA5YfVI2dro0NnhMwqdobwuKBtf0i6Y+7KyOMKIO5itlFfHLsS5ZNXxqeU4Qa/d+xE0Y15QOkmA2zkBksEitYD19iA6lQLzfGkwVxK8mmM5eLwzidCESogdkoQfXh/9SLtE1OBvNqE7cnM0vTlri2GnwzmAkC+cBGvEdDdc5XtC4HOtiSyPd5NBhcqTZ5zDN8VY6ZlOL6rkvYq14bzuk/b89bRwY5Rl4RzlMuSr3aAfIcGGrkCNKr8RfD4WyLkIX5rHQgaJuEc3vgez88IPYmxUUOax12kSvEHFRGNKzH5JIOuD80cit0s+xYy9Uz83JP1ZYjygA6XJsbJb5WaWw0CqBCF5gW985ifDktWejA002fVvoaPPDfml3aq76PkebT4dT77boN6qq1LmObdM48jhTLLiFUKuqsAH9mfi8SurJpp8nfhFpvWQchPISB4bdB1MH6oFX7A1b2j+X/asRoSFAQ2PEzqDU1cqGNg3t9htBEs/z6BxB8KL3Qgmpana8h2TqGBbJZKvr6hxprhK4XyLWBtwtwN2l9Kt0nO1jXNZvhfsjU5Up93l7+Yqbq+o4yX5zEo8OUSUrK6lkzbkg1byS+awTU2bwoE7ujIBx6oHAYVGUPboFORu52hQOMvjyAnfp3JvRb8VKH+CH94TEIH7Adw9PrOuBu1YjaoLhRU2MiYqVuV6WqmhIAs+h4jvzIZ8TtFCFryzUmgHCgqbPLp8/CbNoCLjPT6xMxTVJtjisSCyrTx2O+xL55D6LpIveJQrNcMNurpfTXASsLuca9gunWqhKTfjoXVCpctEsl0oLGwsalpGoi/+/C5oLUXM+jz4lMnyldu2ZzSJArayd7b37laNASABW7RiLnJGgbX5Pp9ORQzQQacFbU9u5HOTviEVDydGj7m2xNKBFwmka8urWiE9+soJo6nI+CInY+RoRA9rdk8GggFDZU1i4bmr/ryCSTiAGAd8Y5uc2XU60VJvTK0DGUda9RfnShCM8ZNmda7/I5ML0hl3qi0DHVt2rUNqYM5lceqXGTS8nRQYjsLoTlP0F8jhUS2DiznbLdhN80+GdBP1E0c0nvp2khyYXfr+nInB5GBgIgbU7wN2hLorZKMeF4EBT4pX6XQKXADG5C3i6JXEbpR6PGmhKZLiW2h2aZZZPq+HSvWHpbUx1ob+nDP68hqqLr05tlHOI6hV3k/LPvQvYYo3ka2M1jlQgJXxTKjnt22/MO0BSFebTBs7lI3cpoVUE3z09rurCdxJtGBu5wpQns0yaQzfzUH6DZVww+1ICV9mmFC3QL4ZiE03EGLqxzeOs07gb19EDv1jsa292RHrcQw4i+nkzsmoNgLgfWYcnGca+TJw9aNTw0+tY5L+ZlD+h6n9mIPffu14BvR1aaruwUC+iLsrEb8zz40SEowggaFaCM/kq2sGG5Uui32WmTC4aU7LyPoH/oPS6h1aOF+vp9gnPMc1PHOHrNgmpoQmg2zC5aQlsVD2lsof/PySFCYfxqE4QWspMEWhMjqFEIsRY0aOZyOdh3VEEKVdy7UZbxeHL9TwsgN/wLTneP5RtiQWHznssxnULenxVAOa1/e0uR0QNFKsFaXR7yE4bV3GOzr7Qi8HtLXHqWSGak/max4ZHWFmOn/HzrIhY9RPQoWUTseIkxros8e1qVs2D7YB3mUNvMq0k7iS0hss8kySDN+gUJOS2xbtotXE1NZ7dL/jbYe6jBNEFBfezEAlp39uVr0dmj0xigS/AWM8S9r1Bh6LR1i6cEl3MmCERpjeUtq2Wu4yRGMW5wCiiX75s54ZWTsO3YPZNQN8geAhDU7LLpX4i3Tk09mXUrMQ9HGm2KQbsvZwEW47neMJqSlvxKMWzYrLKMNqJtmPWyNvXcqAC6cyDBjAiSDbyJGfE8Ef58MFzwBvtpMKSdunSeM8M1izkkYBA/Ds9JbabRP3EMP5z0u++G/PeltmQAbeTu7akjbWyEa+Pj9Wi6o3dVe4uDSBPlhqt4hvmOIurdRfjNXuOgvZKNNNDYm0kkTWUkbwZpVSBGYDacFhXu0Zsrs1My5slqlOop8YVV00zIAMv0GMT8tbYbq+TvT3YTDU8+p70TJqKgIfBaNOffPsSjUbXIeeRzBzXaLFFFZq1bXhuBcz+xZRo3OdD7EA3Y4PaYd0YOewmRWH5dv5X38lBcmcqwfMmotlXO6z1DsRqfM+v/OEbm0+Usl/xTSsLloK3sGuSf3WKuWKdsoeC0kIFsVxAbs78L98c5L2olCYAlZPiFTyeNNmrOlg34IkTqIW1qTnN/IU/rWQmNzlHkhh/e6TsyT/Y67XFgSesVZT6tAMQdy1keRSFe7+Ql7EYfVz5PyzgTAxIU0iognUGes7yolJrrNzVWKHQcJVA3DwLKHHV3bYUyyFBmXZMTNde90Kp4/L4v/9GgRe7RgOcIBAkjOds1hZPU6rk64j0DZ2TlYexSH1lnToz3UdD66sTEJCsXgHSf5D9E+JT0FP4kRwvOMs76lwz3r/VgRTdGwil8TeOXUplobk+19pEQaEcTcnuqVxNBdBPrG0TTcdjQjSJmWioRc5MtW7KAj4tDahIgaj4RzYmK+3ZXzbRZQxyVfbd3Wg127r62WyK/exoN7jAYCtLuteadfbCU9YadHyaB9NPEKID37dhM6FYjye/5XanKVVMg1ANYarL2D5hvc0giji6T5gTyfpHxmJwF8cf+FAytlnFVVWNa9/Njc/5xTryyxOISr5HVzKimzkharSjsffIiZ4cBnE/v0zcxY5b+eVayw+C9epCOg16JVFNS1j1dgQtLSH14kv8dg5sShraB5/uANCc4w7berRotMLWN6t9mz0xiCqBeabEjTA44aega1D3xEo29js0mbBd9tEje0DpotL9D+oWJbQ8WtdBsH4BhFHW3HkcXC5LmvmBerUunzpTQrxYSjLVXQi8lX0QAQEC6rDD1wjleNg/Q37v+qJzOxrexHw5iQ16jzCTX9+eeicPxOgSHqTR3sjHSyBnj9/vOvnvI7B5GFKcEouY5Oix4Q3Uv/ZGpx38MjTyshUBtdDY0MNuQtUOwBLgKmCPBCsGtlCZ95RpnttduqPQSyM2+tlQRimdI/heWr7HCN3nMp3PFWHbOkAQkc951jnWvw7NHY+QOV6whsyVU+4Rf7qLNSvrjE8NMaYearcEYblZkvZCUsGzwcgO9VbUkDiTTsW3j8kFRy2JXnNAQiVAx5BsaEXzgC7LfXybPFjVn2JSCUO2mRIaroap34tDDbKADTm9gIZvzrJtf10c6VVvMC5DWILQGJV4KwdOVjwXOHi3rMcLLBO/mjJl8PloYKOGeEFDd7+g1URacHyNpfBn1BsFFEiH4GPWE8Qp8aT8CHJBRbaAH5OXqDcqJnXYHFgixmtoCLlxZLuSOKuQHAXziavykea7jKPaoW2m3gSKP4iiFf9shw9GyTPNf46VoMUuI5+3LwE8X+LaDrw45AtPg1yVmDJxB0Fx9USf+T5beGMoYVOf+xLTczpKQsDDdxvkavgs0ZUMMvd+sA/spBYwR6Nsd2Ps2emPWr6vIAExAyfWwOd7OG1bKTtHM8FoXQR1xjmMY7bQq3BCsdY06L3aPjqLVWY7noxThAsxc4aLsAuw7Vw99S8WV52MN0+4thpATufJG+6nmGPyGJRVVkeIi4wmG2NyYruxQq6Y+FbtrQHdVFzrC3lB5HXaVBTzif7Bd9vekRndRzlf0mT4AJZRmzyQOAJTjtoe9u2VEAFGIK7p/t8B0giRpO/r2S9g/mzTytCmDOjnqPO0ZSu83OXjolHGRCn7r/WzjLOgF7UiRGEUb1JHK5f0F7b9WMbcH50TA8OiBbQPi6nw9CIb3mx9TA+++uTKHy1jCBT7VLGxw+ctZVO8n9d5ziMKwRjRbIMkU0T/dHerG3UFPPDYDpLkOHRGgaSP5bZBunqWOyLwwQTX0KDnh48JcvzSesd2jbeBK35fjlgVXIdASLmSS+YXH7pb+OVmI6GnO/qNw9YLW05iLiCiNcJ3SD/TAYXAGyQD3QmYwApxXWUbqw+1e6KZHk3Wtsvd1180AV5UJzQHVkfquRcFPYD2ztIaYRNM3tZhSEFYY3oFw6dfOieXN+dmTtaRK0WWze8Qk7rJwXn2cmISofLLfVUKblLVBh8fcrsIBsFUo6qzU+QBBwTsfQgh956WY6HXFmKhbGv1Fd7ps5o89FexYqwIL5zOsFnOwRiWynARpJjb2xsr3YxEmLSw2miNZgJ3YG8RchhmLz8x51az7GNYwSNKu9aTpwRhzYhAYaU2eJ0+WIPar+nKUG80fAeTjonvGJfvGnklinoqsSvyyUdsr5Gkl1LbsZOAmYD1hWfSg6wo//oWeK5fLNn75pAlA5op2XGPDRAQT5Roi4HJ43QwNk5ZOnmDJU8mOzKYyfuxU38vp8+fK3sOhidMPy9p+IUw/ivcuQNyzN1TAh7rUEA00TWoB798vH+sk/4XPxX5nOMd2oVxRLENx6Y5dqrgmWU0hwqNCMvTzgnQYbM84ENSZh1cFYCkVj5UoPKscxXplaPqWKMcn77unF94JHY3QtlIIfIPPkqkWpfOJUJqAbIztLoLIFMwXj99sgp5EihXQs4CFDVGrbzwuEl5uhOqC9i3xkHVEHwAqTFj5z5wGqOQEK9o1nek/M9jr1rRJgJSKOAvbFzm1V1e9Kf58L2cQ9NeqFCw0mbLJsql3FY2O9Cf377AcVmdmB6Yfu8vbtTtvBJszVoZjyXl6sXT5uS2YrDzoUkk/35OcGQeGOyPGZIFuvvj4jdwN9bSTgiH8pe4IyeDt6pTQlRZOlM4Z8/uwJsn6pmsHeiOQQtMZW7VE08bzPGfd/S4cx53A1xaje7wMpHMw1eI5ZPIreSiZj/DRQfdXc3SmOEVUl46EQU4kpuzojwYAgDclcZtv+HnUBfhQDOPr+3IExb/VF3fNAX7XEPmcC8/CURyy1IcvMFvxus3Ug9thsd0yvvhedXYv3tkbdpXz8pCqziPS34zZ4QstfFE5QAEMLipgEkParkTMMfFDFjgzfKn8aaFi160VDWtsvsABMR+ObYpDkvCi75ejaag7l4apMD5l9omP7karfYigtYw2gKfpxxEAcN9FDQE8SvvJqS6uPW1lh1KgRBN6jH8yfSdOta7jYP3Wi7MzvICTwwwt1d/boxndFzsZXCg01bn3RgqT8qpcxyAUSnJ+bqa+oK1Ih04AnZW2xO/26KwKh+VNXBZDZWLa8E2lTuXco1yzV/Jxmz5cn4v6n2nG77toWehTk9MCpnGy13wmPgqaVD7Pq2W5fI2coZNn3Iz2c0gYKMWBVZWecjp7ntuRknyyLsW8i+8ZCB1tUu2uogAEHQ71VzPDkM1MH14TWNydFB+deERZSNoIP0B1P62SJxN32xwLoA+ygTnkQXnq4vTj47qERVITxdQF9GuTITtp7Sm/yUNicIBxweWn7+RsY6Gou3lI/XelrcnOHPcLQNBn66qPMBLwOxVf5cOO8Icx17gZzosBNWaNaTZtYw5k9qRLL1DIx0reXisybdm9T0tn1c9af2SaSjHDJHPv/KnwlrvLXnY10ft1tZiORTjmRNPZagVUsJwvWtz1QLa33sFDfSs9GpY2NvL7SiPjXwT9jg5dFF1AJgklaOhtWGx+GfoVDWTzJgJbkA6d4oRSACBvhZtL3UA7DGcnrjFtJjSF+DTwtoLRqczQFGKc5cCjvSt2QHTrgsMI7HiFa8SHPkP4NP684EBygDEQ7+WO9bbLu4Z0zloo/JzPseEjmBXqMhObV0kF9knTvb54JWer2eyq3DxIHY3VT0YaC3FONs6qkII03ec/t5/nIk/jl3zyQgV++QR1lgq0Vhs4ScOdJNpapFi8p1XWyFDR3upQQUtIDSEz0R5266LI9ZdyXfi5nwi17w99AjmKzWYpfMe+b9Zs6Dw2joisCrEgkZEzlVOvlwC6wuVx3MLAsJixaiMCRB/1x60zsif5iV0lS77N8K5D/4wcNz7sa9ZgXv/xPzIpVkaOJUK0xspYHFvtb6hTVNkrxDjavLzhpBVoEHIRnTx3S8cdNWlXX1EgXEG1JqQUxbOIx5T5s5xyb1LpQa0BbCII8ubXKxcYJ8gWRX41zaCLqXU9iE7N9UMU3NBWqalel+x7vYke1HWGwEnzkhi8sANeI1xaVJP1wXRNIHsRSiiB3qDcsjKw4BFeWI5Fy0A4H9Onv+KE0uUsTxZdbqwhxrODzeR9ZWSkwM9zQuyaibZ5M7kZMqmCTOBRUC1StPF3joNA35wERdu4UVMtdTEJoj0dIiggLFA1ZpFOKQeylDlNxd+hyn+GuQD05x9SQIbeZ6PyjXrwGrNfNSiABq0LTDUEwMssI+TcLqQnT3sWHJvVtcou0mkEWN2hBMriRCqluUaZZ7evWb8oVediD+MP1tq3s7ZTSealAxHZaRqKB71m6X+fe5S7zr3TTGCgj9Vb7adF81e9apzTDjIa/jxLlTvbo1InL6szhL7HsQ+Uk3CcKvRIa+xAKv0V61k6fqCH44NIqHOtvsg0eDSl92ynrfduIBFUxYRB4qyxfB6dwLQPmA/TNnv+CUYvX1YNkVWuINh1SrLXfQrAEPEy0445nMR49bHdyiFQx7EGF0PVen/RcRWvm+PQM/U4zHg1EsDIQ6fsJIeA2PVxD0uvmAvL/KhToCLROyWAZ1zvPZffg73oe6+mlBOdwXto0ZInLRZ7cIB/JD/dyqMH4Y15os65VxpG+zocH8nN0kp311EZYm3jh/oN9t8g7CKk/wOUmBZURc0YB8PM//9zMOmcO+FKLKVz9v0d+F/t32UZ92LPjuEVJn0qInXW5HZQurgOVHVbjcCoa8/ZMf8ZSnhD21c54zxDj56+lQ5gUlrUZTHldQBLVHTuIy9lt3Oru2jVSDhCD69w0rcIBNQqF7aU3U1LET7g78ZeZSKwaOP8Au0inosiH/opN3bQe/o4uJdYXxLMHFQh2GzfGAasfhMSaHaIl9OQB2A5ad3Qkc9MV5uZv6oJ78eX28CVR0DXi93Fvm8VQNFklcjOPLHi3oqfCAtdkjzv/gs3PQzFZ0lV9GTswtq9dk5c91Xy+eyE7EZMxxiTiwV9IclDlplA2caCq8zMlZhZOg9++hjZ7Sf1m8sihurdd9pBNY5kTNfdgGAwzbCV9sg5oNX8AYGOLh/3OAXVUeWB9gILHBIettnzar25QouJVkxHnEi6s0rZKVeOEP3dBpqdwRMHLg2zF3gzQ5dAEsZexTX3jtVzcx7ycwZmQCd4jKGFbHNRUVOgHda03INujLsydKS94BRpt4onk5BwrpNZRDwGksC9Q+biSCEZpr5CBgimxcP7gaVQpSDkl57cZDcRA6iIVepdo4QxrmWKQHItwDlnCtZf7KQz48csAz84Ov7ZNlDlEhOyCw6G/JO/OzgbY1wEbJ1awnt9LQ11fgl5S4UqpRcIp/zXQ5BwQojhBFn7P3ETEHbEMalRwc+JAk44uPzNqi5QY+fdvrfoFijpbKrIw3iprOG3TfX+du/qFwg1/Z6WLQ4rnwnubn8ICLVfLf36TJHX5PEM5iR123hmx78V3D1BYaz19NaBOwjb8Z3SA/yrnUS8SNDAueaS08khMbScxVSSx4lUMDpVg4k+4q29XNoe8oY4oOgAIWJbdU+SVu2dG78MBFmqzo95iyBUV+M7CEWsPuN1YviMCDJURIUcCq3q8oVagN4RNRNFNzQML2tsfKTa0ZVCrpVFc33gUIvX02QTQBqBr7UW8VANvgnMPDNcHZ6SvuSNXUyCuWAjh79ajoGoZs6gc6YXoHn640pj0tEgwPSW1ZZrVg6FicqwD8Mt06vnrbmzsqJsPzxM5oiSn8Ofln0PNIu0l6nIZS1FwsIB9uYR07x6rQexU0GL0rIwmap0eD/U0TqIoZPrRRhpVPI+ZxiXn1F+GxLw6CGafGRwzeIKaDV1caeITL3z+3wMBzCLPUkBIPW3/I5IzBBNfe8zWk9RptVWDFKH5Z3C5j45hamWZt1LTpIcZ9iSeZubkgGy7kegzades16zJYsq2oVArGSkzvKfE/tD5TfSTqRrYaQ21+92DMcmiNZZ+4MruM4qfIjv/RSrR4OwPhjveyhhR8BxQHY+x8ui2PXKEw7v9EhITy84K4E07cVL8E2oiljEp9/Kk9ZTBr9oJa7xuJ+/gtVuijlI5YY0Q0nUY3XQq5tDjx6roXhoMBz+SvHIQH2/zGm/f2eLJi7+moUkTwYpJgWNdICnXIvuCnbOxkfwRqVApbEEHo5e6KbYClR3/mqtkIQCc3ZCFRUSdkn0EIdbe9Pw+ejmyOLB2pWpF7d3z9OFOgdE2MIgKg7kYjUYvEyrbd68oSMl4VFJKNOwWvCkkKwNGKX8VuTOQu6u5Ou8vRBcxaxFc39yI/K13tXuoAbTEOOOEmb06y5cY8MtOKtDSa2TG30orVvILoIGxX6gE+1u9AzdC8vLohgWDTwk3AFv+qVzzZm6LKdayu9fsbHhikooPIsh4pEwufYkcKpeKN5UwgT0AUTSFhicfIwoemrOtkcQxDLAE+9A9Bp02T3FagkAKHUJ8Hx/V/5nO4xTxs1WGYABoKgN7dqbuvgXGxwOGkMakNodVlzOKND2iVHfJaKwz8jXrxxbZ9NuL7G8UFFhxll57z2Bo2CX+ODM+kLNv2PWkqEi18BytqL4t/2kFNCdqRi6fIiiHR2+ogonZu8lzB67hSMMeZNnEpQT9dTCbONOFk0QVVoxdLt1vjKGmJLgiVXBXhYC5qva36gQPShOMXrIZwwaAl/vpGwIZgYz66F1xFOen5KFiZiNtnzYZ2o9gLu8vU+2sekziPjWkIxofLGJFYAs7yNho7T9Lrdgqmi0fIhcJTimt/xa10vGxBr6jSAGlALHYi6R6qvFyrcsxX8P6B1Cp7SO542yZ9VFo5gvJ/gNM4C4YO3ofNOeTwCrPzFvE9H+E361ZjyRqSiNMBIKPxmAX1oJBZ5pzIe9bTqM+dK6TSqAqV78vTC2xNnJJYjvKioA7M3Thj3VE+nS7GWtC6GPfflDNVYZ68TvrVAYZHjBteOUK0QNORdztaV1O3h+xO2LtTN/KO4VOreoEt8UHkEGRIqU6ZWZ1i+jN5i7FGJ32wbEIoxI8wMJm5hBDzuDn3cmJCeQqFvP53Mb8yE9Hb5ROW78w+f9sACs3JzW/a3+ML4mjGGh9KvYGY4BCv/gIOShtAgmbVm1m5cAFu2vBQjK/wpHZSkH+cl5GBiXT1MwK0vPXzEmAuJYqlS+V3f1AAAA=",women:"data:image/webp;base64,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"};
+const PERSON_ICON=(gender)=>`<svg viewBox="0 0 160 180" role="img" aria-hidden="true">
+<defs><linearGradient id="prayerGold-${gender}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe6a6"/><stop offset="1" stop-color="#a87936"/></linearGradient></defs>
+<path d="M15 155V62Q80 -10 145 62V155M7 155H153" stroke="#b99353" stroke-width="3" fill="none"/>
+<path d="M24 150H136" stroke="#e6c77e" stroke-width="4"/>
+<ellipse cx="80" cy="145" rx="52" ry="9" fill="#6d7c74" opacity=".4"/>
+<circle cx="80" cy="47" r="16" fill="#f1d29a" stroke="#7b5d35" stroke-width="2"/>
+${gender==="women"?
+`<path d="M60 41Q80 12 100 41L109 104Q80 125 51 104Z" fill="#284e5b" stroke="#f0d392" stroke-width="4"/>
+<path d="M57 81Q80 67 103 81L118 134H42Z" fill="url(#prayerGold-${gender})" stroke="#8b683c" stroke-width="2"/>
+<path d="M53 94L67 116M107 94L93 116" stroke="#f5daa1" stroke-width="10" stroke-linecap="round"/>`:
+`<path d="M62 26Q80 14 98 26L98 33H62Z" fill="#f3e3c3"/>
+<path d="M56 70Q80 59 104 70L110 121H50Z" fill="url(#prayerGold-${gender})" stroke="#785b3b" stroke-width="2"/>
+<path d="M52 84L63 111M108 84L97 111" stroke="#e6c47e" stroke-width="12" stroke-linecap="round"/>
+<path d="M64 120L60 144M96 120L100 144" stroke="#e6c47e" stroke-width="15" stroke-linecap="round"/>`}
+<path d="M63 111Q80 121 97 111" stroke="#f9e9bf" stroke-width="5" stroke-linecap="round" fill="none"/>
+</svg>`;
+function el(tag,cl,text){const n=document.createElement(tag);if(cl)n.className=cl;if(text!==undefined)n.textContent=text;return n}
+function schoolNav(level,extra={}){
+ schoolLevel=level;
+ history.pushState({page:"prayerLearn",level,gender:schoolGender,topic:schoolTopic,step:schoolStep,...extra},"",location.href);
+ renderPrayer();show("prayerLearn");
+}
+
+const SCHOOL_PARTS={
+ 2:[["Sunnat",2],["Farz",2]],
+ 3:[["Sunnat",4],["Farz",4],["Sunnat",2]],
+ 4:[["Sunnat (g‘ayri muakkad)",4],["Farz",4]],
+ 5:[["Farz",3],["Sunnat",2]],
+ 6:[["Sunnat (g‘ayri muakkad)",4],["Farz",4],["Sunnat",2]],
+ 7:[["Vitr (vojib)",3]],
+ 8:[["Qazo farz",2]]
+};
+const PHRASES=[
+ {id:"takbir",title:"Takbir",ar:"اللّٰهُ أَكْبَرُ",latin:"Allohu akbar",meaning:"Alloh eng buyukdir."},
+ {id:"sana",title:"Sano",ar:"سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",latin:"Subhanakallohumma va bihamdika va tabarokasmuka va ta’ala jadduka va la ilaha g‘oyruk",meaning:"Allohim, Sen poksan, Senga hamd bo‘lsin; isming barakotli, ulug‘liging yuksak, Sendan boshqa iloh yo‘q."},
+ {id:"ruku",title:"Ruku tasbehi",ar:"سُبْحَانَ رَبِّيَ الْعَظِيمِ",latin:"Subhana robbiyal-’aziym",meaning:"Ulug‘ Rabbim barcha nuqsonlardan pokdir."},
+ {id:"rise",title:"Rukudan turish",ar:"سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ",latin:"Sami’allohu liman hamidah",meaning:"Alloh Unga hamd aytgan kishini eshitdi."},
+ {id:"hamd",title:"Hamd",ar:"رَبَّنَا لَكَ الْحَمْدُ",latin:"Robbana lakal-hamd",meaning:"Rabbimiz, hamd Senga xosdir."},
+ {id:"sajda",title:"Sajda tasbehi",ar:"سُبْحَانَ رَبِّيَ الْأَعْلَى",latin:"Subhana robbiyal-a’la",meaning:"Eng oliy Rabbim barcha nuqsonlardan pokdir."},
+ {id:"tashahhud",title:"Attahiyyat",ar:"التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",latin:"Attahiyyatu lillahi vas-solavatu vat-toyyibat...",meaning:"Barcha salomlar, ibodatlar va pok so‘zlar Alloh uchundir. Payg‘ambarga, bizga va solih bandalarga salom bo‘lsin. Allohdan boshqa iloh yo‘qligiga va Muhammad Uning bandasi va elchisi ekaniga guvohlik beraman."},
+ {id:"salam",title:"Salom",ar:"السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",latin:"Assalomu alaykum va rohmatulloh",meaning:"Sizlarga Allohning salomi va rahmati bo‘lsin."}
+];
+const QURAN_CLIPS=[
+ {name:"Fotiha — الفاتحة",surah:1,meaning:"Mehribon va rahmli Alloh nomi bilan. Hamd olamlarning Rabbi Allohgadir. U mehribon va rahmlidir, jazo kunining Egasi. Faqat Sengagina ibodat qilamiz va Sendangina yordam so‘raymiz. Bizni to‘g‘ri yo‘lga hidoyat qil: ne’mat berganlaring yo‘liga, g‘azabga uchraganlar va adashganlar yo‘liga emas."},
+ {name:"Ixlos — الإخلاص",surah:112,meaning:"Ayting: U Alloh yagonadir. Alloh behojatdir. U tug‘magan va tug‘ilmagan. Unga hech kim teng emas."}
+];
+function prayerSegments(topic){
+ const cy=lang==="uz-Cyrl";
+ return (SCHOOL_PARTS[topic]||[]).map(([name,n],i)=>({
+  name:cy?({"Sunnat":"Суннат","Farz":"Фарз","Vitr (vojib)":"Витр (вожиб)","Qazo farz":"Қазо фарз","Sunnat (g‘ayri muakkad)":"Суннат (ғайри муаккад)"}[name]||name):name,
+  count:n,index:i
+ }));
+}
+function schoolExtra(root,topic){
+ const t=schoolT(),cy=lang==="uz-Cyrl";
+ if(topic>=2){
+  const seg=el("section","school-extra");
+  seg.append(el("h3","",cy?"Суннат, фарз ва ракъатлар":"Sunnat, farz va rak’atlar"));
+  const desc=el("p","",cy?"Ҳар бир қисм алоҳида ният ва такбир билан бошланади.":"Har bir qism alohida niyat va takbir bilan boshlanadi.");
+  seg.append(desc);
+  prayerSegments(topic).forEach(({name,count,index})=>{
+   const item=el("div","school-rakat");
+   item.append(el("strong","",`${index+1}. ${name} — ${count} ${cy?"ракъат":"rak’at"}`));
+   const intention=cy?
+    `Қалбингизда Аллоҳ учун ${t.tabs[topic]} намозининг ${count} ракъат ${name.toLowerCase()} қисмини ўқишни ният қилинг. Сўнг «Аллоҳу акбар» деб бошланг.`:
+    `Qalbingizda Alloh uchun ${t.tabs[topic]} namozining ${count} rak’at ${name.toLowerCase()} qismini o‘qishni niyat qiling. So‘ng «Allohu akbar» deb boshlang.`;
+   item.append(el("p","",intention));
+   item.append(el("p","",cy?
+    `1–2-ракъат: Фотиҳа ва қўшимча сура, руку, икки сажда. ${count>2?"Иккинчи ракъатдан кейин ўтириш. ":""}Охирги ўтиришда ташаҳҳуд, саловат ва дуодан кейин салом.`
+    :`1–2-rak’at: Fotiha va qo‘shimcha sura, ruku, ikki sajda. ${count>2?"Ikkinchi rak’atdan keyin o‘tirish. ":""}Oxirgi o‘tirishda tashahhud, salovat va duodan keyin salom.`));
+   seg.append(item);
+  });
+  root.append(seg);
+ }
+ const phrases=el("section","school-extra");
+ phrases.append(el("h3","",cy?"Арабча зикрлар ва маънолари":"Arabcha zikrlar va ma’nolari"));
+ for(const p of PHRASES){
+  const row=el("details","school-phrase");
+  const sum=el("summary","",p.title);row.append(sum);
+  const arabic=el("p","school-phrase-ar",p.ar);arabic.lang="ar";arabic.dir="rtl";
+  row.append(arabic,el("p","",p.latin),el("p","",p.meaning));phrases.append(row);
+ }
+ root.append(phrases);
+ const audio=el("section","school-extra");
+ audio.append(el("h3","",cy?"Қуръон тиловати — қори овози":"Qur’on tilovati — qori ovozi"));
+ audio.append(el("p","",cy?"Мишарий Рашид Алафасий. Интернет талаб қилинади.":"Mishari Rashid Alafasy. Internet talab qilinadi."));
+ for(const clip of QURAN_CLIPS){
+  const item=el("div","school-rakat");
+  item.append(el("strong","",clip.name));
+  const player=el("audio","school-audio-player");player.controls=true;player.preload="none";
+  player.src=`https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${clip.surah}.mp3`;
+  player.addEventListener("error",()=>{status.textContent=cy?"Аудиони юклаб бўлмади. Интернетни текширинг.":"Audio yuklanmadi. Internetni tekshiring."});
+  const status=el("small","school-audio-status","");
+  item.append(player,status,el("p","",clip.meaning));audio.append(item);
+ }
+ root.append(audio);
+ const notice=el("p","school-caution",cy?
+ "Эслатма: аёллар ва эркаклар намозининг айрим ҳаракатларида ҳанафий фиқҳида тафовутлар бор. Тасвирий ҳаракатлар ҳали диний мутахассис томонидан тасдиқланмаган; уларни тўлиқ 3D дарс деб қабул қилманг.":
+ "Eslatma: ayollar va erkaklar namozining ayrim harakatlarida hanafiy fiqhida tafovutlar bor. Tasviriy harakatlar hali diniy mutaxassis tomonidan tasdiqlanmagan; ularni to‘liq 3D dars deb qabul qilmang.");
+ root.append(notice);
+}
+
+function prayerIllustration(gender,pose){
+ // Original scalable vector character. Side-view poses are illustrated, not religiously certified 3D.
+ const woman=gender==="women",garment=woman?"#557c85":"#e8d9bc",shade=woman?"#31515d":"#bba57c";
+ const standing=`<g class="avatar-body"><path d="M131 97Q160 84 188 97L${woman?"207 253 113 253":"195 198 122 198"}Z" fill="${garment}" stroke="${shade}" stroke-width="3"/>
+ <path d="M132 110Q119 139 141 163L155 152M188 110Q200 139 177 163L163 152" fill="none" stroke="${garment}" stroke-width="16" stroke-linecap="round"/>
+ <path d="M141 ${woman?250:196}L138 286M178 ${woman?250:196}L181 286" stroke="${shade}" stroke-width="18" stroke-linecap="round"/>
+ <path d="M137 286L116 291M181 286L204 291" stroke="#b7a17c" stroke-width="11" stroke-linecap="round"/></g>`;
+ const bow=`<g><path d="M129 116L202 148L207 179L139 148Z" fill="${garment}" stroke="${shade}" stroke-width="3"/>
+ <path d="M198 149L194 195M144 147L140 194" stroke="${garment}" stroke-width="14" stroke-linecap="round"/>
+ <path d="M140 194L137 286M194 194L197 286" stroke="${shade}" stroke-width="18" stroke-linecap="round"/>
+ <path d="M137 286L116 291M197 286L216 291" stroke="#b7a17c" stroke-width="10" stroke-linecap="round"/></g>`;
+ const prostrate=`<g><path d="M89 236Q130 177 180 223L202 244L176 264L108 259Z" fill="${garment}" stroke="${shade}" stroke-width="3"/>
+ <path d="M111 251L79 277M182 251L211 277" stroke="${garment}" stroke-width="17" stroke-linecap="round"/>
+ <path d="M180 263L167 281L193 285M110 258L126 282L146 285" fill="none" stroke="${shade}" stroke-width="17" stroke-linecap="round"/></g>`;
+ const seated=`<g><path d="M127 177L189 177L201 241L129 241Z" fill="${garment}" stroke="${shade}" stroke-width="3"/>
+ <path d="M135 236L101 269L174 276M190 237L213 266L161 278" fill="none" stroke="${garment}" stroke-width="18" stroke-linecap="round"/>
+ <path d="M137 188L122 226M188 188L197 228" stroke="${garment}" stroke-width="13" stroke-linecap="round"/></g>`;
+ const body=pose===2?bow:pose===3?prostrate:pose===4?seated:standing;
+ const head=pose===2?{x:216,y:132}:pose===3?{x:73,y:262}:pose===4?{x:159,y:157}:{x:159,y:68};
+ const hijab=woman?`<path d="M${head.x-23} ${head.y-6}Q${head.x} ${head.y-38} ${head.x+23} ${head.y-6}L${head.x+26} ${head.y+31}Q${head.x} ${head.y+40} ${head.x-27} ${head.y+31}Z" fill="#244956" stroke="#e8c780" stroke-width="2"/>`:"";
+ const cap=woman?"":`<path d="M${head.x-19} ${head.y-13}Q${head.x} ${head.y-31} ${head.x+19} ${head.y-13}Z" fill="#f4e6c7"/>`;
+ return `<svg class="prayer-avatar" viewBox="0 0 320 315" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${woman?"Ayol":"Erkak"} namoz harakatining sxematik tasviri">
+ <defs><linearGradient id="avatar-floor" x1="0" x2="1"><stop stop-color="#b68d4e"/><stop offset=".5" stop-color="#f1d49a"/><stop offset="1" stop-color="#b68d4e"/></linearGradient></defs>
+ <path d="M35 296L285 296L304 309L16 309Z" fill="#18424c" stroke="url(#avatar-floor)" stroke-width="2"/>
+ <ellipse cx="160" cy="295" rx="95" ry="7" fill="#000" opacity=".18"/>
+ <g class="prayer-avatar-figure">${body}
+ ${hijab}<circle cx="${head.x}" cy="${head.y}" r="19" fill="#d9b48a" stroke="#8b674a" stroke-width="2"/>${cap}
+ <path d="M${head.x+5} ${head.y-2}l3 1" stroke="#493a30" stroke-width="2" stroke-linecap="round"/>
+ </g></svg>`;
+}
+
+const PRAYER_GUIDE={
+ "uz-Latn":[
+  ["Tik turing, qiblaga yuzlaning, qalbingizda qaysi namoz va qaysi rak’atni o‘qishingizni belgilang.","Takbir: اللّٰهُ أَكْبَرُ — Allohu akbar.","Qo‘llar namoz boshlanishida ko‘tariladi. Hanafiy fiqhida erkak va ayol qo‘l holatlarining ayrim tafsilotlari farq qiladi."],
+  ["Qiyomda gavdani tik, nigohni sajda joyiga qaratib turing.","Avval sano, so‘ng Fotiha; kerakli rak’atlarda Fotiha ortidan qo‘shimcha sura o‘qiladi.","Farzning uchinchi va to‘rtinchi rak’atidagi qiroat sunnat namozidan farq qiladi."],
+  ["Rukuda belni egib, qo‘llarni tizzalarga qo‘ying.","سُبْحَانَ رَبِّيَ الْعَظِيمِ — Subhana robbiyal-’aziym (odatda uch marta).","So‘ng Sami’allohu liman hamidah deb tik turing, Robbana lakal-hamd ayting."],
+  ["Sajdaga tushib, peshona va burunni, kaftlar, tizzalar va oyoq uchlarini yerga qo‘ying.","سُبْحَانَ رَبِّيَ الْأَعْلَى — Subhana robbiyal-a’la (odatda uch marta).","Ikki sajda orasida xotirjam o‘tiring, keyin ikkinchi sajdani ado eting."],
+  ["Oxirgi o‘tirishda Attahiyyat, salovat va duo o‘qing.","السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ — Assalomu alaykum va rohmatulloh.","O‘ng va chap tomonga salom berib namozni yakunlang."]
+ ],
+ "uz-Cyrl":[
+  ["Тик туринг, қиблага юзланинг, қалбингизда қайси намоз ва қайси ракъатни ўқишингизни белгиланг.","Такбир: اللّٰهُ أَكْبَرُ — Аллоҳу акбар.","Қўллар намоз бошланишида кўтарилади. Ҳанафий фиқҳида эркак ва аёл қўл ҳолатларининг айрим тафсилотлари фарқ қилади."],
+  ["Қиёмда гавдани тик, нигоҳни сажда жойига қаратиб туринг.","Аввал сано, сўнг Фотиҳа; керакли ракъатларда Фотиҳадан кейин қўшимча сура ўқилади.","Фарзнинг учинчи ва тўртинчи ракъатидаги қироат суннат намозидан фарқ қилади."],
+  ["Рукуда белни эгиб, қўлларни тиззаларга қўйинг.","سُبْحَانَ رَبِّيَ الْعَظِيمِ — Субҳана роббийал-’азийм (одатда уч марта).","Сўнг Самиъаллоҳу лиман ҳамидаҳ деб тик туринг, Роббана лакал-ҳамд айтинг."],
+  ["Саждага тушиб, пешона ва бурунни, кафтлар, тиззалар ва оёқ учларини ерга қўйинг.","سُبْحَانَ رَبِّيَ الْأَعْلَى — Субҳана роббийал-а’ла (одатда уч марта).","Икки сажда орасида хотиржам ўтиринг, кейин иккинчи саждани адо этинг."],
+  ["Охирги ўтиришда Аттаҳийят, саловат ва дуо ўқинг.","السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ — Ассалому алайкум ва роҳматуллоҳ.","Ўнг ва чап томонга салом бериб намозни якунланг."]
+ ]
+};
+
+// Procedural 3D cartoon model; loaded only when a lesson needs it.
+let avnivo3DLoad=null,avnivo3DStop=null;
+function getThree(){
+ if(window.THREE)return Promise.resolve(window.THREE);
+ if(!avnivo3DLoad)avnivo3DLoad=new Promise((resolve,reject)=>{
+  const tag=document.createElement('script');tag.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r149/three.min.js';
+  tag.onload=()=>window.THREE?resolve(window.THREE):reject(new Error('3D kutubxonasi yuklanmadi'));
+  tag.onerror=()=>reject(new Error('3D uchun internet zarur'));
+  document.head.append(tag);
+ }).catch(e=>{avnivo3DLoad=null;throw e});
+ return avnivo3DLoad;
+}
+function drawPrayer3D(host,gender,pose){
+ if(avnivo3DStop){avnivo3DStop();avnivo3DStop=null}
+ const status=host.parentElement.querySelector('.school-demo-note');
+ getThree().then(T=>{
+  if(!host.isConnected)return;
+  let renderer;
+  try{renderer=new T.WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});}catch(e){status.textContent='3D qo‘llab-quvvatlanmadi; 2D tasvir ko‘rsatilmoqda.';return}
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
+  const w=Math.max(240,Math.round(host.clientWidth||300)),h=300;
+  renderer.setSize(w,h);renderer.outputColorSpace=T.SRGBColorSpace;
+  renderer.domElement.setAttribute('aria-label',gender==='women'?'Ayol 3D modeli':'Erkak 3D modeli');
+  renderer.domElement.className='school-3d-canvas';host.append(renderer.domElement);host.classList.add("has-real-3d");
+  const scene=new T.Scene(),camera=new T.PerspectiveCamera(33,w/h,.1,100);
+  camera.position.set(3.3,2.7,6.3);camera.lookAt(0,1.15,0);
+  scene.add(new T.HemisphereLight(0xfff4da,0x274353,2.2));
+  const light=new T.DirectionalLight(0xffdf9e,2.7);light.position.set(-3,7,5);scene.add(light);
+  const mat=(hex)=>new T.MeshStandardMaterial({color:hex,roughness:.84});
+  const fabric=mat(gender==='women'?0x2b6574:0xe3d3af),pants=mat(gender==='women'?0x2b6574:0x566b76),skin=mat(0xd5a47b),gold=mat(0xd8b779),dark=mat(0x263e47);
+  function ball(parent,x,y,z,r,material,scale){const o=new T.Mesh(new T.SphereGeometry(r,20,12),material);o.position.set(x,y,z);if(scale)o.scale.set(...scale);parent.add(o);return o}
+  function limb(parent,a,b,r,material){const v1=new T.Vector3(...a),v2=new T.Vector3(...b),d=v2.clone().sub(v1);const m=new T.Mesh(new T.CylinderGeometry(r*.88,r,d.length(),12),material);m.position.copy(v1).add(v2).multiplyScalar(.5);m.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),d.normalize());parent.add(m);ball(parent,...a,r,material);ball(parent,...b,r,material)}
+  const floor=new T.Mesh(new T.CylinderGeometry(1.48,1.48,.035,64),mat(0x1b4851));floor.position.y=.015;scene.add(floor);
+  const ring=new T.Mesh(new T.TorusGeometry(1.32,.012,5,64),gold);ring.rotation.x=Math.PI/2;ring.position.y=.041;scene.add(ring);
+  const model=new T.Group();scene.add(model);
+  const positions={
+   0:{hip:[0,1.15,0],chest:[0,1.94,0],head:[0,2.42,0],shoulders:[[-.35,1.98,0],[.35,1.98,0]],elbows:[[-.43,1.57,.18],[.43,1.57,.18]],hands:[[-.12,1.56,.34],[.12,1.56,.34]],knees:[[-.2,.62,0],[.2,.62,0]],feet:[[-.22,.13,.04],[.22,.13,.04]]},
+   1:{hip:[0,1.15,0],chest:[0,1.94,0],head:[0,2.42,0],shoulders:[[-.35,1.98,0],[.35,1.98,0]],elbows:[[-.42,1.62,.14],[.42,1.62,.14]],hands:[[-.1,1.62,.32],[.1,1.62,.32]],knees:[[-.2,.62,0],[.2,.62,0]],feet:[[-.22,.13,.04],[.22,.13,.04]]},
+   2:{hip:[0,1.15,0],chest:[0,1.25,.8],head:[0,1.26,1.48],shoulders:[[-.35,1.28,.8],[.35,1.28,.8]],elbows:[[-.4,.95,.65],[.4,.95,.65]],hands:[[-.22,.68,.28],[.22,.68,.28]],knees:[[-.2,.62,0],[.2,.62,0]],feet:[[-.22,.13,.04],[.22,.13,.04]]},
+   3:{hip:[0,.72,-.24],chest:[0,.65,.44],head:[0,.30,1.05],shoulders:[[-.32,.7,.44],[.32,.7,.44]],elbows:[[-.46,.36,.7],[.46,.36,.7]],hands:[[-.42,.11,1.0],[.42,.11,1.0]],knees:[[-.28,.15,-.43],[.28,.15,-.43]],feet:[[-.28,.12,-.93],[.28,.12,-.93]]},
+   4:{hip:[0,.48,-.15],chest:[0,1.2,-.04],head:[0,1.68,.03],shoulders:[[-.3,1.2,-.04],[.3,1.2,-.04]],elbows:[[-.38,.83,.2],[.38,.83,.2]],hands:[[-.25,.55,.47],[.25,.55,.47]],knees:[[-.32,.21,.56],[.32,.21,.56]],feet:[[-.25,.12,-.42],[.25,.12,-.42]]}
+  };
+  const p=positions[Math.min(Math.max(pose,0),4)];
+  limb(model,p.hip,p.chest,.27,fabric);
+  ball(model,...p.chest,.34,fabric,[1.1,1.2,.73]);
+  if(gender==='women')ball(model,...p.hip,.4,fabric,[1.15,1.3,1.0]);
+  else ball(model,...p.hip,.29,fabric,[1.1,.85,.85]);
+  for(let i=0;i<2;i++){
+   limb(model,p.shoulders[i],p.elbows[i],.105,fabric);
+   limb(model,p.elbows[i],p.hands[i],.085,skin);
+   const hip=[i===0?-.2:.2,p.hip[1],p.hip[2]];
+   limb(model,hip,p.knees[i],.14,pants);limb(model,p.knees[i],p.feet[i],.115,pants);
+  }
+  const head=ball(model,...p.head,.24,skin,[.88,1.07,.92]);
+  if(gender==='women'){
+   const hood=ball(model,p.head[0],p.head[1]+.07,p.head[2]-.08,.275,dark,[1.06,1.2,.95]);
+   const face=ball(model,p.head[0],p.head[1]-.02,p.head[2]+.17,.175,skin,[.93,1.13,.65]);
+  }else{
+   const cap=ball(model,p.head[0],p.head[1]+.19,p.head[2],.25,gold,[1.02,.35,1.02]);
+  }
+  // Cartoon face: eyes and mouth on the forward (+z) surface.
+  for(const x of [-.08,.08])ball(model,p.head[0]+x,p.head[1]+.025,p.head[2]+.216,.014,dark);
+  const mouth=ball(model,p.head[0],p.head[1]-.09,p.head[2]+.218,.017,dark,[1.8,.35,.5]);
+  const shadow=new T.Mesh(new T.CircleGeometry(.9,32),new T.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.1}));shadow.rotation.x=-Math.PI/2;shadow.position.y=.043;scene.add(shadow);
+  let raf=0,stopped=false,angle=0;
+  function frame(){if(stopped)return;angle+=.008;model.rotation.y=Math.sin(angle)*.18;renderer.render(scene,camera);raf=requestAnimationFrame(frame)}
+  frame();
+  const cleanup=()=>{stopped=true;cancelAnimationFrame(raf);scene.traverse(o=>{if(o.geometry)o.geometry.dispose();if(o.material)o.material.dispose()});renderer.dispose();renderer.domElement.remove()};
+  avnivo3DStop=cleanup;
+  status.textContent='3D multfilm prototipi: bu diniy jihatdan tasdiqlangan to‘liq harakat animatsiyasi emas.';
+ }).catch(()=>{if(host.isConnected)status.textContent='Internet yo‘q: 2D harakat tasviri ko‘rsatilmoqda.'});
+}
+function renderPrayer(){
+ if(avnivo3DStop){avnivo3DStop();avnivo3DStop=null}
+ $("prayerContent").querySelectorAll("audio").forEach(a=>a.pause());
+ const t=schoolT(),root=$("prayerContent");
+ $("prayerBack").textContent=t.back;
+ root.replaceChildren();
+ const heading=el("div","school-heading");
+ heading.append(el("div","learn-eyebrow","AVNIVO · هداية"),el("h1","",t.title),el("p","",schoolLevel===0?t.choose:schoolLevel===1?(schoolGender==="men"?t.menDesc:t.womenDesc):t.guide));
+ root.append(heading);
+ if(schoolLevel===0){
+  const grid=el("div","school-choices");
+  ["men","women"].forEach(g=>{
+   const btn=el("button","school-gender");btn.type="button";btn.dataset.gender=g;
+   const art=el("span","school-gender-art school-portrait");
+   const photo=el("img","");photo.src=AVNIVO_PORTRAITS[g];photo.alt=g==="men"?"Namoz kiyimidagi erkak 3D multfilm personaji":"Hijobli ayol 3D multfilm personaji";photo.loading="lazy";art.append(photo);
+   btn.append(art,el("strong","",t[g]),el("small","",t[g+"Desc"]));grid.append(btn);
+  });root.append(grid);return;
+ }
+ if(schoolLevel===1){
+  const list=el("div","school-topics");
+  t.tabs.forEach((name,i)=>{
+   const btn=el("button","school-topic");btn.type="button";btn.dataset.topic=i;
+   const n=el("span","school-topic-num",String(i+1).padStart(2,"0"));
+   const title=el("span","school-topic-title");title.append(el("strong","",name),el("small","",PRAYER_AR[i]));
+   btn.append(n,title,el("span","school-topic-arrow","›"));list.append(btn);
+  });root.append(list);return;
+ }
+ const topic=schoolTopic,lines=t.explanations[topic];
+ const hero=el("div","school-lesson-title");hero.append(el("div","school-ar",PRAYER_AR[topic]),el("h2","",t.tabs[topic]),el("p","",t.info));root.append(hero);
+ const tabs=el("div","school-stepper");
+ lines.forEach((_,i)=>{const b=el("button",i===schoolStep?"current":"",String(i+1));b.type="button";b.dataset.step=i;b.setAttribute("aria-label",`${t.step} ${i+1}`);tabs.append(b)});root.append(tabs);
+ const card=el("article","school-step-card");
+ card.append(el("span","learn-eyebrow",`${t.step} ${schoolStep+1} / ${lines.length}`));
+ card.append(el("p","school-instruction",lines[schoolStep]));
+ const posture=Math.min(schoolStep,4);
+ const demo=el("div","school-demo");
+ demo.append(el("div","school-demo-label",t.posture));
+ const scene=el("div","school-stage");
+ const figure=el("div","school-illustration");
+ figure.innerHTML=prayerIllustration(schoolGender,posture);
+ scene.append(figure);demo.append(scene,el("small","school-demo-note",lang==="uz-Cyrl"?"Асл 3D эмас — мустақил чизилган ҳаракат иллюстрацияси.":"Haqiqiy 3D emas — original harakat illyustratsiyasi."));if(topic>=2){card.append(demo);drawPrayer3D(figure,schoolGender,posture)}
+ if(topic>=2){
+  const guide=el("div","school-motion-guide");
+  const descriptions=PRAYER_GUIDE[lang]||PRAYER_GUIDE["uz-Latn"];
+  descriptions[posture].forEach(line=>guide.append(el("p","",line)));
+  card.append(guide);
+ }
+ const note=el("div","school-audio");note.append(el("strong","",t.audio),el("p","",lang==="uz-Cyrl"?"Қуйида Фотиҳа ва Ихлос сураларининг қори овозидаги аудиоси бор.":"Quyida Fotiha va Ixlos suralarining qori ovozidagi audiosi bor."));card.append(note);
+ const controls=el("div","school-controls");
+ const prev=el("button","",t.back);prev.type="button";prev.dataset.move="-1";prev.disabled=schoolStep===0;
+ const next=el("button","",schoolStep===lines.length-1?(lang==="uz-Cyrl"?"Тугатиш":"Tugatish"):(lang==="uz-Cyrl"?"Кейингиси →":"Keyingisi →"));next.type="button";next.dataset.move="1";
+ controls.append(prev,next);card.append(controls);root.append(card);schoolExtra(root,topic);
+}
+$("prayerContent").addEventListener("click",e=>{
+ const gender=e.target.closest("[data-gender]");
+ if(gender){schoolGender=gender.dataset.gender;schoolTopic=0;schoolStep=0;schoolNav(1);return}
+ const topic=e.target.closest("[data-topic]");
+ if(topic){schoolTopic=Number(topic.dataset.topic);schoolStep=0;schoolNav(2);return}
+ const step=e.target.closest("[data-step]");
+ if(step){schoolStep=Number(step.dataset.step);schoolNav(2);return}
+ const move=e.target.closest("[data-move]");
+ if(move){const next=schoolStep+Number(move.dataset.move);if(next>=schoolT().explanations[schoolTopic].length){schoolNav(1);return}schoolStep=Math.max(0,next);schoolNav(2)}
+});
+$("prayerBack").addEventListener("click",()=>history.back());
+function openPrayer(){schoolLevel=0;schoolStep=0;schoolNav(0)}
+$("prayerNav").addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");if(!b)return;
+ const id=b.dataset.go;
+ if(id==="home"){navigate("home");return}
+ renderDetail(id);history.pushState({page:"detail",id},"",location.href);show("detail");
+});
+const DETAIL_IDS=["prayer","book","compass","beads","ai","times","reminders","settings","dates"];
+function detailText(id){
+ const cy=lang==="uz-Cyrl";
+ const text={
+ "prayer":[0,cy?"Намозни ўрганиш бўлими кейинги босқичда ишга туширилади.":"Namozni o‘rganish bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "book":[1,cy?"Дуолар ва суралар бўлими кейинги босқичда ишга туширилади.":"Duolar va suralar bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "compass":[3,cy?"Қибла компаси кейинги босқичда ишга туширилади.":"Qibla kompasi keyingi bosqichda ishga tushiriladi."],
+ "beads":[4,cy?"Тасбеҳ бўлими кейинги босқичда ишга туширилади.":"Tasbeh bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "ai":[0,cy?"AI савол-жавоб бўлими кейинги босқичда ишга туширилади.":"AI savol-javob bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "times":[1,cy?"Намоз вақтлари кейинги босқичда уланади.":"Namoz vaqtlari keyingi bosqichda ulanadi."],
+ "reminders":[4,cy?"Эслатмалар кейинги босқичда уланади.":"Eslatmalar keyingi bosqichda ulanadi."],
+ "settings":[0,cy?"Созламалар кейинги босқичда уланади.":"Sozlamalar keyingi bosqichda ulanadi."],
+ "dates":[1,cy?"Сана тақвими кейинги босқичда уланади.":"Sana taqvimi keyingi bosqichda ulanadi."]
+ };
+ const headings={
+ times:cy?"Намоз вақтлари":"Namoz vaqtlari",
+ reminders:cy?"Эслатмалар":"Eslatmalar",
+ settings:cy?"Созламалар":"Sozlamalar",
+ dates:cy?"Бугунги сана":"Bugungi sana"
+ };
+ const [i,desc]=text[id]||text.ai;
+ return {title:headings[id]||tr().items[i].title,desc,icon:icon[id]||icon.ai};
+}
+function renderDetail(id){
+ updateActiveTab(id);
+ const item=detailText(id);
+ $("detailTitle").textContent=item.title;
+ $("detailDesc").textContent=item.desc;
+ $("detailSymbol").innerHTML=item.icon;
+ $("detailBack").textContent=tr().back;
+}
+$("home").addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");if(!b)return;
+ const id=b.dataset.go;
+ if(id==="home")return;
+ if(id==="prayer"){openPrayer();return}
+ if(id==="profile"){$("name").value=person?.name||"";$("age").value=person?.age||"";navigate("profile");return}
+ renderDetail(id);history.pushState({page:"detail",id},"",location.href);show("detail");
+});
+$("detailBack").addEventListener("click",()=>history.back());
+$("detailNav").addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");if(!b)return;
+ const id=b.dataset.go;
+ if(id==="home"){navigate("home");return}
+ if(id==="prayer"){openPrayer();return}
+ if(history.state?.page==="detail"&&history.state?.id===id)return;
+ renderDetail(id);history.pushState({page:"detail",id},"",location.href);show("detail");
+});
+
+$("language").addEventListener("change",e=>setLanguage(e.target.value));
+$("profileForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=$("name").value.trim().replace(/\s+/g," "),age=Number($("age").value);
+ if([...name].length<2||[...name].length>40){$("error").textContent=tr().errorName;return}
+ if(!$("age").value.trim()||!Number.isInteger(age)||age<5||age>120){$("error").textContent=tr().errorAge;return}
+ person={name,age,lang};$("error").textContent="";navigate("tour",0);
+});
+$("next").addEventListener("click",()=>{
+ if($("tour").querySelector(".center").getAnimations({subtree:false}).length)return;
+ if(step<ids.length-1)navigate("tour",step+1);
+ else{person.lang=lang;safeSet(KEY,JSON.stringify(person));navigate("home")}
+});
+$("back").addEventListener("click",()=>history.back());
+window.addEventListener("popstate",e=>{
+ if(!ready)return;
+ const s=e.state;
+ if(s&&["profile","tour","home","detail","prayerLearn"].includes(s.page)){
+  const nextIndex=Math.max(0,Math.min(ids.length-1,Number(s.index)||0));
+  if(s.page==="tour"&&page==="tour"){switchTour(nextIndex,nextIndex>=step?1:-1);return}
+  ++tourSequence;
+  step=nextIndex;
+  if(s.page==="tour")renderTour();
+  if(s.page==="home")renderHome();
+  if(s.page==="detail")renderDetail(s.id||"ai");
+  if(s.page==="prayerLearn"){schoolLevel=Number(s.level)||0;schoolGender=s.gender==="women"?"women":"men";schoolTopic=Number(s.topic)||0;schoolStep=Number(s.step)||0;renderPrayer()}
+  show(s.page);
+ }else{
+  // Keep Android back predictable even if history returns to a pre-app entry.
+  if(page==="tour"){++tourSequence;step=0;show("profile")}
+ }
+});
+function begin(){
+ if(ready)return;ready=true;
+
+
+ $("splash").hidden=true;
+ person=saved();
+ const initial=person?"home":"profile";
+ lang=person?.lang||(I18N[safeGet(LANG_KEY)]?safeGet(LANG_KEY):"uz-Latn");
+ setLanguage(lang);
+ renderHome();
+ history.replaceState({page:initial,index:0},"",location.href);
+ if(person)renderHome();
+ show(initial);
+}
+window.setTimeout(begin,3000);
+</script>
+</body>
+</html>

@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071c25"><meta name="description" content="AVNIVO HIDAYAH — islomiy bilim va ibodatni o‘rganish">
+<title>AVNIVO HIDAYAH</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;--gold:#f1d18e;--muted:#c1d2d1;--deep:#061a23;--speed:390ms}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--deep);color:#f9f6ec}
+button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+[hidden]{display:none!important}
+#splash{position:fixed;inset:0;z-index:100;background:#050d1b;display:flex;align-items:center;justify-content:center}
+#splash img{width:100%;height:100%;object-fit:contain;display:block}
+.screen{position:fixed;inset:0;min-height:100svh;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top)) 22px calc(20px + env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 20%,#214955 0%,#0b2a34 43%,#04151d 100%);opacity:0;transform:translate3d(18px,0,0) scale(.985);transition:opacity var(--speed) ease,transform var(--speed) cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.screen.active{opacity:1;transform:none;pointer-events:auto}
+.screen.leaving{opacity:0;transform:translate3d(-15px,0,0) scale(.99)}
+.screen::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cpath d='M48 1L72 24 95 48 72 72 48 95 24 72 1 48 24 24Z M48 19L77 48 48 77 19 48Z' stroke='%23e7c47b' fill='none' stroke-width='1'/%3E%3C/svg%3E");background-size:96px}
+.screen::after{content:"";position:fixed;z-index:-1;inset:40% -20% -20%;background:radial-gradient(ellipse at 50% 100%,#d1aa5533,transparent 65%);pointer-events:none}
+.top{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:46px;flex-shrink:0}
+.logo{font-size:13px;font-weight:800;letter-spacing:.13em;color:var(--gold);white-space:nowrap}
+.back{border:1px solid #d7bd8170;background:#092833bd;color:#fff0d0;padding:11px 13px;border-radius:13px;min-height:43px}
+.progress{display:flex;justify-content:center;gap:5px;flex:1}
+.progress i{width:clamp(11px,4vw,23px);height:4px;border-radius:4px;background:#ffffff45;transition:background .3s,transform .3s}
+.progress i.on{background:var(--gold);transform:scaleY(1.2)}
+.center{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;max-width:520px;width:100%;margin:auto}
+.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:15px}
+h1{font-size:clamp(27px,7vw,38px);line-height:1.18;margin:0 0 17px;font-weight:760;letter-spacing:-.025em}
+.desc{font-size:16px;line-height:1.7;color:#d6e1df;max-width:365px;margin:0}
+.arabic{font-family:Georgia,serif;font-size:29px;color:#f6d58d;direction:rtl;margin:5px 0 12px;text-shadow:0 0 17px #f2bb5770}
+.art{width:min(67vw,270px);aspect-ratio:1;position:relative;display:grid;place-items:center;margin:5px auto 24px}
+.art::before,.art::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.art::before{inset:3%;border:1px solid #d5b16b77;box-shadow:0 0 0 12px #e3bd6910,0 0 45px #d9ac5736}
+.art::after{inset:13%;border:1px dashed #e7c8887a;animation:spin 32s linear infinite}
+.art svg{width:61%;height:61%;stroke:#f6d68e;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 12px #dca74d88);animation:breathe 3.6s ease-in-out infinite}
+.art .star{position:absolute;color:#f7d99c;font-size:15px;filter:drop-shadow(0 0 9px #ffce65);animation:twinkle 2.6s ease-in-out infinite}
+.art .star.a{top:6%;left:20%}.art .star.b{right:8%;top:32%;animation-delay:.7s}.art .star.c{bottom:8%;left:31%;animation-delay:1.4s}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes breathe{50%{transform:scale(1.045);filter:drop-shadow(0 0 23px #f0c26f)}}@keyframes twinkle{50%{opacity:.3;transform:scale(.65)}}
+.foot{position:relative;z-index:1;width:100%;max-width:520px;margin:22px auto 0;flex-shrink:0}
+.primary{width:100%;border:1px solid #ffe7ad;background:linear-gradient(135deg,#f5dca5,#c9a15c);color:#1c2b2a;font-weight:800;padding:16px;border-radius:16px;min-height:56px;font-size:16px}
+.primary:active{transform:scale(.99)}
+.form-title{width:100%;text-align:left;margin:18px 0 6px}
+.form-title p{color:var(--muted);line-height:1.6;margin:0}
+.form-area{width:100%;text-align:left;margin:23px 0 10px}
+label{display:block;color:#f8e6c3;font-size:14px;margin:0 0 8px}
+input,select{display:block;width:100%;min-height:53px;padding:13px 15px;border:1px solid #b8a4759a;border-radius:14px;background:#071f2bcf;color:#fff;font-size:16px;margin-bottom:20px}
+input::placeholder{color:#a8b9b6}
+select{appearance:auto}
+.hint{color:#c2d2cf;font-size:13px;line-height:1.6;margin:0 0 10px}
+.error{color:#ffb9ad;font-size:14px;min-height:22px;margin:0 0 9px}
+.home-title{position:relative;z-index:1;max-width:620px;width:100%;margin:35px auto 22px}
+.home-title p{color:#d4e0de;line-height:1.65}
+.tiles{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:620px;width:100%;margin:0 auto 25px}
+.tile{min-height:143px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:12px;background:linear-gradient(145deg,#17424bdf,#092631e8);border:1px solid #c6aa7290;border-radius:18px;color:#f8f2e6;padding:16px;text-align:left}
+.tile svg{height:37px;width:37px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tile strong{font-size:14px;line-height:1.45}
+.small{position:relative;z-index:1;font-size:12px;color:#c0d1cc;line-height:1.65;max-width:620px;margin:0 auto 24px}
+@media(max-height:720px){.art{width:min(46vw,180px);margin:0 auto 13px}.arabic{font-size:24px}.desc{font-size:14px}.kicker{margin-bottom:9px}}
+@media(prefers-reduced-motion:reduce){:root{--speed:0ms}.art svg,.art::after,.art .star{animation:none!important}}
+
+/* V8: individual motion for the ORIGINAL SVG icons, no replacements. */
+#tour .center{will-change:transform,opacity}
+#tour .art svg{overflow:visible;transform-origin:center;animation:iconReveal .68s cubic-bezier(.18,.9,.2,1) both}
+#tour .art svg>*{transform-box:fill-box;transform-origin:center}
+#tour .art[data-icon="ai"] svg path:first-child{animation:aiTalk 2.8s ease-in-out infinite}
+#tour .art[data-icon="ai"] svg path:nth-child(2){animation:aiLines 2.3s ease-in-out infinite}
+#tour .art[data-icon="ai"] svg path:nth-child(3){animation:aiSpark 1.8s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg path:first-child{animation:prayerRise 3.4s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg path:nth-child(2){animation:prayerDoor 3.4s ease-in-out infinite}
+#tour .art[data-icon="book"] svg path:first-child{animation:bookOpen 3s ease-in-out infinite}
+#tour .art[data-icon="book"] svg path:nth-child(2){animation:bookText 3s ease-in-out infinite}
+#tour .art[data-icon="compass"] svg path:nth-child(3){animation:needle 4s cubic-bezier(.4,0,.2,1) infinite;transform-origin:50% 50%;transform-box:view-box}
+#tour .art[data-icon="compass"] svg circle:nth-child(2){animation:compassRing 9s linear infinite;transform-origin:50% 50%;transform-box:view-box}
+#tour .art[data-icon="beads"] svg circle{animation:beadLight 2.8s ease-in-out infinite}
+#tour .art[data-icon="beads"] svg circle:nth-child(2){animation-delay:.15s}
+#tour .art[data-icon="beads"] svg circle:nth-child(3){animation-delay:.3s}
+#tour .art[data-icon="beads"] svg circle:nth-child(4){animation-delay:.45s}
+#tour .art[data-icon="beads"] svg circle:nth-child(5){animation-delay:.6s}
+#tour .art[data-icon="beads"] svg circle:nth-child(6){animation-delay:.75s}
+#tour .art[data-icon="beads"] svg circle:nth-child(7){animation-delay:.9s}
+#tour .art[data-icon="beads"] svg circle:nth-child(8){animation-delay:1.05s}
+#tour .art[data-icon="beads"] svg path{animation:beadTassel 2.8s ease-in-out infinite}
+@keyframes iconReveal{from{opacity:0;transform:scale(.78) rotate(-7deg)}to{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes aiTalk{50%{transform:scale(1.035)}}
+@keyframes aiLines{50%{opacity:.35;transform:translateX(2px)}}
+@keyframes aiSpark{50%{opacity:.3;transform:scale(.85)}}
+@keyframes prayerRise{50%{transform:translateY(-4px)}}
+@keyframes prayerDoor{50%{opacity:.5}}
+@keyframes bookOpen{50%{transform:scaleX(1.075)}}
+@keyframes bookText{50%{opacity:.4}}
+@keyframes needle{0%,100%{transform:rotate(-14deg)}45%{transform:rotate(24deg)}70%{transform:rotate(-5deg)}}
+@keyframes compassRing{to{transform:rotate(360deg)}}
+@keyframes beadLight{0%,100%{stroke:#f6d68e;filter:drop-shadow(0 0 0 transparent)}35%{stroke:#fff5d6;filter:drop-shadow(0 0 7px #ffd36b)}}
+@keyframes beadTassel{50%{transform:rotate(12deg)}}
+@media(prefers-reduced-motion:reduce){
+ #tour .art svg,#tour .art svg>*,#tour .art::after,#tour .art .star{animation:none!important}
+ #tour .center{will-change:auto}
+}
+
+/* Responsive home: every card, icon and navigation item is a real element. */
+.home-screen{padding:0;display:flex;overflow:hidden;background:#061b24}
+.home-screen::before{opacity:.13;background-size:75px}
+.home-screen::after{display:none}
+.home-scroll{position:relative;z-index:1;flex:1;overflow-y:auto;min-height:0;padding:calc(14px + env(safe-area-inset-top)) 14px 24px;scrollbar-width:thin}
+.home-header{display:flex;align-items:center;gap:9px;min-width:0;max-width:720px;margin:0 auto}
+.brand-mark{width:48px;height:56px;display:grid;place-items:center;border:2px solid #d9ae65;border-radius:24px 24px 5px 5px;font-size:27px;color:#edca84;box-shadow:0 0 13px #dfae5240;flex-shrink:0}
+.brand-copy{display:flex;flex-direction:column;min-width:0;flex:1}.brand-small{font-size:9px;letter-spacing:.3em;color:#e9d5b0}.brand-copy strong{font-family:Georgia,serif;font-size:clamp(22px,5.5vw,33px);color:#f5d696;line-height:1.08;letter-spacing:.03em}.brand-motto{font-size:10px;color:#d1d5cd;white-space:nowrap}
+.profile-card{display:flex;align-items:center;gap:6px;min-width:0;max-width:47%;padding:8px;border:1px solid #cda75f8a;background:#071d28de;border-radius:17px;color:#fff0d0;text-align:left;box-shadow:0 0 12px #c6a25624}
+.profile-card>span:nth-child(2){min-width:0;display:flex;flex-direction:column}.profile-card small{font-size:10px;color:#d4d6cf;white-space:nowrap}.profile-card strong{font-size:13px;color:#f1cd8c;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.profile-card>span:last-child{font-size:24px}.profile-icon{font-size:25px;color:#d9bb7b}
+.hero-arch{height:clamp(105px,25vh,230px);max-width:720px;margin:12px auto 8px;border:1px solid #bd985c75;border-radius:50% 50% 7px 7px / 80% 80% 7px 7px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 90%,#bb8c3b36,transparent 50%),linear-gradient(#06202c,#102c37);box-shadow:inset 0 0 24px #d6aa4633,0 0 22px #c29b4822}
+.hero-arch::before{content:"";position:absolute;inset:8px;border:1px solid #c6a46957;border-radius:inherit}
+.hero-moon{position:absolute;top:9%;left:50%;transform:translateX(-50%);font-size:40px;color:#f3d390;text-shadow:0 0 19px #f1be65;animation:moonPulse 4s ease-in-out infinite}
+.hero-mosque{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);display:flex;align-items:end;gap:8px;filter:drop-shadow(0 0 12px #c59a5670)}
+.dome{width:110px;height:70px;border-radius:70px 70px 0 0;background:linear-gradient(130deg,#b38a49,#173441 60%);border:1px solid #d5ae6b;position:relative}.dome::before{content:"☪";position:absolute;top:-29px;left:44px;color:#f2ce84;font-size:27px}.minaret{width:18px;height:100px;background:linear-gradient(90deg,#8d6b36,#102a36);border:1px solid #d7ac64;border-radius:9px 9px 0 0}
+.info-grid,.feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:720px;margin:0 auto}.info-card{display:flex;flex-direction:column;gap:5px;text-align:left;border:1px solid #c8a66c8c;border-radius:17px;background:linear-gradient(140deg,#102e38ee,#061b25);color:#f4e6c9;padding:14px;min-height:105px;box-shadow:inset 0 0 15px #d8b26012}.info-label{font-size:12px;color:#d8d9d0}.info-card strong{font-family:Georgia,serif;font-size:clamp(16px,4vw,22px);color:#f1d292}.info-card small{font-size:11px;color:#b9cbc8}
+.section-title{max-width:720px;margin:20px auto 12px;font-family:Georgia,serif;font-size:20px;color:#f1d391}
+.feature-card{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:10px;min-height:clamp(190px,29vh,280px);padding:15px 10px 14px;background:radial-gradient(ellipse at 50% 24%,#24505a88,transparent 70%),linear-gradient(145deg,#102d36,#061c27);border:1px solid #cfa965a8;border-radius:18px;color:#f8f1e2;text-align:center;box-shadow:inset 0 0 18px #cfaa4a17,0 0 12px #cda64a1a;overflow:hidden}
+.feature-card::before{content:"";position:absolute;inset:6px;border:1px solid #a88b5450;border-radius:13px;pointer-events:none}.feature-card::after{content:"✦";position:absolute;top:2px;left:50%;transform:translateX(-50%);color:#eac47d;font-size:14px;animation:twinkle 2.7s infinite}
+.feature-icon{width:clamp(76px,21vw,126px);height:clamp(76px,21vw,126px);border:1px solid #dfbb6b9c;border-radius:50%;display:grid;place-items:center;position:relative;box-shadow:0 0 18px #c7a45635;animation:softGlow 3.8s ease-in-out infinite}
+.feature-icon::before{content:"";position:absolute;inset:7px;border:1px dashed #d7b46b80;border-radius:50%;animation:spin 30s linear infinite}.feature-icon svg{width:69%;height:69%;stroke:#f1ce87;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px #e0ad57);animation:breathe 3.6s ease-in-out infinite}
+.feature-card strong{font-family:Georgia,serif;font-size:clamp(15px,3.8vw,20px);line-height:1.2}.feature-card small{font-size:11px;line-height:1.45;color:#cbd6d3;max-width:170px}
+.bottom-nav{position:relative;z-index:5;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;flex-shrink:0;padding:10px 5px calc(7px + env(safe-area-inset-bottom));background:linear-gradient(#092630,#041923);border-top:1px solid #d5ad668a;box-shadow:0 -8px 24px #d1a34a18}
+.nav-item{position:relative;min-width:0;border:0;background:transparent;color:#cad4ce;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:5px 0;min-height:55px;font-size:clamp(9px,2.4vw,12px)}.nav-item.selected{color:#f4d48f}.nav-icon{width:29px;height:29px;display:grid;place-items:center}.nav-icon svg{width:27px;height:27px;stroke:#dfbd7d;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;animation:navFloat 3.4s ease-in-out infinite}.nav-item:nth-child(2) svg{animation-delay:.5s}.nav-item:nth-child(4) svg{animation-delay:1s}.nav-item:nth-child(5) svg{animation-delay:1.5s}
+.nav-ai{color:#f5e3b9}.nav-ai .nav-icon{width:53px;height:53px;margin-top:-28px;border-radius:50%;border:2px solid #d5b16b;background:radial-gradient(circle,#14576a,#052733);box-shadow:0 0 0 5px #cda55a26,0 0 18px #35d1de70;animation:softGlow 3s ease-in-out infinite}.nav-ai svg{width:32px;height:32px;stroke:#d6f9f4}
+@keyframes moonPulse{50%{text-shadow:0 0 32px #f6d18a;opacity:.8}}@keyframes softGlow{50%{box-shadow:0 0 23px #e2bd666b}}@keyframes navFloat{50%{transform:translateY(-3px);filter:drop-shadow(0 0 5px #d9b262)}}
+@media(max-width:350px){.brand-mark{width:38px;height:45px}.profile-card{max-width:44%;padding:6px}.brand-copy strong{font-size:20px}.feature-card{min-height:180px}.home-scroll{padding-left:10px;padding-right:10px}}
+@media(prefers-reduced-motion:reduce){.home-screen *{animation:none!important}}
+
+/* V11: preserve original onboarding and splash; matching motion for feature icons */
+.hero-arch{height:clamp(78px,16svh,145px);margin:8px auto 6px}
+.hero-moon{font-size:31px}
+.hero-mosque{transform:translateX(-50%) scale(.76);transform-origin:bottom center}
+.section-title{margin:12px auto 9px}
+.feature-card{min-height:clamp(166px,25svh,236px);gap:7px;padding:12px 9px}
+.feature-icon{width:clamp(70px,19vw,112px);height:clamp(70px,19vw,112px)}
+/* Same SVGs and individual motion as in the introduction */
+.feature-icon svg{animation:iconReveal .68s cubic-bezier(.18,.9,.2,1) both,breathe 3.6s ease-in-out .68s infinite}
+.feature-icon svg>*{transform-box:fill-box;transform-origin:center}
+.feature-icon[data-icon="ai"] svg path:first-child{animation:aiTalk 2.8s ease-in-out infinite}
+.feature-icon[data-icon="ai"] svg path:nth-child(2){animation:aiLines 2.3s ease-in-out infinite}
+.feature-icon[data-icon="prayer"] svg path:first-child{animation:prayerRise 3.4s ease-in-out infinite}
+.feature-icon[data-icon="prayer"] svg path:nth-child(2){animation:prayerDoor 3.4s ease-in-out infinite}
+.feature-icon[data-icon="prayer"] svg circle{animation:beadLight 3.4s ease-in-out infinite}
+#tour .art[data-icon="prayer"] svg circle{animation:beadLight 3.4s ease-in-out infinite}
+.feature-icon[data-icon="book"] svg path:first-child{animation:bookOpen 3s ease-in-out infinite}
+.feature-icon[data-icon="book"] svg path:nth-child(2){animation:bookText 3s ease-in-out infinite}
+.feature-icon[data-icon="compass"] svg path:nth-child(3){animation:needle 4s cubic-bezier(.4,0,.2,1) infinite;transform-origin:50% 50%;transform-box:view-box}
+.feature-icon[data-icon="compass"] svg circle:nth-child(2){animation:compassRing 9s linear infinite;transform-origin:50% 50%;transform-box:view-box}
+.feature-icon[data-icon="beads"] svg circle{animation:beadLight 2.8s ease-in-out infinite}
+.feature-icon[data-icon="beads"] svg circle:nth-child(2){animation-delay:.15s}.feature-icon[data-icon="beads"] svg circle:nth-child(3){animation-delay:.3s}.feature-icon[data-icon="beads"] svg circle:nth-child(4){animation-delay:.45s}.feature-icon[data-icon="beads"] svg circle:nth-child(5){animation-delay:.6s}.feature-icon[data-icon="beads"] svg circle:nth-child(6){animation-delay:.75s}.feature-icon[data-icon="beads"] svg circle:nth-child(7){animation-delay:.9s}.feature-icon[data-icon="beads"] svg circle:nth-child(8){animation-delay:1.05s}
+.feature-icon[data-icon="beads"] svg path{animation:beadTassel 2.8s ease-in-out infinite}
+.nav-icon{width:36px;height:36px}.nav-icon svg{width:34px;height:34px;animation:navFloat 3.4s ease-in-out infinite,navLight 4.2s ease-in-out infinite}
+.nav-ai .nav-icon{width:60px;height:60px;margin-top:-33px}.nav-ai .nav-icon svg{width:38px;height:38px}
+@keyframes navLight{50%{stroke:#ffe7b3;filter:drop-shadow(0 0 5px #cda65d)}}
+@media(max-width:350px){.nav-icon{width:32px;height:32px}.nav-icon svg{width:30px;height:30px}.nav-ai .nav-icon{width:54px;height:54px}}
+@media(prefers-reduced-motion:reduce){.feature-icon svg,.feature-icon svg>*,.nav-icon svg{animation:none!important}}
+
+/* V12 — noninteractive user info; active-tab Islamic ornament, larger icons. */
+.profile-card{cursor:default;user-select:text;max-width:49%}
+.nav-item{isolation:isolate;min-height:68px;padding:9px 1px 7px;gap:5px;border-radius:15px;transition:color .28s ease,background .28s ease}
+.nav-icon{width:43px;height:43px}
+.nav-icon svg{width:39px;height:39px}
+.nav-item.selected:not(.nav-ai){background:radial-gradient(ellipse at 50% 40%,#a87e2a27,transparent 80%);color:#ffe0a2}
+.nav-item.selected:not(.nav-ai)::before{content:"";position:absolute;inset:0;border:1px solid #e3bd77b5;border-radius:15px;box-shadow:inset 0 0 14px #e2b76129,0 0 12px #d8aa543c;pointer-events:none;animation:activeFrame 4s ease-in-out infinite}
+.nav-item.selected:not(.nav-ai)::after{content:"✦";position:absolute;top:-9px;left:50%;transform:translateX(-50%);font-size:13px;color:#f4d68e;text-shadow:0 0 8px #e5b968;pointer-events:none;animation:twinkle 2.8s ease-in-out infinite}
+.nav-item.selected .nav-icon svg{stroke:#ffe1a0;filter:drop-shadow(0 0 6px #d9ad5c)}
+.nav-ai .nav-icon{width:65px;height:65px;margin-top:-37px}
+.nav-ai .nav-icon svg{width:43px;height:43px}
+.nav-ai.selected .nav-icon{box-shadow:0 0 0 5px #d9b76755,0 0 20px #44d4dc99,0 0 30px #d9ad5b65}
+@keyframes activeFrame{50%{border-color:#f7dba6;box-shadow:inset 0 0 18px #e6c16b35,0 0 16px #e0b56065}}
+@media(max-width:350px){.nav-icon{width:37px;height:37px}.nav-icon svg{width:34px;height:34px}.nav-ai .nav-icon{width:58px;height:58px}.nav-ai .nav-icon svg{width:39px;height:39px}}
+@media(prefers-reduced-motion:reduce){.nav-item.selected::before,.nav-item.selected::after{animation:none!important}}
+#detail{padding-bottom:0}#detail .bottom-nav{margin:0 -22px;flex-shrink:0}
+
+/* V13 prayer curriculum: isolated styles, original theme and animations retained */
+#prayerLearn{padding-bottom:0}
+#prayerLearn .lesson-scroll{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:10px 0 28px;scrollbar-width:thin}
+#prayerLearn .bottom-nav{margin:0 -22px;flex-shrink:0}
+.learn-hero{position:relative;border:1px solid #d8b66b8a;border-radius:22px;padding:24px 19px;margin:12px 0 18px;overflow:hidden;background:radial-gradient(ellipse at 80% 0,#c7a14c29,transparent 60%),linear-gradient(155deg,#143b43,#071f2b)}
+.learn-hero:before{content:"";position:absolute;inset:0;opacity:.25;pointer-events:none;background:repeating-conic-gradient(from 45deg at 50% 50%,transparent 0 20deg,#cda85b24 21deg 22deg,transparent 23deg 45deg);mask-image:linear-gradient(90deg,transparent,#000)}
+.learn-hero svg{width:65px;height:65px;stroke:#f2d28e;fill:none;filter:drop-shadow(0 0 9px #e5bd6c66);animation:navFloat 3.4s ease-in-out infinite}
+.learn-hero h1{font-size:26px;margin:8px 0}.learn-hero p{line-height:1.65;color:#d3e0dd;margin:0}
+.learn-eyebrow{color:#f0d18d;font-size:12px;letter-spacing:.13em;font-weight:700}
+.learn-progress{margin:16px 0 3px;display:flex;gap:12px;align-items:center}
+.learn-progress-track{height:7px;border-radius:10px;background:#ffffff27;flex:1;overflow:hidden}
+.learn-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#a87a33,#ffe5a4);border-radius:10px;transition:width .5s}
+.learn-progress-label{color:#f2d69d;font-size:12px;white-space:nowrap}
+.learn-tabs{display:flex;gap:9px;overflow-x:auto;padding:5px 0 15px;scrollbar-width:none}
+.learn-tabs button{border:1px solid #bfa36b77;background:#0a2b35;color:#d7e2dd;padding:12px 15px;border-radius:999px;white-space:nowrap;min-height:44px;transition:background .25s,border-color .25s}
+.learn-tabs button[aria-selected="true"]{border-color:#f5d58f;background:#765b2c70;color:#fff3cf;box-shadow:0 0 12px #d6ad5b30}
+.learn-list{display:grid;gap:12px}
+.learn-card{border:1px solid #c5a56979;background:linear-gradient(140deg,#123842e8,#08242fdc);border-radius:17px;overflow:hidden;box-shadow:0 5px 20px #0002}
+.learn-card-head{display:flex;gap:13px;align-items:center;padding:17px;width:100%;background:transparent;border:0;color:#fff5de;text-align:left}
+.learn-card-num{flex-shrink:0;width:43px;height:43px;border:1px solid #e8c27d;border-radius:13px;display:grid;place-items:center;color:#f3d591;font-weight:800;background:#d9ae5710}
+.learn-card-title{flex:1;min-width:0}.learn-card-title strong{display:block;font-size:16px;line-height:1.4}.learn-card-title small{display:block;color:#b9d1cc;margin-top:5px;font-size:12px}
+.learn-chevron{color:#f0d18d;font-size:20px;transition:transform .3s}.learn-card.open .learn-chevron{transform:rotate(90deg)}
+.learn-body{padding:0 17px 18px;animation:lessonAppear .32s ease both}
+.learn-body p{line-height:1.7;color:#dce8e4;font-size:15px;margin:11px 0}
+.learn-body .arabic-verse{direction:rtl;text-align:right;font-family:serif;font-size:25px;line-height:2.1;color:#f6dfa9;background:#071e2a;padding:15px;border-radius:12px;border:1px solid #bfa46a45}
+.learn-body .translation{border-left:2px solid #d7b573;padding-left:12px;color:#e5d6b6}
+.learn-body .note{font-size:13px;color:#d4c29b;background:#d3ad5012;border-radius:12px;padding:12px}
+.learn-complete{margin-top:12px;border:1px solid #d5b879aa;border-radius:12px;background:#b68a382b;color:#ffebbd;padding:13px 15px;min-height:46px;width:100%;font-weight:700}
+.learn-complete.done{background:#215c4a;color:#d9ffe6;border-color:#78b99b}
+.learn-empty{color:#d9e3df;line-height:1.7}
+@keyframes lessonAppear{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.learn-hero svg,.learn-body{animation:none!important}}
+
+/* V14 prayer school. All surfaces inherit the approved navy/gold theme. */
+#prayerLearn .lesson-scroll{padding:14px 0 24px}
+.school-heading{text-align:center;padding:10px 8px 22px;animation:schoolEnter .5s ease both}
+.school-heading h1{font-family:Georgia,serif;color:#f4d69a;font-size:clamp(24px,6vw,32px);margin:8px 0}
+.school-heading p{color:#d4e1df;line-height:1.6;margin:0}
+.school-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.school-gender{border:1px solid #cfa963;border-radius:20px;background:linear-gradient(150deg,#173b46,#09222c);color:#ffe5b0;min-height:245px;padding:15px 10px;display:flex;align-items:center;flex-direction:column;gap:10px;box-shadow:inset 0 0 25px #d6aa2c13,0 7px 22px #0005;animation:schoolEnter .6s both}
+.school-gender:nth-child(2){animation-delay:.12s}
+.school-gender-art{width:min(100%,135px);filter:drop-shadow(0 0 10px #dfb96a88);animation:schoolFloat 3.8s ease-in-out infinite}
+.school-gender-art svg{width:100%;display:block}
+.school-gender strong{font-size:19px}.school-gender small{font-size:12px;line-height:1.5;color:#c7d6d3}
+.school-topics{display:grid;gap:11px}
+.school-topic{width:100%;min-height:80px;display:flex;align-items:center;gap:14px;text-align:left;padding:12px 16px;border:1px solid #c7a56c88;border-radius:16px;background:linear-gradient(115deg,#133a45,#08252f);color:#f5e4be;box-shadow:0 5px 17px #0003;animation:schoolEnter .5s both}
+.school-topic:nth-child(2n){animation-delay:.08s}
+.school-topic-num{width:44px;height:44px;border:1px solid #d8b777;border-radius:50%;display:grid;place-items:center;flex-shrink:0;color:#f4d59a}
+.school-topic-title{display:flex;flex:1;flex-direction:column;gap:5px}
+.school-topic-title strong{font-size:17px}
+.school-topic-title small{font-family:serif;font-size:19px;color:#f1d49b;direction:rtl;text-align:left}
+.school-topic-arrow{font-size:28px}
+.school-lesson-title{padding:10px 0 17px;text-align:center}
+.school-lesson-title h2{color:#f3dbab;margin:8px 0;font-family:Georgia,serif}
+.school-lesson-title p{font-size:13px;line-height:1.6;color:#c6d8d4}
+.school-ar{font-family:serif;font-size:29px;color:#f5d99b}
+.school-stepper{display:flex;gap:9px;overflow-x:auto;padding:5px 0 15px}
+.school-stepper button{min-width:42px;height:42px;border-radius:50%;border:1px solid #ba965a;background:#0b2933;color:#ead6a9}
+.school-stepper button.current{outline:2px solid #f7dc9f;outline-offset:2px}
+.school-step-card{border:1px solid #cfac6e;border-radius:20px;padding:19px;background:linear-gradient(150deg,#143944,#071f2b);animation:schoolEnter .35s both}
+.school-instruction{font-size:17px;line-height:1.75;color:#f4f0e5}
+.school-demo{border:1px solid #bd9c5b66;border-radius:17px;padding:12px;background:radial-gradient(circle at 50% 30%,#286070,#071b26 80%)}
+.school-demo-label{color:#eacb8c;text-align:center;font-size:13px}
+.school-stage{height:210px;position:relative;perspective:600px;overflow:hidden}
+.school-stage:after{content:"";position:absolute;bottom:20px;left:15%;width:70%;height:20px;border:1px solid #d8b77570;border-radius:50%;transform:rotateX(65deg)}
+.school-figure{position:absolute;left:50%;top:25px;width:100px;height:170px;transform:translateX(-50%) rotateY(-14deg);transform-style:preserve-3d;animation:schoolFigure 3s ease-in-out infinite}
+.school-figure span{position:absolute;display:block;background:linear-gradient(110deg,#e5c27c,#a87939);box-shadow:inset -8px 0 10px #4e3a2777}
+.figure-head{width:34px;height:34px;border-radius:50%;left:33px;top:0}
+.figure-body{width:48px;height:76px;border-radius:20px 20px 8px 8px;left:26px;top:32px;transform-origin:50% 8px}
+.figure-arm{width:14px;height:63px;border-radius:10px;top:39px;transform-origin:top}
+.figure-arm.left{left:19px;transform:rotate(16deg)}
+.figure-arm.right{right:19px;transform:rotate(-16deg)}
+.figure-leg{width:18px;height:65px;top:101px;border-radius:8px;transform-origin:top}
+.figure-leg.left{left:30px}.figure-leg.right{right:30px}
+.pose-2 .figure-body{transform:rotate(64deg)}.pose-2 .figure-head{transform:translate(29px,30px)}.pose-2 .figure-arm{transform:rotate(58deg)}
+.pose-3 .figure-body{transform:translateY(58px) rotate(75deg)}.pose-3 .figure-head{transform:translate(43px,95px)}.pose-3 .figure-leg{transform:rotate(85deg) translateY(13px)}
+.pose-4 .figure-body{transform:translateY(22px)}.pose-4 .figure-leg{transform:rotate(80deg)}
+.school-demo-note{display:block;font-size:11px;color:#c5d8d6;line-height:1.6;text-align:center}
+.school-audio{margin-top:17px;border:1px dashed #ba985e;border-radius:13px;padding:14px}
+.school-audio strong{color:#f2d498}.school-audio p{font-size:13px;line-height:1.6;color:#d1dbd8;margin-bottom:0}
+.school-controls{display:flex;gap:12px;margin-top:17px}
+.school-controls button{flex:1;min-height:46px;border:1px solid #cba766;border-radius:12px;background:#cba76622;color:#f9e6b9;font-weight:700}
+.school-controls button:disabled{opacity:.35}
+.school-gender:focus-visible,.school-topic:focus-visible,.school-controls button:focus-visible{outline:2px solid #ffe2a4;outline-offset:3px}
+.bottom-nav .nav-item.selected{background:transparent!important;color:inherit!important;box-shadow:none!important}
+.bottom-nav .nav-item.selected:before,.bottom-nav .nav-item.selected:after{background:transparent!important}
+.bottom-nav .nav-item.selected .nav-icon{border:1.5px solid #e5c17d;border-radius:13px;box-shadow:0 0 0 2px #b9934d26,inset 0 0 10px #b9934d17}
+@keyframes schoolEnter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes schoolFloat{50%{transform:translateY(-5px)}}
+@keyframes schoolFigure{50%{transform:translateX(-50%) rotateY(14deg)}}
+@media(prefers-reduced-motion:reduce){.school-heading,.school-gender,.school-gender-art,.school-topic,.school-step-card,.school-figure{animation:none!important}}
+
+/* V15: keep the navigation visible on every prayer-school level */
+#prayerLearn{height:100dvh;min-height:0;max-height:100dvh;overflow:hidden;display:flex;flex-direction:column;padding-bottom:0}
+#prayerLearn .top{flex:0 0 auto}
+#prayerLearn .lesson-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;padding-bottom:18px}
+#prayerLearn .bottom-nav{flex:0 0 auto;margin:0 -22px;position:relative;z-index:10;padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+.school-gender-art{width:min(100%,160px);height:180px;display:grid;place-items:center}
+.school-gender-art svg{max-height:180px}
+.school-gender{min-height:275px}
+.school-extra{margin-top:17px;padding:16px;border:1px solid #cba7688f;border-radius:17px;background:linear-gradient(145deg,#143744,#071e28);animation:schoolEnter .4s ease both}
+.school-extra h3{color:#f4d89c;font-size:19px;margin:0 0 12px}
+.school-extra p{font-size:14px;line-height:1.7;color:#e1e8e3}
+.school-rakat{padding:13px 0;border-top:1px solid #d0ae6b52}
+.school-rakat strong{color:#f7d9a3}
+.school-phrase{border-top:1px solid #b89a6455;padding:10px 0}
+.school-phrase summary{cursor:pointer;color:#f5dbad;min-height:35px}
+.school-phrase-ar{font-family:serif;font-size:25px!important;line-height:2!important;color:#ffe1a4!important}
+.school-audio-player{display:block;width:100%;height:46px;margin-top:10px;color-scheme:light}
+.school-audio-status{color:#f0b2a7}
+.school-caution{padding:14px;border:1px solid #d4a86b70;border-radius:12px;color:#e7d6b3;line-height:1.7;font-size:13px}
+.bottom-nav .nav-item.selected:not(.nav-ai){background:transparent!important;color:inherit!important}
+.bottom-nav .nav-item.selected:not(.nav-ai)::after{content:none!important}
+.bottom-nav .nav-item.selected:not(.nav-ai)::before{border:1px solid #e3bd77b5!important;box-shadow:0 0 12px #d8aa543c!important;background:transparent!important}
+@media(prefers-reduced-motion:reduce){.school-extra{animation:none}}
+</style>
+</head>
+<body>
+<!-- LOCKED APPROVED SPLASH: exact splash.png, static, no sound, no animation, 3000ms -->
+<div id="splash"><img src="./splash.png" alt="AVNIVO HIDAYAH" fetchpriority="high"></div>
+<section class="screen" id="profile" hidden>
+ <div class="top"><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="center">
+  <div class="form-title">
+   <div class="kicker" data-i18n="welcomeLabel"></div>
+   <h1 data-i18n="welcomeTitle"></h1>
+   <p data-i18n="welcomeDesc"></p>
+  </div>
+  <form id="profileForm" class="form-area" novalidate>
+   <label for="language" data-i18n="languageLabel"></label>
+   <select id="language" name="language" aria-label="Til / Тил">
+    <option value="uz-Latn">O‘zbekcha (lotin alifbosi)</option>
+    <option value="uz-Cyrl">Ўзбекча (кирил алифбоси)</option>
+   </select>
+   <label for="name" data-i18n="nameLabel"></label>
+   <input id="name" name="name" maxlength="40" autocomplete="given-name" required>
+   <label for="age" data-i18n="ageLabel"></label>
+   <input id="age" name="age" type="number" min="5" max="120" step="1" inputmode="numeric" required>
+   <p class="hint" data-i18n="privacy"></p>
+   <p class="error" id="error" role="alert" aria-live="assertive"></p>
+   <button class="primary" type="submit" data-i18n="continue"></button>
+  </form>
+ </div>
+</section>
+<section class="screen" id="tour" hidden>
+ <div class="top">
+  <button class="back" id="back" type="button" data-i18n="back"></button>
+  <div class="progress" id="progress"></div><span class="logo">HIDAYAH</span>
+ </div>
+ <div class="center">
+  <div class="kicker" id="step"></div>
+  <div class="art" id="art"><span class="star a">✦</span><span class="star b">✧</span><span class="star c">✦</span><div id="symbol" style="display:contents"></div></div>
+  <div class="arabic" id="arabic" lang="ar"></div>
+  <h1 id="heading"></h1><p class="desc" id="description"></p>
+ </div>
+ <div class="foot"><button class="primary" id="next" type="button"></button></div>
+</section>
+<main class="screen home-screen" id="home" hidden>
+ <div class="home-scroll">
+  <header class="home-header"><div class="brand-mark" aria-hidden="true">☪</div><div class="brand-copy"><span class="brand-small">A V N I V O</span><strong>HIDAYAH</strong><span class="brand-motto" data-home="motto"></span></div><div class="profile-card" role="group" aria-label="Foydalanuvchi ma’lumotlari"><span class="profile-icon" aria-hidden="true">♙</span><span><small data-home="salaam"></small><strong id="homeName"></strong><small id="homeAge"></small></span></div></header>
+  <div class="hero-arch" aria-hidden="true"><div class="hero-moon">☾</div><div class="hero-mosque"><span class="minaret"></span><span class="dome"></span><span class="minaret"></span></div></div>
+  <div class="info-grid"><button class="info-card" data-go="dates" type="button"><span class="info-label" data-home="date"></span><strong id="todayDate"></strong><small id="todayWeekday"></small></button><button class="info-card" data-go="times" type="button"><span class="info-label" data-home="prayerTimes"></span><strong data-home="timesPending"></strong><small data-home="timesNote"></small></button></div>
+  <div class="section-title" data-home="explore"></div><div class="feature-grid" id="homeFeatures"></div>
+ </div>
+ <nav class="bottom-nav" id="bottomNav" aria-label="Navigatsiya"><button type="button" data-go="home" class="nav-item selected"><span class="nav-icon" id="navHome"></span><span data-home="main"></span></button><button type="button" data-go="times" class="nav-item"><span class="nav-icon" id="navTimes"></span><span data-home="prayerTimes"></span></button><button type="button" data-go="ai" class="nav-item nav-ai"><span class="nav-icon" id="navAI"></span><span>AI</span></button><button type="button" data-go="reminders" class="nav-item"><span class="nav-icon" id="navReminders"></span><span data-home="reminders"></span></button><button type="button" data-go="settings" class="nav-item"><span class="nav-icon" id="navSettings"></span><span data-home="settings"></span></button></nav>
+</main>
+<section class="screen" id="prayerLearn" hidden>
+ <div class="top"><button class="back" type="button" id="prayerBack"></button><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="lesson-scroll" id="lessonScroll">
+  <div id="prayerContent" aria-live="polite"></div>
+ </div>
+ <nav class="bottom-nav" id="prayerNav" aria-label="Navigatsiya"></nav>
+</section>
+<section class="screen" id="detail" hidden>
+ <div class="top"><button type="button" class="back" id="detailBack">← Orqaga</button><span class="logo">AVNIVO · <span lang="ar">هداية</span></span></div>
+ <div class="center"><div class="art" id="detailArt"><span class="star a">✦</span><span class="star b">✧</span><div id="detailSymbol" style="display:contents"></div></div>
+ <h1 id="detailTitle"></h1><p class="desc" id="detailDesc"></p></div>
+<nav class="bottom-nav" id="detailNav" aria-label="Navigatsiya"><button type="button" data-go="home" class="nav-item selected"><span class="nav-icon"></span><span data-home="main"></span></button><button type="button" data-go="times" class="nav-item"><span class="nav-icon"></span><span data-home="prayerTimes"></span></button><button type="button" data-go="ai" class="nav-item nav-ai"><span class="nav-icon"></span><span>AI</span></button><button type="button" data-go="reminders" class="nav-item"><span class="nav-icon"></span><span data-home="reminders"></span></button><button type="button" data-go="settings" class="nav-item"><span class="nav-icon"></span><span data-home="settings"></span></button></nav>
+</section>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const KEY="avnivo-hidayah-profile-v2",LANG_KEY="avnivo-hidayah-language-v1";
+const I18N={
+ "uz-Latn":{
+ welcomeLabel:"Hidayahga xush kelibsiz",welcomeTitle:"Avval tanishib olaylik",welcomeDesc:"Ismingiz bilan murojaat qilamiz va tushuntirishlarni yoshingizga moslaymiz.",
+ languageLabel:"Ilova tili",nameLabel:"Ismingiz",ageLabel:"Yoshingiz",namePlaceholder:"Ismingizni yozing",agePlaceholder:"Masalan, 20",
+ privacy:"Ism va yosh faqat shu qurilmadagi brauzerda saqlanadi. Yosh diniy hukmlarni emas, tushuntirish uslubini belgilaydi.",
+ continue:"Davom etish",back:"← Orqaga",next:"Keyingisi →",enter:"Hidayahga kirish →",
+ profile:"Profil",salaam:"Assalomu alaykum",greeting:", xush kelibsiz!",homeDesc:"Ilm, ibodat va zikr yo‘lingizdagi yordamchi.",
+ placeholder:"Bu bo‘limlarning asosiy funksiyalari keyingi bosqichda yaratiladi. AI javoblari malakali diniy mutaxassis maslahatining o‘rnini bosmaydi.",
+ stage:"IMKONIYATLAR",errorName:"Ism 2–40 ta belgidan iborat bo‘lsin.",errorAge:"Yoshni 5 dan 120 gacha butun son bilan kiriting.",unavailable:" bo‘limi hali ishlab chiqilmoqda.",
+ items:[
+  {title:"Islomiy savol-javob",desc:"Qur’on, hadis, ibodat va odob haqida savollar bering. AI yordamchisi tushunarli javoblar va tekshirish uchun manbalar taqdim etishga mo‘ljallangan."},
+  {title:"Namozni o‘rganish",desc:"Tahoratdan namozning yakunigacha bo‘lgan tartibni, harakatlarni va o‘qiladigan suralarni bosqichma-bosqich o‘rganing."},
+  {title:"Duolar va suralar",desc:"Kundalik duolar hamda suralarni arabcha matni, o‘qilishi va o‘zbekcha ma’nosi bilan o‘rganing."},
+  {title:"Qibla kompasi",desc:"Namoz uchun qibla yo‘nalishini toping. Bunda qurilmangizning joylashuv va kompas imkoniyatlaridan foydalaniladi."},
+  {title:"Tasbeh va zikr",desc:"Elektron tasbeh orqali zikrlarni sanang va kundalik zikrlaringizni kuzatib boring."}
+ ]},
+ "uz-Cyrl":{
+ welcomeLabel:"Ҳидояга хуш келибсиз",welcomeTitle:"Аввал танишиб олайлик",welcomeDesc:"Исмингиз билан мурожаат қиламиз ва тушунтиришларни ёшингизга мослаймиз.",
+ languageLabel:"Илова тили",nameLabel:"Исмингиз",ageLabel:"Ёшингиз",namePlaceholder:"Исмингизни ёзинг",agePlaceholder:"Масалан, 20",
+ privacy:"Исм ва ёш фақат шу қурилмадаги браузерда сақланади. Ёш диний ҳукмларни эмас, тушунтириш услубини белгилайди.",
+ continue:"Давом этиш",back:"← Орқага",next:"Кейингиси →",enter:"Ҳидояга кириш →",
+ profile:"Профил",salaam:"Ассалому алайкум",greeting:", хуш келибсиз!",homeDesc:"Илм, ибодат ва зикр йўлингиздаги ёрдамчи.",
+ placeholder:"Бу бўлимларнинг асосий функциялари кейинги босқичда яратилади. AI жавоблари малакали диний мутахассис маслаҳатининг ўрнини босмайди.",
+ stage:"ИМКОНИЯТЛАР",errorName:"Исм 2–40 та белгидан иборат бўлсин.",errorAge:"Ёшни 5 дан 120 гача бутун сон билан киритинг.",unavailable:" бўлими ҳали ишлаб чиқилмоқда.",
+ items:[
+  {title:"Исломий савол-жавоб",desc:"Қуръон, ҳадис, ибодат ва одоб ҳақида саволлар беринг. AI ёрдамчиси тушунарли жавоблар ва текшириш учун манбалар тақдим этишга мўлжалланган."},
+  {title:"Намозни ўрганиш",desc:"Таҳоратдан намознинг якунигача бўлган тартибни, ҳаракатларни ва ўқиладиган сураларни босқичма-босқич ўрганинг."},
+  {title:"Дуолар ва суралар",desc:"Кундалик дуолар ҳамда сураларни арабча матни, ўқилиши ва ўзбекча маъноси билан ўрганинг."},
+  {title:"Қибла компаси",desc:"Намоз учун қибла йўналишини топинг. Бунда қурилмангизнинг жойлашув ва компас имкониятларидан фойдаланилади."},
+  {title:"Тасбеҳ ва зикр",desc:"Электрон тасбеҳ орқали зикрларни сананг ва кундалик зикрларингизни кузатиб боринг."}
+ ]}
+};
+const icon={
+ ai:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M20 30Q20 15 35 15H65Q80 15 80 30V61Q80 75 65 75H48L31 88V75Q20 72 20 61Z"/><path d="M35 37H65M35 49H65M35 61H54"/><path d="M73 8L75 3M84 15L92 12"/></svg>',
+ prayer:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M13 88H87M19 85V44Q50 12 81 44V85"/><path d="M28 48Q50 25 72 48"/><circle cx="50" cy="51" r="8"/><path d="M40 63Q50 59 60 63L65 80H35Z"/><path d="M40 67L29 79M60 67L71 79M36 83H64"/></svg>',
+ book:'<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 21Q30 9 12 19V77Q35 68 50 84Q65 68 88 77V19Q70 9 50 21Z"/><path d="M50 21V84M23 35Q33 31 42 36M58 36Q67 31 78 35M23 49Q33 45 42 50M58 50Q67 45 78 49"/></svg>',
+ compass:'<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="37"/><circle cx="50" cy="50" r="28" stroke-dasharray="3 7"/><path d="M63 35L55 56 36 65 45 44Z"/><path d="M50 6V14M50 86V94M6 50H14M86 50H94"/></svg>',
+ beads:'<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="15" r="7"/><circle cx="70" cy="25" r="7"/><circle cx="81" cy="45" r="7"/><circle cx="76" cy="65" r="7"/><circle cx="57" cy="80" r="7"/><circle cx="35" cy="76" r="7"/><circle cx="21" cy="56" r="7"/><circle cx="26" cy="34" r="7"/><path d="M57 87L61 97"/></svg>'
+};
+const ids=["ai","prayer","book","compass","beads"];
+const arabic=["العلم","الصلاة","الدعاء","القبلة","الذكر"];
+let person=null,lang="uz-Latn",page="profile",step=0,transitionToken=0,ready=false;
+function safeGet(k){try{return localStorage.getItem(k)}catch{return null}}
+function safeSet(k,v){try{localStorage.setItem(k,v)}catch{}}
+function saved(){try{const p=JSON.parse(safeGet(KEY));return p&&typeof p.name==="string"&&p.name.length>=2&&Number.isInteger(p.age)&&p.age>=5&&p.age<=120&&I18N[p.lang]?p:null}catch{return null}}
+function tr(){return I18N[lang]}
+function setLanguage(value){
+ lang=I18N[value]?value:"uz-Latn";
+ document.documentElement.lang=lang;
+ $("language").value=lang;
+ safeSet(LANG_KEY,lang);
+ for(const el of document.querySelectorAll("[data-i18n]"))el.textContent=tr()[el.dataset.i18n];
+ $("name").placeholder=tr().namePlaceholder;$("age").placeholder=tr().agePlaceholder;
+ $("error").textContent="";
+ if(page==="tour")renderTour();
+ if(page==="home")renderHome();
+ if(page==="detail")renderDetail(history.state?.id||"ai");
+ if(page==="prayerLearn")renderPrayer();
+}
+function show(next){
+ const old=document.querySelector(".screen.active"),target=$(next);
+ transitionToken++;const token=transitionToken;
+ if(old===target){page=next;return}
+ target.hidden=false;target.classList.remove("leaving");
+ requestAnimationFrame(()=>{if(token===transitionToken)target.classList.add("active")});
+ if(old){old.classList.remove("active");old.classList.add("leaving");setTimeout(()=>{if(!old.classList.contains("active")){old.hidden=true;old.classList.remove("leaving")}},420)}
+ page=next;
+ if(next!=="prayerLearn")$("prayerContent").querySelectorAll("audio").forEach(a=>a.pause());
+ if(next==="home")startGlow();else stopGlow();
+}
+let tourMotion=Promise.resolve(), tourSequence=0;
+const reduced=()=>window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+async function switchTour(index, direction=1){
+ const seq=++tourSequence, center=$("tour").querySelector(".center");
+ center.getAnimations({subtree:false}).forEach(a=>a.cancel());
+ if(reduced()||$("tour").hidden||!$("tour").classList.contains("active")){
+  step=index;renderTour();return;
+ }
+ const out=center.animate([{opacity:1,transform:"translateX(0) scale(1)"},{opacity:0,transform:`translateX(${-direction*34}px) scale(.965)`}],
+ {duration:200,easing:"ease-in",fill:"forwards"});
+ try{await out.finished}catch{return}
+ if(seq!==tourSequence)return;
+ out.cancel();step=index;renderTour();
+ const enter=center.animate([{opacity:0,transform:`translateX(${direction*36}px) scale(.97)`},{opacity:1,transform:"translateX(0) scale(1)"}],
+ {duration:390,easing:"cubic-bezier(.16,1,.3,1)",fill:"both"});
+ try{await enter.finished}catch{return}
+ if(seq===tourSequence)enter.cancel();
+}
+function navigate(next,index=0){
+ const previous=step,wasTour=page==="tour";
+ history.pushState({page:next,index},"",location.href);
+ if(next==="tour"&&wasTour){switchTour(index,index>=previous?1:-1);return}
+ step=index;
+ if(next==="tour")renderTour();
+ if(next==="home")renderHome();
+ show(next);
+}
+function renderTour(){
+ $("art").dataset.icon=ids[step];
+ const s=tr().items[step];
+ $("step").textContent=`${step+1} / ${ids.length} · ${tr().stage}`;
+ $("symbol").innerHTML=icon[ids[step]];
+ $("arabic").textContent=arabic[step];
+ $("heading").textContent=s.title;$("description").textContent=s.desc;
+ $("next").textContent=step===ids.length-1?tr().enter:tr().next;
+ $("progress").innerHTML=ids.map((_,i)=>`<i class="${i<=step?"on":""}"></i>`).join("");
+}
+const HOME_TRANSLATIONS={
+ "uz-Latn":{motto:"Ilm · Amal · Taqvo · Hayot",salaam:"Assalomu alaykum",age:"yosh",date:"Bugungi sana",prayerTimes:"Namoz vaqtlari",timesPending:"Hali ulanmagan",timesNote:"Keyin sozlanadi",explore:"Ilm va ibodat",main:"Asosiy",reminders:"Eslatmalar",settings:"Sozlamalar",descs:["Namozni bosqichma-bosqich o‘rganing","Qur’on suralari va duolar","Qibla yo‘nalishini toping","Zikrlarni sanang"]},
+ "uz-Cyrl":{motto:"Илм · Амал · Тақво · Ҳаёт",salaam:"Ассалому алайкум",age:"ёш",date:"Бугунги сана",prayerTimes:"Намоз вақтлари",timesPending:"Ҳали уланмаган",timesNote:"Кейин созланади",explore:"Илм ва ибодат",main:"Асосий",reminders:"Эслатмалар",settings:"Созламалар",descs:["Намозни босқичма-босқич ўрганинг","Қуръон суралари ва дуолар","Қибла йўналишини топинг","Зикрларни сананг"]}
+};
+const homeIcons={
+ home:'<svg viewBox="0 0 100 100"><path d="M16 48L50 18 84 48V85H16Z M35 85V57Q50 38 65 57V85 M50 18V9"/></svg>',
+ times:'<svg viewBox="0 0 100 100"><rect x="15" y="20" width="70" height="65" rx="7"/><path d="M15 40H85M31 11V28M69 11V28"/><circle cx="50" cy="61" r="13"/><path d="M50 53V62L58 67"/></svg>',
+ ai:'<svg viewBox="0 0 100 100"><path d="M25 38Q25 17 50 17Q76 17 76 43V62L87 77H64V87H39V76Q25 65 25 38Z"/><path d="M42 42Q38 32 48 30Q55 25 60 33Q70 30 70 41Q75 51 65 55Q63 64 53 58Q43 63 40 54Q31 50 42 42Z"/></svg>',
+ reminders:'<svg viewBox="0 0 100 100"><path d="M25 73H75L68 63V41Q68 22 50 22Q32 22 32 41V63Z M43 80Q50 90 57 80"/></svg>',
+ settings:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="15"/><path d="M43 10H57L60 22 71 27 82 20 92 31 84 42 88 54 99 58 96 72 83 74 75 84 78 96 64 100 58 88 44 88 38 100 24 96 27 84 19 74 6 72 3 58 14 54 18 42 10 31 20 20 31 27 40 22Z" transform="translate(5 2) scale(.9)"/></svg>'
+};
+function updateActiveTab(id){
+ const target=["home","times","ai","reminders","settings"].includes(id)?id:"home";
+ for(const n of document.querySelectorAll(".bottom-nav")){
+  for(const b of n.querySelectorAll(".nav-item")){
+   const active=b.dataset.go===target;
+   b.classList.toggle("selected",active);
+   if(active)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current");
+  }
+ }
+}
+function renderHome(){
+ updateActiveTab("home");
+ const t=HOME_TRANSLATIONS[lang];
+ document.querySelectorAll("[data-home]").forEach(el=>{el.textContent=t[el.dataset.home]||""});
+ $("homeName").textContent=person?.name||"";
+ $("homeAge").textContent=person?.age?`${person.age} ${t.age}`:"";
+ const now=new Date();
+ $("todayDate").textContent=new Intl.DateTimeFormat(lang==="uz-Cyrl"?"uz-Cyrl-UZ":"uz-Latn-UZ",{day:"numeric",month:"long",year:"numeric"}).format(now);
+ $("todayWeekday").textContent=new Intl.DateTimeFormat(lang==="uz-Cyrl"?"uz-Cyrl-UZ":"uz-Latn-UZ",{weekday:"long"}).format(now);
+ const order=["prayer","book","compass","beads"];
+ $("homeFeatures").replaceChildren(...order.map((id,i)=>{
+  const b=document.createElement("button");b.type="button";b.className="feature-card";b.dataset.go=id;
+  const art=document.createElement("span");art.className="feature-icon";art.dataset.icon=id;art.innerHTML=icon[id];
+  const title=document.createElement("strong");title.textContent=tr().items[[1,2,3,4][i]].title;
+  const desc=document.createElement("small");desc.textContent=t.descs[i];
+  b.append(art,title,desc);return b;
+ }));
+ for(const [id,svg] of Object.entries(homeIcons)){
+  const node=$({home:"navHome",times:"navTimes",ai:"navAI",reminders:"navReminders",settings:"navSettings"}[id]);
+  node.innerHTML=svg;
+ }
+ const detailNav=$("detailNav");
+ for(const b of detailNav.querySelectorAll(".nav-item")){
+  const original=$("bottomNav").querySelector(`[data-go="${b.dataset.go}"]`);
+  if(original)b.querySelector(".nav-icon").innerHTML=original.querySelector(".nav-icon").innerHTML;
+ }
+ for(const el of detailNav.querySelectorAll("[data-home]"))el.textContent=t[el.dataset.home]||"";
+ const prayerNav=$("prayerNav");
+ prayerNav.innerHTML=detailNav.innerHTML;
+ for(const b of prayerNav.querySelectorAll(".nav-item"))b.classList.toggle("selected",b.dataset.go==="home");
+
+}
+function startGlow(){}function stopGlow(){}
+
+
+/* Prayer school v14: three navigable levels, shared bottom nav, local state. */
+const SCHOOL={
+ "uz-Latn":{
+  title:"Namozni o‘rganish",choose:"O‘quv yo‘nalishini tanlang",men:"Erkaklar",women:"Ayollar",
+  menDesc:"Erkaklar uchun namoz tartibi",womenDesc:"Ayollar uchun namoz tartibi",
+  back:"← Orqaga",guide:"Bosqichma-bosqich qo‘llanma",step:"Bosqich",
+  posture:"Harakatning ko‘rgazmali modeli",audio:"Sura tilovati",audioSoon:"Qori tilovati hali ulanmagan. Noto‘g‘ri talaffuzni oldini olish uchun sun’iy ovoz ishlatilmaydi.",
+  info:"Namozdagi ayrim amaliy tafsilotlar mazhabga qarab farqlanadi. Quyidagi matnlar boshlang‘ich o‘quv qo‘llanmasidir.",
+  demo:"Bu 3D uslubdagi sxematik harakat namoyishi, aniq anatomik yoki diniy videodars emas.",
+  tabs:["Tahorat","Azon","Bomdod","Peshin","Asr","Shom","Xufton","Vitr","Qazo"],
+  explanations:[
+   ["Tahoratga niyat qiling va pok suv tayyorlang.","Qo‘llarni yuving, og‘iz va burunni chaying.","Yuzni yuving, qo‘llarni tirsaklari bilan qo‘shib yuving.","Boshga mas’h torting va oyoqlarni to‘piqlari bilan yuving."],
+   ["Namoz vaqti kirganini tekshiring.","Azon ibodatga chaqiriqdir; uning lafzlarini ishonchli ustoz yoki qori orqali o‘rganing.","Azondan so‘ng namozga tayyorlaning. Jamoat namozida iqomat aytiladi."],
+   ["Bomdodning 2 rak’at sunnati va 2 rak’at farzi bor.","Niyat qilib takbir ayting, tik turib Fotiha va qo‘shimcha sura o‘qing.","Ruku qiling, tik turing, ikki marta sajda qiling.","Ikkinchi rak’atni ado etib, oxirgi o‘tirishda tashahhud, salovat va duo o‘qib salom bering."],
+   ["Peshinning odatiy hanafiy tartibi: 4 sunnat, 4 farz, 2 sunnat.","Har rak’atda qiyom, ruku va ikki sajda tartibiga rioya qiling.","To‘rt rak’atli namozda ikkinchi rak’atdan keyin birinchi o‘tirish, oxirida yakuniy o‘tirish bo‘ladi."],
+   ["Asr namozining farzi 4 rak’at.","Farzdan oldin 4 rak’at g‘ayri muakkad sunnat o‘qilishi mumkin.","To‘rt rak’atli farzning qiyom, ruku, sajda va o‘tirish tartibiga rioya qiling."],
+   ["Shom namozining 3 rak’at farzi va 2 rak’at sunnati bor.","Farzning dastlabki ikki rak’atida Fotiha va qo‘shimcha sura o‘qiladi.","Uchinchi rak’atdan keyin yakuniy o‘tirish va salom bilan namoz tugaydi."],
+   ["Xuftonning 4 rak’at farzi va 2 rak’at sunnati bor.","Farzdan oldin 4 rak’at g‘ayri muakkad sunnat o‘qilishi mumkin.","Xuftondan so‘ng vitr namozi ado etiladi."],
+   ["Hanafiy mazhabida vitr 3 rak’at vojibdir.","Uchinchi rak’atda Fotiha va qo‘shimcha suradan keyin takbir aytilib qunut duosi o‘qiladi.","So‘ng ruku, sajdalar, oxirgi o‘tirish va salom bajariladi."],
+   ["Qazo — vaqtida ado etilmagan farz yoki vojib namozni keyin o‘qish.","Qaysi namozning qazosi ekanini niyat qiling.","Rak’at soni va tartibi asl namozga mos bo‘ladi.","Qazo namozlari bo‘yicha o‘z holatingizga mos fiqhiy maslahat oling."]
+  ],
+  positions:["Tayyorgarlik","Qiyom","Ruku","Sajda","O‘tirish"],
+  actions:["Tayyorlanish","Tik turish va qiroat","Ruku","Sajda","Oxirgi o‘tirish va salom"]
+ },
+ "uz-Cyrl":{
+  title:"Намозни ўрганиш",choose:"Ўқув йўналишини танланг",men:"Эркаклар",women:"Аёллар",
+  menDesc:"Эркаклар учун намоз тартиби",womenDesc:"Аёллар учун намоз тартиби",
+  back:"← Орқага",guide:"Босқичма-босқич қўлланма",step:"Босқич",
+  posture:"Ҳаракатнинг кўргазмали модели",audio:"Сура тиловати",audioSoon:"Қори тиловати ҳали уланмаган. Нотўғри талаффузнинг олдини олиш учун сунъий овоз ишлатилмайди.",
+  info:"Намоздаги айрим амалий тафсилотлар мазҳабга қараб фарқланади. Қуйидаги матнлар бошланғич ўқув қўлланмасидир.",
+  demo:"Бу 3D услубдаги схематик ҳаракат намойиши, аниқ анатомик ёки диний видеодарс эмас.",
+  tabs:["Таҳорат","Азон","Бомдод","Пешин","Аср","Шом","Хуфтон","Витр","Қазо"],
+  explanations:[
+   ["Таҳоратга ният қилинг ва пок сув тайёрланг.","Қўлларни ювинг, оғиз ва бурунни чайинг.","Юзни ювинг, қўлларни тирсаклари билан қўшиб ювинг.","Бошга масҳ тортинг ва оёқларни тўпиқлари билан ювинг."],
+   ["Намоз вақти кирганини текширинг.","Азон ибодатга чақириқдир; унинг лафзларини ишончли устоз ёки қори орқали ўрганинг.","Азондан сўнг намозга тайёрланинг. Жамоат намозида иқомат айтилади."],
+   ["Бомдоднинг 2 ракъат суннати ва 2 ракъат фарзи бор.","Ният қилиб такбир айтинг, тик туриб Фотиҳа ва қўшимча сура ўқинг.","Руку қилинг, тик туринг, икки марта сажда қилинг.","Иккинчи ракъатни адо этиб, охирги ўтиришда ташаҳҳуд, саловат ва дуо ўқиб салом беринг."],
+   ["Пешиннинг одатий ҳанафий тартиби: 4 суннат, 4 фарз, 2 суннат.","Ҳар ракъатда қиём, руку ва икки сажда тартибига риоя қилинг.","Тўрт ракъатли намозда иккинчи ракъатдан кейин биринчи ўтириш, охирида якуний ўтириш бўлади."],
+   ["Аср намозининг фарзи 4 ракъат.","Фарздан олдин 4 ракъат ғайри муаккад суннат ўқилиши мумкин.","Тўрт ракъатли фарзнинг қиём, руку, сажда ва ўтириш тартибига риоя қилинг."],
+   ["Шом намозининг 3 ракъат фарзи ва 2 ракъат суннати бор.","Фарзнинг дастлабки икки ракъатида Фотиҳа ва қўшимча сура ўқилади.","Учинчи ракъатдан кейин якуний ўтириш ва салом билан намоз тугайди."],
+   ["Хуфтоннинг 4 ракъат фарзи ва 2 ракъат суннати бор.","Фарздан олдин 4 ракъат ғайри муаккад суннат ўқилиши мумкин.","Хуфтондан сўнг витр намози адо этилади."],
+   ["Ҳанафий мазҳабида витр 3 ракъат вожибдир.","Учинчи ракъатда Фотиҳа ва қўшимча сурадан кейин такбир айтилиб қунут дуоси ўқилади.","Сўнг руку, саждалар, охирги ўтириш ва салом бажарилади."],
+   ["Қазо — вақтида адо этилмаган фарз ёки вожиб намозни кейин ўқиш.","Қайси намознинг қазоси эканини ният қилинг.","Ракъат сони ва тартиби асл намозга мос бўлади.","Қазо намозлари бўйича ўз ҳолатингизга мос фиқҳий маслаҳат олинг."]
+  ],
+  positions:["Тайёргарлик","Қиём","Руку","Сажда","Ўтириш"],
+  actions:["Тайёрланиш","Тик туриш ва қироат","Руку","Сажда","Охирги ўтириш ва салом"]
+ }
+};
+const PRAYER_AR=["الوضوء","الأذان","الفجر","الظهر","العصر","المغرب","العشاء","الوتر","القضاء"];
+let schoolLevel=0,schoolGender="men",schoolTopic=0,schoolStep=0;
+function schoolT(){return SCHOOL[lang]||SCHOOL["uz-Latn"]}
+const PERSON_ICON=(gender)=>`<svg viewBox="0 0 160 180" role="img" aria-hidden="true">
+<defs><linearGradient id="prayerGold-${gender}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe6a6"/><stop offset="1" stop-color="#a87936"/></linearGradient></defs>
+<path d="M15 155V62Q80 -10 145 62V155M7 155H153" stroke="#b99353" stroke-width="3" fill="none"/>
+<path d="M24 150H136" stroke="#e6c77e" stroke-width="4"/>
+<ellipse cx="80" cy="145" rx="52" ry="9" fill="#6d7c74" opacity=".4"/>
+<circle cx="80" cy="47" r="16" fill="#f1d29a" stroke="#7b5d35" stroke-width="2"/>
+${gender==="women"?
+`<path d="M60 41Q80 12 100 41L109 104Q80 125 51 104Z" fill="#284e5b" stroke="#f0d392" stroke-width="4"/>
+<path d="M57 81Q80 67 103 81L118 134H42Z" fill="url(#prayerGold-${gender})" stroke="#8b683c" stroke-width="2"/>
+<path d="M53 94L67 116M107 94L93 116" stroke="#f5daa1" stroke-width="10" stroke-linecap="round"/>`:
+`<path d="M62 26Q80 14 98 26L98 33H62Z" fill="#f3e3c3"/>
+<path d="M56 70Q80 59 104 70L110 121H50Z" fill="url(#prayerGold-${gender})" stroke="#785b3b" stroke-width="2"/>
+<path d="M52 84L63 111M108 84L97 111" stroke="#e6c47e" stroke-width="12" stroke-linecap="round"/>
+<path d="M64 120L60 144M96 120L100 144" stroke="#e6c47e" stroke-width="15" stroke-linecap="round"/>`}
+<path d="M63 111Q80 121 97 111" stroke="#f9e9bf" stroke-width="5" stroke-linecap="round" fill="none"/>
+</svg>`;
+function el(tag,cl,text){const n=document.createElement(tag);if(cl)n.className=cl;if(text!==undefined)n.textContent=text;return n}
+function schoolNav(level,extra={}){
+ schoolLevel=level;
+ history.pushState({page:"prayerLearn",level,gender:schoolGender,topic:schoolTopic,step:schoolStep,...extra},"",location.href);
+ renderPrayer();show("prayerLearn");
+}
+
+const SCHOOL_PARTS={
+ 2:[["Sunnat",2],["Farz",2]],
+ 3:[["Sunnat",4],["Farz",4],["Sunnat",2]],
+ 4:[["Sunnat (g‘ayri muakkad)",4],["Farz",4]],
+ 5:[["Farz",3],["Sunnat",2]],
+ 6:[["Sunnat (g‘ayri muakkad)",4],["Farz",4],["Sunnat",2]],
+ 7:[["Vitr (vojib)",3]],
+ 8:[["Qazo farz",2]]
+};
+const PHRASES=[
+ {id:"takbir",title:"Takbir",ar:"اللّٰهُ أَكْبَرُ",latin:"Allohu akbar",meaning:"Alloh eng buyukdir."},
+ {id:"sana",title:"Sano",ar:"سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالَى جَدُّكَ وَلَا إِلَهَ غَيْرُكَ",latin:"Subhanakallohumma va bihamdika va tabarokasmuka va ta’ala jadduka va la ilaha g‘oyruk",meaning:"Allohim, Sen poksan, Senga hamd bo‘lsin; isming barakotli, ulug‘liging yuksak, Sendan boshqa iloh yo‘q."},
+ {id:"ruku",title:"Ruku tasbehi",ar:"سُبْحَانَ رَبِّيَ الْعَظِيمِ",latin:"Subhana robbiyal-’aziym",meaning:"Ulug‘ Rabbim barcha nuqsonlardan pokdir."},
+ {id:"rise",title:"Rukudan turish",ar:"سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ",latin:"Sami’allohu liman hamidah",meaning:"Alloh Unga hamd aytgan kishini eshitdi."},
+ {id:"hamd",title:"Hamd",ar:"رَبَّنَا لَكَ الْحَمْدُ",latin:"Robbana lakal-hamd",meaning:"Rabbimiz, hamd Senga xosdir."},
+ {id:"sajda",title:"Sajda tasbehi",ar:"سُبْحَانَ رَبِّيَ الْأَعْلَى",latin:"Subhana robbiyal-a’la",meaning:"Eng oliy Rabbim barcha nuqsonlardan pokdir."},
+ {id:"tashahhud",title:"Attahiyyat",ar:"التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",latin:"Attahiyyatu lillahi vas-solavatu vat-toyyibat...",meaning:"Barcha salomlar, ibodatlar va pok so‘zlar Alloh uchundir. Payg‘ambarga, bizga va solih bandalarga salom bo‘lsin. Allohdan boshqa iloh yo‘qligiga va Muhammad Uning bandasi va elchisi ekaniga guvohlik beraman."},
+ {id:"salam",title:"Salom",ar:"السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",latin:"Assalomu alaykum va rohmatulloh",meaning:"Sizlarga Allohning salomi va rahmati bo‘lsin."}
+];
+const QURAN_CLIPS=[
+ {name:"Fotiha — الفاتحة",surah:1,meaning:"Mehribon va rahmli Alloh nomi bilan. Hamd olamlarning Rabbi Allohgadir. U mehribon va rahmlidir, jazo kunining Egasi. Faqat Sengagina ibodat qilamiz va Sendangina yordam so‘raymiz. Bizni to‘g‘ri yo‘lga hidoyat qil: ne’mat berganlaring yo‘liga, g‘azabga uchraganlar va adashganlar yo‘liga emas."},
+ {name:"Ixlos — الإخلاص",surah:112,meaning:"Ayting: U Alloh yagonadir. Alloh behojatdir. U tug‘magan va tug‘ilmagan. Unga hech kim teng emas."}
+];
+function prayerSegments(topic){
+ const cy=lang==="uz-Cyrl";
+ return (SCHOOL_PARTS[topic]||[]).map(([name,n],i)=>({
+  name:cy?({"Sunnat":"Суннат","Farz":"Фарз","Vitr (vojib)":"Витр (вожиб)","Qazo farz":"Қазо фарз","Sunnat (g‘ayri muakkad)":"Суннат (ғайри муаккад)"}[name]||name):name,
+  count:n,index:i
+ }));
+}
+function schoolExtra(root,topic){
+ const t=schoolT(),cy=lang==="uz-Cyrl";
+ if(topic>=2){
+  const seg=el("section","school-extra");
+  seg.append(el("h3","",cy?"Суннат, фарз ва ракъатлар":"Sunnat, farz va rak’atlar"));
+  const desc=el("p","",cy?"Ҳар бир қисм алоҳида ният ва такбир билан бошланади.":"Har bir qism alohida niyat va takbir bilan boshlanadi.");
+  seg.append(desc);
+  prayerSegments(topic).forEach(({name,count,index})=>{
+   const item=el("div","school-rakat");
+   item.append(el("strong","",`${index+1}. ${name} — ${count} ${cy?"ракъат":"rak’at"}`));
+   const intention=cy?
+    `Қалбингизда Аллоҳ учун ${t.tabs[topic]} намозининг ${count} ракъат ${name.toLowerCase()} қисмини ўқишни ният қилинг. Сўнг «Аллоҳу акбар» деб бошланг.`:
+    `Qalbingizda Alloh uchun ${t.tabs[topic]} namozining ${count} rak’at ${name.toLowerCase()} qismini o‘qishni niyat qiling. So‘ng «Allohu akbar» deb boshlang.`;
+   item.append(el("p","",intention));
+   item.append(el("p","",cy?
+    `1–2-ракъат: Фотиҳа ва қўшимча сура, руку, икки сажда. ${count>2?"Иккинчи ракъатдан кейин ўтириш. ":""}Охирги ўтиришда ташаҳҳуд, саловат ва дуодан кейин салом.`
+    :`1–2-rak’at: Fotiha va qo‘shimcha sura, ruku, ikki sajda. ${count>2?"Ikkinchi rak’atdan keyin o‘tirish. ":""}Oxirgi o‘tirishda tashahhud, salovat va duodan keyin salom.`));
+   seg.append(item);
+  });
+  root.append(seg);
+ }
+ const phrases=el("section","school-extra");
+ phrases.append(el("h3","",cy?"Арабча зикрлар ва маънолари":"Arabcha zikrlar va ma’nolari"));
+ for(const p of PHRASES){
+  const row=el("details","school-phrase");
+  const sum=el("summary","",p.title);row.append(sum);
+  const arabic=el("p","school-phrase-ar",p.ar);arabic.lang="ar";arabic.dir="rtl";
+  row.append(arabic,el("p","",p.latin),el("p","",p.meaning));phrases.append(row);
+ }
+ root.append(phrases);
+ const audio=el("section","school-extra");
+ audio.append(el("h3","",cy?"Қуръон тиловати — қори овози":"Qur’on tilovati — qori ovozi"));
+ audio.append(el("p","",cy?"Мишарий Рашид Алафасий. Интернет талаб қилинади.":"Mishari Rashid Alafasy. Internet talab qilinadi."));
+ for(const clip of QURAN_CLIPS){
+  const item=el("div","school-rakat");
+  item.append(el("strong","",clip.name));
+  const player=el("audio","school-audio-player");player.controls=true;player.preload="none";
+  player.src=`https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${clip.surah}.mp3`;
+  player.addEventListener("error",()=>{status.textContent=cy?"Аудиони юклаб бўлмади. Интернетни текширинг.":"Audio yuklanmadi. Internetni tekshiring."});
+  const status=el("small","school-audio-status","");
+  item.append(player,status,el("p","",clip.meaning));audio.append(item);
+ }
+ root.append(audio);
+ const notice=el("p","school-caution",cy?
+ "Эслатма: аёллар ва эркаклар намозининг айрим ҳаракатларида ҳанафий фиқҳида тафовутлар бор. Тасвирий ҳаракатлар ҳали диний мутахассис томонидан тасдиқланмаган; уларни тўлиқ 3D дарс деб қабул қилманг.":
+ "Eslatma: ayollar va erkaklar namozining ayrim harakatlarida hanafiy fiqhida tafovutlar bor. Tasviriy harakatlar hali diniy mutaxassis tomonidan tasdiqlanmagan; ularni to‘liq 3D dars deb qabul qilmang.");
+ root.append(notice);
+}
+function renderPrayer(){
+ $("prayerContent").querySelectorAll("audio").forEach(a=>a.pause());
+ const t=schoolT(),root=$("prayerContent");
+ $("prayerBack").textContent=t.back;
+ root.replaceChildren();
+ const heading=el("div","school-heading");
+ heading.append(el("div","learn-eyebrow","AVNIVO · هداية"),el("h1","",t.title),el("p","",schoolLevel===0?t.choose:schoolLevel===1?(schoolGender==="men"?t.menDesc:t.womenDesc):t.guide));
+ root.append(heading);
+ if(schoolLevel===0){
+  const grid=el("div","school-choices");
+  ["men","women"].forEach(g=>{
+   const btn=el("button","school-gender");btn.type="button";btn.dataset.gender=g;
+   const art=el("span","school-gender-art");art.innerHTML=PERSON_ICON(g);
+   btn.append(art,el("strong","",t[g]),el("small","",t[g+"Desc"]));grid.append(btn);
+  });root.append(grid);return;
+ }
+ if(schoolLevel===1){
+  const list=el("div","school-topics");
+  t.tabs.forEach((name,i)=>{
+   const btn=el("button","school-topic");btn.type="button";btn.dataset.topic=i;
+   const n=el("span","school-topic-num",String(i+1).padStart(2,"0"));
+   const title=el("span","school-topic-title");title.append(el("strong","",name),el("small","",PRAYER_AR[i]));
+   btn.append(n,title,el("span","school-topic-arrow","›"));list.append(btn);
+  });root.append(list);return;
+ }
+ const topic=schoolTopic,lines=t.explanations[topic];
+ const hero=el("div","school-lesson-title");hero.append(el("div","school-ar",PRAYER_AR[topic]),el("h2","",t.tabs[topic]),el("p","",t.info));root.append(hero);
+ const tabs=el("div","school-stepper");
+ lines.forEach((_,i)=>{const b=el("button",i===schoolStep?"current":"",String(i+1));b.type="button";b.dataset.step=i;b.setAttribute("aria-label",`${t.step} ${i+1}`);tabs.append(b)});root.append(tabs);
+ const card=el("article","school-step-card");
+ card.append(el("span","learn-eyebrow",`${t.step} ${schoolStep+1} / ${lines.length}`));
+ card.append(el("p","school-instruction",lines[schoolStep]));
+ const posture=topic===0?0:topic===1?1:Math.min(schoolStep,4);
+ const demo=el("div","school-demo");
+ demo.append(el("div","school-demo-label",t.posture));
+ const scene=el("div","school-stage");
+ const figure=el("div",`school-figure pose-${posture} ${schoolGender}`);
+ figure.innerHTML='<span class="figure-head"></span><span class="figure-body"></span><span class="figure-arm left"></span><span class="figure-arm right"></span><span class="figure-leg left"></span><span class="figure-leg right"></span>';
+ scene.append(figure);demo.append(scene,el("small","school-demo-note",t.demo));card.append(demo);
+ const note=el("div","school-audio");note.append(el("strong","",t.audio),el("p","",lang==="uz-Cyrl"?"Қуйида Фотиҳа ва Ихлос сураларининг қори овозидаги аудиоси бор.":"Quyida Fotiha va Ixlos suralarining qori ovozidagi audiosi bor."));card.append(note);
+ const controls=el("div","school-controls");
+ const prev=el("button","",t.back);prev.type="button";prev.dataset.move="-1";prev.disabled=schoolStep===0;
+ const next=el("button","",schoolStep===lines.length-1?(lang==="uz-Cyrl"?"Тугатиш":"Tugatish"):(lang==="uz-Cyrl"?"Кейингиси →":"Keyingisi →"));next.type="button";next.dataset.move="1";
+ controls.append(prev,next);card.append(controls);root.append(card);schoolExtra(root,topic);
+}
+$("prayerContent").addEventListener("click",e=>{
+ const gender=e.target.closest("[data-gender]");
+ if(gender){schoolGender=gender.dataset.gender;schoolTopic=0;schoolStep=0;schoolNav(1);return}
+ const topic=e.target.closest("[data-topic]");
+ if(topic){schoolTopic=Number(topic.dataset.topic);schoolStep=0;schoolNav(2);return}
+ const step=e.target.closest("[data-step]");
+ if(step){schoolStep=Number(step.dataset.step);schoolNav(2);return}
+ const move=e.target.closest("[data-move]");
+ if(move){const next=schoolStep+Number(move.dataset.move);if(next>=schoolT().explanations[schoolTopic].length){schoolNav(1);return}schoolStep=Math.max(0,next);schoolNav(2)}
+});
+$("prayerBack").addEventListener("click",()=>history.back());
+function openPrayer(){schoolLevel=0;schoolStep=0;schoolNav(0)}
+$("prayerNav").addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");if(!b)return;
+ const id=b.dataset.go;
+ if(id==="home"){navigate("home");return}
+ renderDetail(id);history.pushState({page:"detail",id},"",location.href);show("detail");
+});
+const DETAIL_IDS=["prayer","book","compass","beads","ai","times","reminders","settings","dates"];
+function detailText(id){
+ const cy=lang==="uz-Cyrl";
+ const text={
+ "prayer":[0,cy?"Намозни ўрганиш бўлими кейинги босқичда ишга туширилади.":"Namozni o‘rganish bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "book":[1,cy?"Дуолар ва суралар бўлими кейинги босқичда ишга туширилади.":"Duolar va suralar bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "compass":[3,cy?"Қибла компаси кейинги босқичда ишга туширилади.":"Qibla kompasi keyingi bosqichda ishga tushiriladi."],
+ "beads":[4,cy?"Тасбеҳ бўлими кейинги босқичда ишга туширилади.":"Tasbeh bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "ai":[0,cy?"AI савол-жавоб бўлими кейинги босқичда ишга туширилади.":"AI savol-javob bo‘limi keyingi bosqichda ishga tushiriladi."],
+ "times":[1,cy?"Намоз вақтлари кейинги босқичда уланади.":"Namoz vaqtlari keyingi bosqichda ulanadi."],
+ "reminders":[4,cy?"Эслатмалар кейинги босқичда уланади.":"Eslatmalar keyingi bosqichda ulanadi."],
+ "settings":[0,cy?"Созламалар кейинги босқичда уланади.":"Sozlamalar keyingi bosqichda ulanadi."],
+ "dates":[1,cy?"Сана тақвими кейинги босқичда уланади.":"Sana taqvimi keyingi bosqichda ulanadi."]
+ };
+ const headings={
+ times:cy?"Намоз вақтлари":"Namoz vaqtlari",
+ reminders:cy?"Эслатмалар":"Eslatmalar",
+ settings:cy?"Созламалар":"Sozlamalar",
+ dates:cy?"Бугунги сана":"Bugungi sana"
+ };
+ const [i,desc]=text[id]||text.ai;
+ return {title:headings[id]||tr().items[i].title,desc,icon:icon[id]||icon.ai};
+}
+function renderDetail(id){
+ updateActiveTab(id);
+ const item=detailText(id);
+ $("detailTitle").textContent=item.title;
+ $("detailDesc").textContent=item.desc;
+ $("detailSymbol").innerHTML=item.icon;
+ $("detailBack").textContent=tr().back;
+}
+$("home").addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");if(!b)return;
+ const id=b.dataset.go;
+ if(id==="home")return;
+ if(id==="prayer"){openPrayer();return}
+ if(id==="profile"){$("name").value=person?.name||"";$("age").value=person?.age||"";navigate("profile");return}
+ renderDetail(id);history.pushState({page:"detail",id},"",location.href);show("detail");
+});
+$("detailBack").addEventListener("click",()=>history.back());
+$("detailNav").addEventListener("click",e=>{
+ const b=e.target.closest("[data-go]");if(!b)return;
+ const id=b.dataset.go;
+ if(id==="home"){navigate("home");return}
+ if(id==="prayer"){openPrayer();return}
+ if(history.state?.page==="detail"&&history.state?.id===id)return;
+ renderDetail(id);history.pushState({page:"detail",id},"",location.href);show("detail");
+});
+
+$("language").addEventListener("change",e=>setLanguage(e.target.value));
+$("profileForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const name=$("name").value.trim().replace(/\s+/g," "),age=Number($("age").value);
+ if([...name].length<2||[...name].length>40){$("error").textContent=tr().errorName;return}
+ if(!$("age").value.trim()||!Number.isInteger(age)||age<5||age>120){$("error").textContent=tr().errorAge;return}
+ person={name,age,lang};$("error").textContent="";navigate("tour",0);
+});
+$("next").addEventListener("click",()=>{
+ if($("tour").querySelector(".center").getAnimations({subtree:false}).length)return;
+ if(step<ids.length-1)navigate("tour",step+1);
+ else{person.lang=lang;safeSet(KEY,JSON.stringify(person));navigate("home")}
+});
+$("back").addEventListener("click",()=>history.back());
+window.addEventListener("popstate",e=>{
+ if(!ready)return;
+ const s=e.state;
+ if(s&&["profile","tour","home","detail","prayerLearn"].includes(s.page)){
+  const nextIndex=Math.max(0,Math.min(ids.length-1,Number(s.index)||0));
+  if(s.page==="tour"&&page==="tour"){switchTour(nextIndex,nextIndex>=step?1:-1);return}
+  ++tourSequence;
+  step=nextIndex;
+  if(s.page==="tour")renderTour();
+  if(s.page==="home")renderHome();
+  if(s.page==="detail")renderDetail(s.id||"ai");
+  if(s.page==="prayerLearn"){schoolLevel=Number(s.level)||0;schoolGender=s.gender==="women"?"women":"men";schoolTopic=Number(s.topic)||0;schoolStep=Number(s.step)||0;renderPrayer()}
+  show(s.page);
+ }else{
+  // Keep Android back predictable even if history returns to a pre-app entry.
+  if(page==="tour"){++tourSequence;step=0;show("profile")}
+ }
+});
+function begin(){
+ if(ready)return;ready=true;
+
+
+ $("splash").hidden=true;
+ person=saved();
+ const initial=person?"home":"profile";
+ lang=person?.lang||(I18N[safeGet(LANG_KEY)]?safeGet(LANG_KEY):"uz-Latn");
+ setLanguage(lang);
+ renderHome();
+ history.replaceState({page:initial,index:0},"",location.href);
+ if(person)renderHome();
+ show(initial);
+}
+window.setTimeout(begin,3000);
+</script>
+</body>
+</html>
